@@ -1,0 +1,135 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-07-30 13:33-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../data/gnomato.ui.h:1
+msgid "00:00"
+msgstr "00:00"
+
+#: ../data/gnomato.ui.h:2
+msgid "<b>Tasks</b>"
+msgstr "<b>Tarefas</b>"
+
+#: ../data/gnomato.ui.h:3
+msgid "Gnomato"
+msgstr "Gnomato"
+
+#: ../data/gnomato.ui.h:4
+msgid "Gnomato Website"
+msgstr "Site do Gnomato"
+
+#: ../data/gnomato.ui.h:5
+msgid "Intervals"
+msgstr "Intervalos"
+
+#: ../data/gnomato.ui.h:6
+msgid "Long Break:"
+msgstr "Pausa Maior:"
+
+#: ../data/gnomato.ui.h:7
+msgid "Name:"
+msgstr "Nome:"
+
+#: ../data/gnomato.ui.h:8
+msgid "Preferences - Gnomato"
+msgstr "Preferências - Gnomato"
+
+#: ../data/gnomato.ui.h:9
+msgid "Restart"
+msgstr "Reiniciar"
+
+#: ../data/gnomato.ui.h:10
+msgid "Short Break:"
+msgstr "Pausa Menor:"
+
+#: ../data/gnomato.ui.h:11 ../src/win_main.cc:199
+msgid "Start"
+msgstr "Iniciar"
+
+#: ../data/gnomato.ui.h:12
+msgid "W - B - W - B - W - B - W - LB"
+msgstr "T - P - T - P - T - P - T - PM"
+
+#: ../data/gnomato.ui.h:13
+msgid "Work:"
+msgstr "Trabalho:"
+
+#: ../data/gnomato.ui.h:14
+msgid "_Edit"
+msgstr "_Editar"
+
+#: ../data/gnomato.ui.h:15
+msgid "_File"
+msgstr "_Arquivo"
+
+#: ../data/gnomato.ui.h:16
+msgid "_Help"
+msgstr "A_juda"
+
+#: ../src/main.cc:50
+msgid "Creating database"
+msgstr "Criando o banco de dados"
+
+#: ../src/main.cc:62
+msgid "Database successfully created "
+msgstr "Banco de dados criado com sucesso"
+
+#: ../src/main.cc:87
+msgid "Could not open the database. Error: "
+msgstr "Não foi possível acessar o banco de dados. Erro: "
+
+#: ../src/win_main.cc:80
+msgid "Start/Pause"
+msgstr "Iniciar/Pausar"
+
+#. break
+#: ../src/win_main.cc:138 ../src/win_main.cc:147
+msgid "W -"
+msgstr "T -"
+
+#: ../src/win_main.cc:139
+msgid "<span color=\"red\"><b>LB</b></span>"
+msgstr "<span color=\"red\"><b>PM</b></span>"
+
+#: ../src/win_main.cc:140
+msgid "<span color=\"red\"><b>B</b></span> -"
+msgstr "<span color=\"red\"><b>P</b></span> -"
+
+#. pomodoro
+#: ../src/win_main.cc:142
+msgid "<span color=\"green\"><b>W</b></span> -"
+msgstr "<span color=\"green\"><b>T</b></span> -"
+
+#: ../src/win_main.cc:143 ../src/win_main.cc:148
+msgid "LB"
+msgstr "PM"
+
+#: ../src/win_main.cc:144 ../src/win_main.cc:149
+msgid "B -"
+msgstr "P -"
+
+#: ../src/win_main.cc:172
+msgid "Title"
+msgstr "Título"
+
+#: ../src/win_main.cc:203
+msgid "Pause"
+msgstr "Pausar"
+
+#~ msgid "Diego Rubin"
+#~ msgstr "Diego Rubin"
