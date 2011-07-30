@@ -34,13 +34,12 @@ DialogPreferences::DialogPreferences(BaseObjectType* cobject,
   m_refGlade->get_widget("btnCancel", btnCancel);
 
   // page 1 - intervals 
-  m_refGlade->get_widget("entWork", entWork);
-  m_refGlade->get_widget("entShortBreak", entShortBreak);
-  m_refGlade->get_widget("entLongBreak", entLongBreak);
-  entWork->set_text(this->configs.work_interval);
-  entShortBreak->set_text(this->configs.break_interval);
-  entLongBreak->set_text(this->configs.long_interval);
-
+  m_refGlade->get_widget("spnWork", spnWork);
+  m_refGlade->get_widget("spnShortBreak", spnShortBreak);
+  m_refGlade->get_widget("spnLongBreak", spnLongBreak);
+  spnWork->set_value(atoi(this->configs.work_interval.c_str()));
+  spnShortBreak->set_value(atoi(this->configs.break_interval.c_str()));
+  spnLongBreak->set_value(atoi(this->configs.long_interval.c_str()));
 
   // connect signals
   btnCancel->signal_clicked().connect(sigc::mem_fun(*this,&DialogPreferences::on_button_cancel_clicked));
@@ -60,9 +59,9 @@ void DialogPreferences::on_button_cancel_clicked()
 
 void DialogPreferences::on_button_ok_clicked()
 {
-  configs.work_interval = entWork->get_text();
-  configs.break_interval = entShortBreak->get_text();
-  configs.long_interval = entLongBreak->get_text();
+  configs.work_interval = spnWork->get_text();
+  configs.break_interval = spnShortBreak->get_text();
+  configs.long_interval = spnLongBreak->get_text();
   
   configs.save();
   hide();

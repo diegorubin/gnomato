@@ -73,6 +73,9 @@ WinMain::WinMain(BaseObjectType* cobject,
   btnAddTask->signal_clicked().
             connect(sigc::mem_fun(*this, &WinMain::on_button_del_task_clicked));
 
+  trvTasks->signal_row_activated().
+            connect(sigc::mem_fun(*this, &WinMain::on_treeview_tasks_row_activated));
+
   // connect menu
   mnuNew->signal_activate().
             connect(sigc::mem_fun(*this, &WinMain::on_menu_file_new_task));
@@ -236,6 +239,11 @@ void WinMain::on_button_restart_clicked()
 	lblDisplay->set_text(generate_display());
 }
 
+void WinMain::on_treeview_tasks_row_activated(const TreeModel::Path& path,
+                                              TreeViewColumn* column)
+{
+}
+
 void WinMain::on_button_del_task_clicked()
 {
 
@@ -265,8 +273,9 @@ bool WinMain::on_timeout(int timer_number)
 
 	lblDisplay->set_text(generate_display());
   --time_elapsed;
-
-  std::cout << minutes << ":" << seconds << "\r";
+ 
+  conn.disconnect();
+  conn = Glib::signal_timeout().connect(timer, 1000);
 }
 
 // callbacks implementations - menu

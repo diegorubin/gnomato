@@ -108,6 +108,8 @@ private:
   virtual void on_systray_popup(guint button, guint activate_time);
   virtual void on_button_start_clicked();
   virtual void on_button_restart_clicked();
+  virtual void on_treeview_tasks_row_activated(const TreeModel::Path& path,
+                                               TreeViewColumn* column);
   virtual void on_button_del_task_clicked();
   virtual bool on_timeout(int timer_number);
 

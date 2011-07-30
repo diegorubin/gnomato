@@ -43,9 +43,9 @@ private:
   Button *btnOk;
   Button *btnCancel;
 
-  Entry *entWork;
-  Entry *entShortBreak;
-  Entry *entLongBreak;
+  SpinButton *spnWork;
+  SpinButton *spnShortBreak;
+  SpinButton *spnLongBreak;
   
   Glib::RefPtr<Gtk::Builder> m_refGlade;
 

@@ -67,16 +67,15 @@
                 <property name="column_spacing">3</property>
                 <property name="row_homogeneous">True</property>
                 <property name="column_homogeneous">True</property>
-                <property name="n_columns">2</property>
                 <child>
-                  <object class="GtkLabel" id="lblWork">
+                  <object class="GtkLabel" id="lblLongBreak">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Work:</property>
+                    <property name="label" translatable="yes">Long Break:</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
-                    <property name="top_attach">0</property>
+                    <property name="top_attach">2</property>
                     <property name="width">1</property>
                     <property name="height">1</property>
                   </packing>
@@ -95,24 +94,71 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="lblLongBreak">
+                  <object class="GtkLabel" id="lblWork">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Long Break:</property>
+                    <property name="label" translatable="yes">Work:</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
+                    <property name="top_attach">0</property>
+                    <property name="width">1</property>
+                    <property name="height">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="lblMinutesWork">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">&lt;i&gt;minutes&lt;/i&gt;</property>
+                    <property name="use_markup">True</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">2</property>
+                    <property name="top_attach">0</property>
+                    <property name="width">1</property>
+                    <property name="height">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="lblMinutesShort">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">&lt;i&gt;minutes&lt;/i&gt;</property>
+                    <property name="use_markup">True</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">2</property>
+                    <property name="top_attach">1</property>
+                    <property name="width">1</property>
+                    <property name="height">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="lblMinutesLong">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">&lt;i&gt;minutes&lt;/i&gt;</property>
+                    <property name="use_markup">True</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">2</property>
                     <property name="top_attach">2</property>
                     <property name="width">1</property>
                     <property name="height">1</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="entWork">
+                  <object class="GtkSpinButton" id="spnWork">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="invisible_char">●</property>
-                    <property name="invisible_char_set">True</property>
+                    <property name="progress_pulse_step">1</property>
+                    <property name="adjustment">adjWork</property>
+                    <property name="climb_rate">1</property>
+                    <property name="snap_to_ticks">True</property>
+                    <property name="numeric">True</property>
+                    <property name="update_policy">if-valid</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -122,11 +168,17 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="entShortBreak">
+                  <object class="GtkSpinButton" id="spnShortBreak">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="invisible_char">●</property>
                     <property name="invisible_char_set">True</property>
+                    <property name="progress_pulse_step">1</property>
+                    <property name="adjustment">adjShortBreak</property>
+                    <property name="climb_rate">1</property>
+                    <property name="snap_to_ticks">True</property>
+                    <property name="numeric">True</property>
+                    <property name="update_policy">if-valid</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -136,11 +188,16 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="entLongBreak">
+                  <object class="GtkSpinButton" id="spnLongBreak">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="invisible_char">●</property>
                     <property name="invisible_char_set">True</property>
+                    <property name="progress_pulse_step">1</property>
+                    <property name="adjustment">adjLongBreak</property>
+                    <property name="climb_rate">1</property>
+                    <property name="snap_to_ticks">True</property>
+                    <property name="update_policy">if-valid</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -268,6 +325,24 @@
       <action-widget response="0">btnTaskCancel</action-widget>
       <action-widget response="0">btnTaskOk</action-widget>
     </action-widgets>
+  </object>
+  <object class="GtkAdjustment" id="adjLongBreak">
+    <property name="lower">1</property>
+    <property name="upper">99</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">5</property>
+  </object>
+  <object class="GtkAdjustment" id="adjShortBreak">
+    <property name="lower">1</property>
+    <property name="upper">99</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">5</property>
+  </object>
+  <object class="GtkAdjustment" id="adjWork">
+    <property name="lower">1</property>
+    <property name="upper">99</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">5</property>
   </object>
   <object class="GtkAboutDialog" id="winAbout">
     <property name="can_focus">False</property>
