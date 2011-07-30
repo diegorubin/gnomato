@@ -14,126 +14,123 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../data/gnomato.ui.h:1
 msgid "00:00"
-msgstr "00:00"
+msgstr ""
 
 #: ../data/gnomato.ui.h:2
 msgid "<b>Tasks</b>"
-msgstr "<b>Tarefas</b>"
+msgstr ""
 
 #: ../data/gnomato.ui.h:3
 msgid "<i>minutes</i>"
-msgstr "<i>minutos</i>"
+msgstr ""
 
 #: ../data/gnomato.ui.h:4
 msgid "Gnomato"
-msgstr "Gnomato"
+msgstr ""
 
 #: ../data/gnomato.ui.h:5
 msgid "Gnomato Website"
-msgstr "Site do Gnomato"
+msgstr ""
 
 #: ../data/gnomato.ui.h:6
 msgid "Intervals"
-msgstr "Intervalos"
+msgstr ""
 
 #: ../data/gnomato.ui.h:7
 msgid "Long Break:"
-msgstr "Pausa Maior:"
+msgstr ""
 
 #: ../data/gnomato.ui.h:8
 msgid "Name:"
-msgstr "Nome:"
+msgstr ""
 
 #: ../data/gnomato.ui.h:9
 msgid "Preferences - Gnomato"
-msgstr "Preferências - Gnomato"
+msgstr ""
 
 #: ../data/gnomato.ui.h:10
 msgid "Restart"
-msgstr "Reiniciar"
+msgstr ""
 
 #: ../data/gnomato.ui.h:11
 msgid "Short Break:"
-msgstr "Pausa Menor:"
+msgstr ""
 
 #: ../data/gnomato.ui.h:12 ../src/win_main.cc:224
 msgid "Start"
-msgstr "Iniciar"
+msgstr ""
 
 #: ../data/gnomato.ui.h:13
 msgid "W - B - W - B - W - B - W - LB"
-msgstr "T - P - T - P - T - P - T - PM"
+msgstr ""
 
 #: ../data/gnomato.ui.h:14
 msgid "Work:"
-msgstr "Trabalho:"
+msgstr ""
 
 #: ../data/gnomato.ui.h:15
 msgid "_Edit"
-msgstr "_Editar"
+msgstr ""
 
 #: ../data/gnomato.ui.h:16
 msgid "_File"
-msgstr "_Arquivo"
+msgstr ""
 
 #: ../data/gnomato.ui.h:17
 msgid "_Help"
-msgstr "A_juda"
+msgstr ""
 
 #: ../src/main.cc:53
 msgid "Creating database"
-msgstr "Criando o banco de dados"
+msgstr ""
 
 #: ../src/main.cc:65
 msgid "Database successfully created "
-msgstr "Banco de dados criado com sucesso"
+msgstr ""
 
 #: ../src/main.cc:90
 msgid "Could not open the database. Error: "
-msgstr "Não foi possível acessar o banco de dados. Erro: "
+msgstr ""
 
 #: ../src/win_main.cc:105
 msgid "Start/Pause"
-msgstr "Iniciar/Pausar"
+msgstr ""
 
 #. break
 #: ../src/win_main.cc:163 ../src/win_main.cc:172
 msgid "W -"
-msgstr "T -"
+msgstr ""
 
 #: ../src/win_main.cc:164
 msgid "<span color=\"red\"><b>LB</b></span>"
-msgstr "<span color=\"red\"><b>PM</b></span>"
+msgstr ""
 
 #: ../src/win_main.cc:165
 msgid "<span color=\"red\"><b>B</b></span> -"
-msgstr "<span color=\"red\"><b>P</b></span> -"
+msgstr ""
 
 #. pomodoro
 #: ../src/win_main.cc:167
 msgid "<span color=\"green\"><b>W</b></span> -"
-msgstr "<span color=\"green\"><b>T</b></span> -"
+msgstr ""
 
 #: ../src/win_main.cc:168 ../src/win_main.cc:173
 msgid "LB"
-msgstr "PM"
+msgstr ""
 
 #: ../src/win_main.cc:169 ../src/win_main.cc:174
 msgid "B -"
-msgstr "P -"
+msgstr ""
 
 #: ../src/win_main.cc:197
 msgid "Title"
-msgstr "Título"
+msgstr ""
 
 #: ../src/win_main.cc:228
 msgid "Pause"
-msgstr "Pausar"
-
-#~ msgid "Diego Rubin"
-#~ msgstr "Diego Rubin"
+msgstr ""
