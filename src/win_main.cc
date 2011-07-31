@@ -197,6 +197,30 @@ void WinMain::load_tasks()
   trvTasks->append_column(_("Title"), mdlColumn.title);
 }
 
+void WinMain::notify(const char *message)
+{
+  NotifyNotification *notMessage;
+  GError *error = NULL;
+
+  notMessage = notify_notification_new("Gnomato",
+                                       message,
+                                       GNOMATO_DATADIR "/tomato.png");
+/*
+  GdkPixbuf *icon = gdk_pixbuf_new_from_file(GNOMATO_DATADIR "/tomato.png",
+                                             &error);
+
+  notify_notification_set_image_from_pixbuf(notMessage,icon);
+*/
+  notify_notification_set_timeout(notMessage,3000);
+
+  char category[30] = "Gnomato Notifications";
+  notify_notification_set_category(notMessage,category);
+
+  notify_notification_set_urgency(notMessage,NOTIFY_URGENCY_CRITICAL);
+
+  notify_notification_show(notMessage,&error);
+}
+
 // callbacks implementations
 void WinMain::on_systray_activated()
 {
@@ -274,21 +298,23 @@ bool WinMain::on_timeout(int timer_number)
 	if(!time_elapsed){
 	  cycle_number++;
 
-	  if(cycle_number % 2) 
+	  if(cycle_number % 2){
+      notify(_("Take a break"));
 	    if(cycle_number == 7)
         time_elapsed = atoi(configs.long_interval.c_str()) * 60;
       else
         time_elapsed = atoi(configs.break_interval.c_str()) * 60;
-    else 
+    }
+    else{
+      notify(_("End of break"));
 	    time_elapsed = atoi(configs.work_interval.c_str()) * 60;
+    }
 
     lblCycle->set_markup(generate_cycle());
 
 	  if(cycle_number == 7)
       cycle_number = 0;
-
-    showed=true;
-    show();
+  
   }
 
 	lblDisplay->set_text(generate_display());

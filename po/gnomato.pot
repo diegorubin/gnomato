@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-31 12:44-0300\n"
+"POT-Creation-Date: 2011-07-31 16:39-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,7 +61,7 @@ msgstr ""
 msgid "Short Break:"
 msgstr ""
 
-#: ../data/gnomato.ui.h:12 ../src/win_main.cc:224
+#: ../data/gnomato.ui.h:12 ../src/win_main.cc:248
 msgid "Start"
 msgstr ""
 
@@ -89,15 +89,15 @@ msgstr ""
 msgid "_New Task"
 msgstr ""
 
-#: ../src/main.cc:53
+#: ../src/main.cc:54
 msgid "Creating database"
 msgstr ""
 
-#: ../src/main.cc:65
+#: ../src/main.cc:66
 msgid "Database successfully created "
 msgstr ""
 
-#: ../src/main.cc:90
+#: ../src/main.cc:91
 msgid "Could not open the database. Error: "
 msgstr ""
 
@@ -135,6 +135,14 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: ../src/win_main.cc:228
+#: ../src/win_main.cc:252
 msgid "Pause"
+msgstr ""
+
+#: ../src/win_main.cc:302
+msgid "Take a break"
+msgstr ""
+
+#: ../src/win_main.cc:309
+msgid "End of break"
 msgstr ""

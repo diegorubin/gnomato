@@ -25,6 +25,7 @@
 
 #include <gtkmm.h>
 #include <glibmm/i18n.h>
+#include <libnotify/notify.h>
 #include <iostream>
 #include <sstream>
 
@@ -103,6 +104,7 @@ private:
   std::string generate_display();
   std::string generate_cycle();
   void load_tasks();
+  void notify(const char *message);
 
   // callback methods
   virtual void on_systray_activated();

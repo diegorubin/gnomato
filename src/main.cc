@@ -22,6 +22,7 @@
 
 #include <gtkmm.h>
 #include <glibmm/i18n.h>
+#include <libnotify/notify.h>
 #include <fstream>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -92,6 +93,8 @@ int main(int argc, char **argv)
   }
 
   Gtk::Main kit(argc, argv);
+
+  notify_init("Gnomato");
 
   Glib::RefPtr<Gtk::Builder> refBuilder = Gtk::Builder::create();
   try
