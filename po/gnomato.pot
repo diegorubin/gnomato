@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-30 17:19-0300\n"
+"POT-Creation-Date: 2011-07-31 12:44-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,6 +83,10 @@ msgstr ""
 
 #: ../data/gnomato.ui.h:17
 msgid "_Help"
+msgstr ""
+
+#: ../data/gnomato.ui.h:18
+msgid "_New Task"
 msgstr ""
 
 #: ../src/main.cc:53

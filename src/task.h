@@ -35,6 +35,7 @@ public:
   //methods
   bool create();
   bool save();
+  bool destroy();
 
   //setters
   void set_id(std::string id);

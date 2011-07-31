@@ -27,7 +27,6 @@ DialogTask::DialogTask(BaseObjectType* cobject,
 : Gtk::Dialog(cobject),
   m_refGlade(refGlade)
 {
-
   // buttons
   m_refGlade->get_widget("btnTaskOk", btnOk);
   m_refGlade->get_widget("btnTaskCancel", btnCancel);
@@ -50,16 +49,35 @@ DialogTask::~DialogTask()
 {
 }
 
+void DialogTask::set_id(std::string value)
+{
+  id = value;
+  Task t(id);
+
+  entName->set_text(t.get_name());
+}
+
 void DialogTask::on_button_cancel_clicked()
 {
+  id = "";
+  entName->set_text("");
   hide();
 }
 
 void DialogTask::on_button_ok_clicked()
 {
-  Task task;
-  task.set_name(entName->get_text().c_str());
-  task.create();
+  if(id == ""){
+    task = new Task();
+    task->set_name(entName->get_text().c_str());
+    task->create();
+  }else{
+    task = new Task(id);
+    task->set_name(entName->get_text().c_str());
+    task->save();
+  }
+
+  id = "";
+  entName->set_text("");
 
   hide();
 }

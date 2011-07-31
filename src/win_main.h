@@ -66,7 +66,8 @@ private:
   Config configs;
 
   sigc::slot<bool> timer;
-  sigc::connection conn;
+  sigc::connection timeout;
+  sigc::connection row_activated;
 
   Glib::RefPtr<Gtk::Builder> m_refGlade;
 

@@ -34,4 +34,6 @@
 
 #define UPDATE_TASK "UPDATE Task SET name = '%s' WHERE id = %s;"
 
+#define DELETE_TASK "DELETE FROM Task WHERE id = %s;"
+
 #endif //_SQLS_

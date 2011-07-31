@@ -39,8 +39,8 @@ Task::Task(std::string id)
   sprintf(sql, SELECT_TASK, id.c_str());
   execute_query(sql);
    
-  id = tasks_aux.front()->get_id();
-  name = tasks_aux.front()->get_name();
+  this->id = tasks_aux.front()->get_id();
+  this->name = tasks_aux.front()->get_name();
 }
 
 Task::~Task()
@@ -55,10 +55,18 @@ bool Task::create()
   return execute_query(sql);
 }
 
+bool Task::destroy()
+{
+  char sql[500];
+  sprintf(sql, DELETE_TASK, id.c_str());
+  
+  return execute_query(sql);
+}
+
 bool Task::save()
 {
   char sql[500];
-  sprintf(sql, UPDATE_TASK, name.c_str());
+  sprintf(sql, UPDATE_TASK, name.c_str(), id.c_str());
 
   return execute_query(sql);
 }

@@ -36,13 +36,19 @@ public:
   DialogTask();
   virtual ~DialogTask();
 
+  //methods
+  void set_id(std::string value);
+
 private:
+
+  std::string id;
 
   Button *btnOk;
   Button *btnCancel;
 
   Entry *entName;
 
+  Task *task;
   Glib::RefPtr<Gtk::Builder> m_refGlade;
 
   // callback methods
