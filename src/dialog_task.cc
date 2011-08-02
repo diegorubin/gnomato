@@ -41,6 +41,10 @@ DialogTask::DialogTask(BaseObjectType* cobject,
   btnOk->signal_clicked().
          connect(sigc::mem_fun(*this,
                &DialogTask::on_button_ok_clicked));
+  
+  entName->signal_activate().
+         connect(sigc::mem_fun(*this,
+               &DialogTask::on_button_ok_clicked));
 
   show_all();
 }
@@ -76,9 +80,9 @@ void DialogTask::on_button_ok_clicked()
     task->save();
   }
 
+  hide();
+
   id = "";
   entName->set_text("");
-
-  hide();
 }
 
