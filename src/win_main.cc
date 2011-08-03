@@ -354,5 +354,6 @@ void WinMain::on_menu_help_about()
 {
   m_refGlade->get_widget("winAbout", abtDialog);
   abtDialog->run();
+  abtDialog->hide();
 }
 
