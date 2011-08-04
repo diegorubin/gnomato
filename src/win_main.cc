@@ -38,6 +38,7 @@ WinMain::WinMain(BaseObjectType* cobject,
   // get widgets
   m_refGlade->get_widget("lblDisplay", lblDisplay);
   m_refGlade->get_widget("lblCycle", lblCycle);
+  m_refGlade->get_widget("lblTaskTitle", lblTaskTitle);
 
   m_refGlade->get_widget("btnStart", btnStart);
   m_refGlade->get_widget("btnRestart", btnRestart);
@@ -75,6 +76,9 @@ WinMain::WinMain(BaseObjectType* cobject,
 
   row_activated = trvTasks->signal_row_activated().
             connect(sigc::mem_fun(*this, &WinMain::on_treeview_tasks_row_activated));
+
+  trvTasks->signal_cursor_changed().
+            connect(sigc::mem_fun(*this, &WinMain::on_cursor_changed));
 
   // connect menu
   mnuNew->signal_activate().
@@ -205,12 +209,7 @@ void WinMain::notify(const char *message)
   notMessage = notify_notification_new("Gnomato",
                                        message,
                                        GNOMATO_DATADIR "/tomato.png");
-/*
-  GdkPixbuf *icon = gdk_pixbuf_new_from_file(GNOMATO_DATADIR "/tomato.png",
-                                             &error);
-
-  notify_notification_set_image_from_pixbuf(notMessage,icon);
-*/
+  
   notify_notification_set_timeout(notMessage,3000);
 
   char category[30] = "Gnomato Notifications";
@@ -322,6 +321,16 @@ bool WinMain::on_timeout(int timer_number)
  
   timeout.disconnect();
   timeout = Glib::signal_timeout().connect(timer, 1000);
+}
+
+void WinMain::on_cursor_changed()
+{
+  std::vector<Gtk::TreePath> paths = trvTasks->get_selection()->get_selected_rows();
+  if(paths.size()){
+    Gtk::TreeRow row = Gtk::TreeRow(*treTasks->get_iter(*paths.begin()));
+
+    lblTaskTitle->set_text((Glib::ustring)row[mdlColumn.title]);
+  }
 }
 
 // callbacks implementations - menu

@@ -85,6 +85,7 @@ private:
 
   Label *lblDisplay;
   Label *lblCycle;
+  Label *lblTaskTitle;
 
   TreeView *trvTasks;
 	ModelColumns mdlColumn;
@@ -115,6 +116,7 @@ private:
                                                TreeViewColumn* column);
   virtual void on_button_del_task_clicked();
   virtual bool on_timeout(int timer_number);
+  virtual void on_cursor_changed();
 
   // callback methods - menu
   virtual void on_menu_file_new_task();
