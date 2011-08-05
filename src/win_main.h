@@ -68,7 +68,6 @@ private:
 
   sigc::slot<bool> timer;
   sigc::connection timeout;
-  sigc::connection row_activated;
 
   Glib::RefPtr<Gtk::Builder> m_refGlade;
 
@@ -77,6 +76,7 @@ private:
   Button *btnRestart;
   Button *btnAddTask;
   Button *btnDelTask;
+  Button *btnFinish;
 
   ImageMenuItem *mnuNew;
   ImageMenuItem *mnuQuit;
@@ -86,6 +86,8 @@ private:
   Label *lblDisplay;
   Label *lblCycle;
   Label *lblTaskTitle;
+
+  Box *hbxWorkOn;
 
   TreeView *trvTasks;
 	ModelColumns mdlColumn;
@@ -105,6 +107,7 @@ private:
   std::string generate_display();
   std::string generate_cycle();
   void load_tasks();
+  void show_task();
   void notify(const char *message);
 
   // callback methods
@@ -112,6 +115,7 @@ private:
   virtual void on_systray_popup(guint button, guint activate_time);
   virtual void on_button_start_clicked();
   virtual void on_button_restart_clicked();
+  virtual void on_button_finish_clicked();
   virtual void on_treeview_tasks_row_activated(const TreeModel::Path& path,
                                                TreeViewColumn* column);
   virtual void on_button_del_task_clicked();

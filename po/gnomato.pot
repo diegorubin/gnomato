@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-04 11:52-0300\n"
+"POT-Creation-Date: 2011-08-05 16:37-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,62 +34,66 @@ msgid "<i>minutes</i>"
 msgstr ""
 
 #: ../data/gnomato.ui.h:5
-msgid "Gnomato"
+msgid "Finish"
 msgstr ""
 
 #: ../data/gnomato.ui.h:6
-msgid "Gnomato Website"
+msgid "Gnomato"
 msgstr ""
 
 #: ../data/gnomato.ui.h:7
-msgid "Intervals"
+msgid "Gnomato Website"
 msgstr ""
 
 #: ../data/gnomato.ui.h:8
-msgid "Long Break:"
+msgid "Intervals"
 msgstr ""
 
 #: ../data/gnomato.ui.h:9
-msgid "Name:"
+msgid "Long Break:"
 msgstr ""
 
 #: ../data/gnomato.ui.h:10
-msgid "Preferences - Gnomato"
+msgid "Name:"
 msgstr ""
 
 #: ../data/gnomato.ui.h:11
-msgid "Restart"
+msgid "Preferences - Gnomato"
 msgstr ""
 
 #: ../data/gnomato.ui.h:12
+msgid "Restart"
+msgstr ""
+
+#: ../data/gnomato.ui.h:13
 msgid "Short Break:"
 msgstr ""
 
-#: ../data/gnomato.ui.h:13 ../src/win_main.cc:247
+#: ../data/gnomato.ui.h:14 ../src/win_main.cc:247
 msgid "Start"
 msgstr ""
 
-#: ../data/gnomato.ui.h:14
+#: ../data/gnomato.ui.h:15
 msgid "W - B - W - B - W - B - W - LB"
 msgstr ""
 
-#: ../data/gnomato.ui.h:15
+#: ../data/gnomato.ui.h:16
 msgid "Work:"
 msgstr ""
 
-#: ../data/gnomato.ui.h:16
+#: ../data/gnomato.ui.h:17
 msgid "_Edit"
 msgstr ""
 
-#: ../data/gnomato.ui.h:17
+#: ../data/gnomato.ui.h:18
 msgid "_File"
 msgstr ""
 
-#: ../data/gnomato.ui.h:18
+#: ../data/gnomato.ui.h:19
 msgid "_Help"
 msgstr ""
 
-#: ../data/gnomato.ui.h:19
+#: ../data/gnomato.ui.h:20
 msgid "_New Task"
 msgstr ""
 

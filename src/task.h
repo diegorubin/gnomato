@@ -36,14 +36,19 @@ public:
   bool create();
   bool save();
   bool destroy();
+  bool finish();
 
   //setters
   void set_id(std::string id);
   void set_name(std::string value);
+  void set_pomodoros(int value);
+  void set_done(int value);
 
   //getters
   std::string get_id();
   std::string get_name();
+  int get_pomodoros();
+  int get_done();
 
   static std::list<Task*> all();
     
@@ -51,6 +56,8 @@ private:
   // attributes
   std::string id;
   std::string name;
+  int pomodoros;
+  int done;
   
 };
 

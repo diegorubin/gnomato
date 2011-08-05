@@ -40,10 +40,13 @@ WinMain::WinMain(BaseObjectType* cobject,
   m_refGlade->get_widget("lblCycle", lblCycle);
   m_refGlade->get_widget("lblTaskTitle", lblTaskTitle);
 
+  m_refGlade->get_widget("hbxWorkOn", hbxWorkOn);
+
   m_refGlade->get_widget("btnStart", btnStart);
   m_refGlade->get_widget("btnRestart", btnRestart);
   m_refGlade->get_widget("btnAddTask", btnAddTask);
   m_refGlade->get_widget("btnDelTask", btnDelTask);
+  m_refGlade->get_widget("btnFinish", btnFinish);
   
   m_refGlade->get_widget("trvTasks", trvTasks);
 
@@ -68,13 +71,16 @@ WinMain::WinMain(BaseObjectType* cobject,
   btnRestart->signal_clicked().
             connect(sigc::mem_fun(*this, &WinMain::on_button_restart_clicked));
 
+  btnFinish->signal_clicked().
+            connect(sigc::mem_fun(*this, &WinMain::on_button_finish_clicked));
+
   btnAddTask->signal_clicked().
               connect(sigc::mem_fun(*this, &WinMain::on_menu_file_new_task));
 
   btnDelTask->signal_clicked().
             connect(sigc::mem_fun(*this, &WinMain::on_button_del_task_clicked));
 
-  row_activated = trvTasks->signal_row_activated().
+  trvTasks->signal_row_activated().
             connect(sigc::mem_fun(*this, &WinMain::on_treeview_tasks_row_activated));
 
   trvTasks->signal_cursor_changed().
@@ -262,6 +268,24 @@ void WinMain::on_button_restart_clicked()
 	lblDisplay->set_text(generate_display());
 }
 
+void WinMain::on_button_finish_clicked()
+{
+  /*
+   * TODO: create method get_selected_task();
+   */
+  std::vector<Gtk::TreePath> paths = trvTasks->get_selection()->get_selected_rows();
+  if(paths.size()){
+    Gtk::TreeRow row = Gtk::TreeRow(*treTasks->get_iter(*paths.begin()));
+
+    Task t((Glib::ustring)row[mdlColumn.id]);
+    t.finish();
+
+    load_tasks();
+    hbxWorkOn->hide();
+  }
+
+}
+
 void WinMain::on_treeview_tasks_row_activated(const TreeModel::Path& path,
                                               TreeViewColumn* column)
 {
@@ -275,7 +299,8 @@ void WinMain::on_treeview_tasks_row_activated(const TreeModel::Path& path,
     dlgTask->run();
   
     load_tasks();
-
+  
+    hbxWorkOn->hide();
   }
 }
 
@@ -289,6 +314,7 @@ void WinMain::on_button_del_task_clicked()
     t.destroy();
 
     load_tasks();
+    hbxWorkOn->hide();
   }
 }
 
@@ -330,6 +356,7 @@ void WinMain::on_cursor_changed()
     Gtk::TreeRow row = Gtk::TreeRow(*treTasks->get_iter(*paths.begin()));
 
     lblTaskTitle->set_text((Glib::ustring)row[mdlColumn.title]);
+    hbxWorkOn->show();
   }
 }
 

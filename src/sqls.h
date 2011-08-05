@@ -23,16 +23,42 @@
 #ifndef _SQLS_
 #define _SQLS_
 
-#define CREATE_TASK "CREATE TABLE Task(id INTEGER, name VARCHAR(200), \
-                     primary key(id))"
+#define CREATE_TASK "CREATE TABLE \
+                       Task \
+                         (\
+                           id INTEGER, \
+                           name VARCHAR(200), \
+                           pomodoros INTEGER, \
+                           done INTEGER, \
+                           primary key(id)\
+                         )"
 
 #define SELECT_TASK "SELECT * FROM Task WHERE id = %s;"
 
-#define SELECT_ALL_TASK "SELECT * FROM Task;" 
+#define SELECT_ALL_TASK "SELECT * FROM Task WHERE done = 0;" 
 
-#define INSERT_TASK "INSERT INTO Task(name) VALUES ('%s');"
+#define INSERT_TASK "INSERT INTO \
+                      Task \
+                        ( \
+                          name,\
+                          pomodoros,\
+                          done \
+                        )\
+                      VALUES \
+                        (\
+                          '%s',\
+                           %d, \
+                           %d \
+                         );"
 
-#define UPDATE_TASK "UPDATE Task SET name = '%s' WHERE id = %s;"
+#define UPDATE_TASK "UPDATE \
+                       Task \
+                     SET \
+                       name = '%s', \
+                       pomodoros = %d,\
+                       done = %d \
+                     WHERE \
+                       id = %s;"
 
 #define DELETE_TASK "DELETE FROM Task WHERE id = %s;"
 
