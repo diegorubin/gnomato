@@ -226,6 +226,17 @@ void WinMain::notify(const char *message)
   notify_notification_show(notMessage,&error);
 }
 
+Task* WinMain::get_current_task()
+{
+  std::vector<Gtk::TreePath> paths = trvTasks->get_selection()->get_selected_rows();
+  if(paths.size()){
+    Gtk::TreeRow row = Gtk::TreeRow(*treTasks->get_iter(*paths.begin()));
+
+    return(new Task((Glib::ustring)row[mdlColumn.id]));
+  }
+  return NULL; 
+}
+
 // callbacks implementations
 void WinMain::on_systray_activated()
 {
@@ -270,15 +281,9 @@ void WinMain::on_button_restart_clicked()
 
 void WinMain::on_button_finish_clicked()
 {
-  /*
-   * TODO: create method get_selected_task();
-   */
-  std::vector<Gtk::TreePath> paths = trvTasks->get_selection()->get_selected_rows();
-  if(paths.size()){
-    Gtk::TreeRow row = Gtk::TreeRow(*treTasks->get_iter(*paths.begin()));
-
-    Task t((Glib::ustring)row[mdlColumn.id]);
-    t.finish();
+  Task *t = get_current_task();
+  if(t){
+    t->finish();
 
     load_tasks();
     hbxWorkOn->hide();
@@ -306,12 +311,9 @@ void WinMain::on_treeview_tasks_row_activated(const TreeModel::Path& path,
 
 void WinMain::on_button_del_task_clicked()
 {
-  std::vector<Gtk::TreePath> paths = trvTasks->get_selection()->get_selected_rows();
-  if(paths.size()){
-    Gtk::TreeRow row = Gtk::TreeRow(*treTasks->get_iter(*paths.begin()));
-
-    Task t((Glib::ustring)row[mdlColumn.id]);
-    t.destroy();
+  Task *t = get_current_task();
+  if(t){
+    t->destroy();
 
     load_tasks();
     hbxWorkOn->hide();

@@ -109,6 +109,7 @@ private:
   void load_tasks();
   void show_task();
   void notify(const char *message);
+  Task* get_current_task();
 
   // callback methods
   virtual void on_systray_activated();
