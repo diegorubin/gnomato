@@ -606,8 +606,8 @@
                 </child>
                 <child>
                   <object class="GtkFrame" id="frmWorkOn">
-                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="no_show_all">True</property>
                     <property name="label_xalign">0</property>
                     <property name="shadow_type">none</property>
                     <child>
@@ -622,8 +622,8 @@
                             <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkBox" id="hbxWorkOn">
+                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="no_show_all">True</property>
                                 <child>
                                   <object class="GtkLabel" id="lblTaskTitle">
                                     <property name="visible">True</property>
@@ -676,6 +676,7 @@
                       <object class="GtkLabel" id="lblWorkOn">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
                         <property name="label" translatable="yes">&lt;b&gt;Work On&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </object>

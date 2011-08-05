@@ -39,8 +39,9 @@ WinMain::WinMain(BaseObjectType* cobject,
   m_refGlade->get_widget("lblDisplay", lblDisplay);
   m_refGlade->get_widget("lblCycle", lblCycle);
   m_refGlade->get_widget("lblTaskTitle", lblTaskTitle);
+  m_refGlade->get_widget("lblPomodoros", lblPomodoros);
 
-  m_refGlade->get_widget("hbxWorkOn", hbxWorkOn);
+  m_refGlade->get_widget("frmWorkOn", frmWorkOn);
 
   m_refGlade->get_widget("btnStart", btnStart);
   m_refGlade->get_widget("btnRestart", btnRestart);
@@ -188,6 +189,18 @@ std::string WinMain::generate_cycle()
   return cycle;
 }
 
+void WinMain::generate_pomodoros()
+{
+  std::string pomodoros = "";
+  int i;
+
+  if(currentTask){
+    for(i = currentTask->get_pomodoros(); i >= 1; i--)
+      pomodoros.append("X ");
+  }
+  lblPomodoros->set_text(pomodoros);
+}
+
 void WinMain::load_tasks()
 {
   std::list<Task*> tasks = Task::all();
@@ -237,6 +250,14 @@ Task* WinMain::get_current_task()
   return NULL; 
 }
 
+void WinMain::inc_current_task()
+{
+  currentTask->set_pomodoros(currentTask->get_pomodoros()+1);
+  currentTask->save();
+
+  generate_pomodoros();
+}
+
 // callbacks implementations
 void WinMain::on_systray_activated()
 {
@@ -281,12 +302,13 @@ void WinMain::on_button_restart_clicked()
 
 void WinMain::on_button_finish_clicked()
 {
-  Task *t = get_current_task();
-  if(t){
-    t->finish();
+  if(currentTask){
+    currentTask->finish();
 
     load_tasks();
-    hbxWorkOn->hide();
+    frmWorkOn->hide();
+
+    currentTask = NULL;
   }
 
 }
@@ -305,18 +327,19 @@ void WinMain::on_treeview_tasks_row_activated(const TreeModel::Path& path,
   
     load_tasks();
   
-    hbxWorkOn->hide();
+    frmWorkOn->hide();
   }
 }
 
 void WinMain::on_button_del_task_clicked()
 {
-  Task *t = get_current_task();
-  if(t){
-    t->destroy();
+  if(currentTask){
+    currentTask->destroy();
 
     load_tasks();
-    hbxWorkOn->hide();
+    frmWorkOn->hide();
+
+    currentTask = NULL;
   }
 }
 
@@ -327,6 +350,7 @@ bool WinMain::on_timeout(int timer_number)
 
 	  if(cycle_number % 2){
       notify(_("Take a break"));
+      inc_current_task();
 	    if(cycle_number == 7)
         time_elapsed = atoi(configs.long_interval.c_str()) * 60;
       else
@@ -353,12 +377,11 @@ bool WinMain::on_timeout(int timer_number)
 
 void WinMain::on_cursor_changed()
 {
-  std::vector<Gtk::TreePath> paths = trvTasks->get_selection()->get_selected_rows();
-  if(paths.size()){
-    Gtk::TreeRow row = Gtk::TreeRow(*treTasks->get_iter(*paths.begin()));
-
-    lblTaskTitle->set_text((Glib::ustring)row[mdlColumn.title]);
-    hbxWorkOn->show();
+  currentTask = get_current_task();
+  if(currentTask){
+    lblTaskTitle->set_text(currentTask->get_name());
+    frmWorkOn->show();
+    generate_pomodoros();
   }
 }
 

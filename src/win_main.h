@@ -66,6 +66,8 @@ private:
 
   Config configs;
 
+  Task *currentTask;
+
   sigc::slot<bool> timer;
   sigc::connection timeout;
 
@@ -86,8 +88,9 @@ private:
   Label *lblDisplay;
   Label *lblCycle;
   Label *lblTaskTitle;
+  Label *lblPomodoros;
 
-  Box *hbxWorkOn;
+  Frame *frmWorkOn;
 
   TreeView *trvTasks;
 	ModelColumns mdlColumn;
@@ -106,10 +109,12 @@ private:
   // methods
   std::string generate_display();
   std::string generate_cycle();
+  void generate_pomodoros();
   void load_tasks();
   void show_task();
   void notify(const char *message);
   Task* get_current_task();
+  void inc_current_task();
 
   // callback methods
   virtual void on_systray_activated();
