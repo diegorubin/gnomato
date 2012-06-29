@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Gnomato
+GenericName=Gnomato timer
+Comment=Timer for pomodoro technique
+Exec=@prefix@/bin/gnomato
+Icon=@prefix@/share/gnomato/tomato.png
+Terminal=false
+Type=Application
+Categories=GNOME;GTK;Accessories;
