@@ -418,3 +418,8 @@ void WinMain::on_menu_help_about()
   abtDialog->hide();
 }
 
+Glib::ustring WinMain::get_current_time()
+{
+  return generate_display();
+}
+

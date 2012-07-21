@@ -43,6 +43,7 @@ public:
   virtual ~WinMain();
 
   void set_systray(Glib::RefPtr<Gtk::StatusIcon> tray);
+  Glib::ustring get_current_time();
 
 protected:
 
