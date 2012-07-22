@@ -37,6 +37,7 @@
 #include "utils.h"
 #include "win_main.h"
 #include "database.h"
+#include "dbus_client.h"
 
 
 sqlite3 *db;
@@ -62,7 +63,7 @@ static void on_method_call(const Glib::RefPtr<Gio::DBus::Connection>& /* connect
   const Glib::VariantContainerBase& parameters,
   const Glib::RefPtr<Gio::DBus::MethodInvocation>& invocation)
 {
-  if(method_name == "GetElapedTime")
+  if(method_name == "GetElapsedTime")
   {
     const Glib::Variant<Glib::ustring> time_var =
       Glib::Variant<Glib::ustring>::create(winMain->get_current_time());
@@ -223,11 +224,6 @@ int main(int argc, char **argv)
     sigc::ptr_fun(&on_bus_acquired),
     sigc::ptr_fun(&on_name_acquired),
     sigc::ptr_fun(&on_name_lost));
-
-    //Keep the service running until the process is killed:
-    // Glib::RefPtr<Glib::MainLoop> loop = Glib::MainLoop::create();
-    // loop->run();
-
 
     if(winMain)
     {

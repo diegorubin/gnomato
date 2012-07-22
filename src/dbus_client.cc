@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 /*!
-* utils.cc
+* dbus_client.cc
 * Copyright (C) Diego Rubin 2011 <rubin.diego@gmail.com>
 *
 * Gnomato is free software: you can redistribute it and/or modify it
@@ -20,29 +20,36 @@
 *
 */
 
-#include "utils.h"
+#include "dbus_client.h"
 
-const char* home()
+DbusClient::DbusClient(int argc, char **argv) 
 {
-  string file = getenv("HOME");
-  file.append("/.gnomato");
+  this->argc = argc;
+  this->argv = argv;
 
-  return file.c_str();
+  // Get the user session bus connection.
+  Glib::RefPtr<Gio::DBus::Connection> connection =
+    Gio::DBus::Connection::get_sync(Gio::DBus::BUS_TYPE_SESSION);
+
+  // Check for an unavailable connection.
+  if(!connection)
+  {
+    std::cerr << "The user's session bus is not available." << std::endl;
+    //return 1;
+  }
+
+  // Create the proxy to the bus asynchronously.
+  Gio::DBus::Proxy::create(connection, "com.diegorubin.Gnomato",
+    "/com/diegorubin/Gnomato", "com.diegorubin.Gnomato",
+    sigc::mem_fun(*this, &DbusClient::on_dbus_proxy_available));
+  
 }
 
-const char* dbfile()
+DbusClient::~DbusClient()
 {
-  string file = getenv("HOME");
-  file.append(DBPATH);
-  file.append("\0");
-
-  return file.c_str();
 }
 
-const char* cfgfile()
+void DbusClient::on_dbus_proxy_available(Glib::RefPtr<Gio::AsyncResult>& result)
 {
-  string file = getenv("HOME");
-  file.append(CFGPATH);
-
-  return file.c_str();
 }
+

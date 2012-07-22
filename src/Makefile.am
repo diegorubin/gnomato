@@ -19,6 +19,7 @@ gnomato_SOURCES = main.cc \
 									database.cc \
 									task.cc \
 									config.cc \
+									dbus_client.cc \
 									utils.cc
 
 gnomato_LDADD = ${Gnomato_LIBS}

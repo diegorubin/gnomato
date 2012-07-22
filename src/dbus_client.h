@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 /*!
-* utils.cc
+* dbus_client.h
 * Copyright (C) Diego Rubin 2011 <rubin.diego@gmail.com>
 *
 * Gnomato is free software: you can redistribute it and/or modify it
@@ -20,29 +20,27 @@
 *
 */
 
-#include "utils.h"
+#ifndef _DBUS_CLIENT_H_
+#define _DBUS_CLIENT_H_
 
-const char* home()
+#include <giomm.h>
+#include <glibmm.h>
+#include <iostream>
+
+using namespace std;
+
+class DbusClient
 {
-  string file = getenv("HOME");
-  file.append("/.gnomato");
+public:
+    DbusClient(int argc, char **argv);
+    virtual ~DbusClient();
 
-  return file.c_str();
-}
+private:
+    int argc;
+    char **argv;
 
-const char* dbfile()
-{
-  string file = getenv("HOME");
-  file.append(DBPATH);
-  file.append("\0");
+    void on_dbus_proxy_available(Glib::RefPtr<Gio::AsyncResult>& result);
+};
 
-  return file.c_str();
-}
+#endif //_DBUS_CLIENT_H_
 
-const char* cfgfile()
-{
-  string file = getenv("HOME");
-  file.append(CFGPATH);
-
-  return file.c_str();
-}
