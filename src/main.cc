@@ -49,7 +49,7 @@ static Glib::RefPtr<Gio::DBus::NodeInfo> introspection_data;
 static Glib::ustring introspection_xml =
   "<node>"
   "  <interface name='com.diegorubin.Gnomato'>"
-  "    <method name='GetCurrentTime'>"
+  "    <method name='GetElapsedTime'>"
   "      <arg type='s' name='iso8601' direction='out'/>"
   "    </method>"
   "  </interface>"
@@ -95,7 +95,7 @@ void on_bus_acquired(const Glib::RefPtr<Gio::DBus::Connection>& connection, cons
   // the repetition of the interface name:
   try
   {
-    registered_id = connection->register_object("/org/glibmm/DBus/TestObject",
+    registered_id = connection->register_object("/com/diegorubin/Gnomato",
       introspection_data->lookup_interface(),
       interface_vtable);
   }

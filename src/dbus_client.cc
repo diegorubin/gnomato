@@ -67,7 +67,7 @@ void DbusClient::on_dbus_proxy_available(Glib::RefPtr<Gio::AsyncResult>& result)
   {
     // The proxy's call method returns a tuple of the value(s) that the method
     // call produces so just get the tuple as a VariantContainerBase.
-    const Glib::VariantContainerBase result = proxy->call_sync("GetCurrentTime");
+    const Glib::VariantContainerBase result = proxy->call_sync("GetElapsedTime");
 
     // Now extract the single item in the variant container which is the
     // array of strings (the names).
