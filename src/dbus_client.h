@@ -40,6 +40,7 @@ private:
     char **argv;
 
     void on_dbus_proxy_available(Glib::RefPtr<Gio::AsyncResult>& result);
+    bool on_main_loop_idle();
 };
 
 #endif //_DBUS_CLIENT_H_

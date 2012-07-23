@@ -177,6 +177,7 @@ int main(int argc, char **argv)
 
   if(argc > 1) // command
   {
+    DbusClient *client = new DbusClient(argc, argv);
 
   }
   else // gui

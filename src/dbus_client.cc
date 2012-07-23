@@ -39,6 +39,7 @@ DbusClient::DbusClient(int argc, char **argv)
   }
 
   // Create the proxy to the bus asynchronously.
+  std::cout << "in client" << std::endl;
   Gio::DBus::Proxy::create(connection, "com.diegorubin.Gnomato",
     "/com/diegorubin/Gnomato", "com.diegorubin.Gnomato",
     sigc::mem_fun(*this, &DbusClient::on_dbus_proxy_available));
@@ -51,5 +52,44 @@ DbusClient::~DbusClient()
 
 void DbusClient::on_dbus_proxy_available(Glib::RefPtr<Gio::AsyncResult>& result)
 {
+  std::cout << "in callback" << std::endl;
+
+  Glib::RefPtr<Gio::DBus::Proxy> proxy = Gio::DBus::Proxy::create_finish(result);
+
+  if(!proxy)
+  {
+    std::cerr << "The proxy to the user's session bus was not successfully "
+      "created." << std::endl;
+    return;
+  }
+
+  try
+  {
+    // The proxy's call method returns a tuple of the value(s) that the method
+    // call produces so just get the tuple as a VariantContainerBase.
+    const Glib::VariantContainerBase result = proxy->call_sync("GetCurrentTime");
+
+    // Now extract the single item in the variant container which is the
+    // array of strings (the names).
+    Glib::Variant< std::vector<Glib::ustring> > names_variant;
+    result.get_child(names_variant);
+
+    // Get the vector of strings.
+    std::vector<Glib::ustring> names = names_variant.get();
+
+  }
+  catch(const Glib::Error& error)
+  {
+    std::cerr << "Got an error: '" << error.what() << "'." << std::endl;
+  }
+
+  // Connect an idle callback to the main loop to quit when the main loop is
+  // idle now that the method call is finished.
+  Glib::signal_idle().connect(sigc::mem_fun(*this, &DbusClient::on_main_loop_idle));
+}
+
+bool DbusClient::on_main_loop_idle()
+{
+  return false;
 }
 
