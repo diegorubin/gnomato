@@ -39,6 +39,8 @@ private:
     int argc;
     char **argv;
 
+    Glib::RefPtr<Glib::MainLoop> loop;
+
     void on_dbus_proxy_available(Glib::RefPtr<Gio::AsyncResult>& result);
     bool on_main_loop_idle();
 };

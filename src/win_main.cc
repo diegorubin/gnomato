@@ -30,6 +30,8 @@ WinMain::WinMain(BaseObjectType* cobject,
   lblDisplay(0)
   
 {
+  currentTask = 0;
+
   showed = false;
   started = false;
 
@@ -252,10 +254,12 @@ Task* WinMain::get_current_task()
 
 void WinMain::inc_current_task()
 {
-  currentTask->set_pomodoros(currentTask->get_pomodoros()+1);
-  currentTask->save();
+  if(currentTask) {
+    currentTask->set_pomodoros(currentTask->get_pomodoros()+1);
+    currentTask->save();
 
-  generate_pomodoros();
+    generate_pomodoros();
+  }
 }
 
 // callbacks implementations
@@ -308,7 +312,7 @@ void WinMain::on_button_finish_clicked()
     load_tasks();
     frmWorkOn->hide();
 
-    currentTask = NULL;
+    currentTask = 0;
   }
 
 }
@@ -421,5 +425,25 @@ void WinMain::on_menu_help_about()
 Glib::ustring WinMain::get_current_time()
 {
   return generate_display();
+}
+
+Glib::ustring WinMain::get_current_task_title()
+{
+  if(currentTask != 0) {
+    std::stringstream taskName;
+
+    taskName << currentTask->get_name(); 
+    taskName << " ( ";
+    taskName << currentTask->get_pomodoros();
+    taskName << " )";
+
+    return taskName.str();
+  } else
+    return "";
+}
+
+Glib::ustring WinMain::get_cycle()
+{
+  return generate_cycle();
 }
 

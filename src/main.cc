@@ -49,7 +49,13 @@ static Glib::RefPtr<Gio::DBus::NodeInfo> introspection_data;
 static Glib::ustring introspection_xml =
   "<node>"
   "  <interface name='com.diegorubin.Gnomato'>"
-  "    <method name='GetElapsedTime'>"
+  "    <method name='GetRemainer'>"
+  "      <arg type='s' name='iso8601' direction='out'/>"
+  "    </method>"
+  "    <method name='GetCurrentTask'>"
+  "      <arg type='s' name='iso8601' direction='out'/>"
+  "    </method>"
+  "    <method name='GetCycle'>"
   "      <arg type='s' name='iso8601' direction='out'/>"
   "    </method>"
   "  </interface>"
@@ -63,10 +69,32 @@ static void on_method_call(const Glib::RefPtr<Gio::DBus::Connection>& /* connect
   const Glib::VariantContainerBase& parameters,
   const Glib::RefPtr<Gio::DBus::MethodInvocation>& invocation)
 {
-  if(method_name == "GetElapsedTime")
+  if(method_name == "GetRemainer")
   {
     const Glib::Variant<Glib::ustring> time_var =
       Glib::Variant<Glib::ustring>::create(winMain->get_current_time());
+
+    Glib::VariantContainerBase response =
+      Glib::VariantContainerBase::create_tuple(time_var);
+
+    // Return the tuple with the included time.
+    invocation->return_value(response);
+  }
+  else if(method_name == "GetCurrentTask")
+  {
+    const Glib::Variant<Glib::ustring> time_var =
+      Glib::Variant<Glib::ustring>::create(winMain->get_current_task_title());
+
+    Glib::VariantContainerBase response =
+      Glib::VariantContainerBase::create_tuple(time_var);
+
+    // Return the tuple with the included time.
+    invocation->return_value(response);
+  }
+  else if(method_name == "GetCycle")
+  {
+    const Glib::Variant<Glib::ustring> time_var =
+      Glib::Variant<Glib::ustring>::create(winMain->get_cycle());
 
     Glib::VariantContainerBase response =
       Glib::VariantContainerBase::create_tuple(time_var);
@@ -172,9 +200,6 @@ int main(int argc, char **argv)
       exit(1);
   }
 
-  Gtk::Main kit(argc, argv);
-
-
   if(argc > 1) // command
   {
     DbusClient *client = new DbusClient(argc, argv);
@@ -182,6 +207,8 @@ int main(int argc, char **argv)
   }
   else // gui
   {
+
+    Gtk::Main kit(argc, argv);
 
     notify_init("Gnomato");
 
@@ -236,8 +263,9 @@ int main(int argc, char **argv)
 
     Gio::DBus::unown_name(id);
     delete winMain;
-    sqlite3_close(db);
   }
+  
+  sqlite3_close(db);
 
   return 0;
 }

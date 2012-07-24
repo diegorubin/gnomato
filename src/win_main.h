@@ -44,6 +44,8 @@ public:
 
   void set_systray(Glib::RefPtr<Gtk::StatusIcon> tray);
   Glib::ustring get_current_time();
+  Glib::ustring get_current_task_title();
+  Glib::ustring get_cycle();
 
 protected:
 

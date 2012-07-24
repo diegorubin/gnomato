@@ -27,6 +27,9 @@ DbusClient::DbusClient(int argc, char **argv)
   this->argc = argc;
   this->argv = argv;
 
+  Gio::init();
+  loop = Glib::MainLoop::create();
+
   // Get the user session bus connection.
   Glib::RefPtr<Gio::DBus::Connection> connection =
     Gio::DBus::Connection::get_sync(Gio::DBus::BUS_TYPE_SESSION);
@@ -35,14 +38,14 @@ DbusClient::DbusClient(int argc, char **argv)
   if(!connection)
   {
     std::cerr << "The user's session bus is not available." << std::endl;
-    //return 1;
   }
 
   // Create the proxy to the bus asynchronously.
-  std::cout << "in client" << std::endl;
   Gio::DBus::Proxy::create(connection, "com.diegorubin.Gnomato",
     "/com/diegorubin/Gnomato", "com.diegorubin.Gnomato",
     sigc::mem_fun(*this, &DbusClient::on_dbus_proxy_available));
+
+  loop->run();
   
 }
 
@@ -52,30 +55,27 @@ DbusClient::~DbusClient()
 
 void DbusClient::on_dbus_proxy_available(Glib::RefPtr<Gio::AsyncResult>& result)
 {
-  std::cout << "in callback" << std::endl;
-
   Glib::RefPtr<Gio::DBus::Proxy> proxy = Gio::DBus::Proxy::create_finish(result);
 
   if(!proxy)
   {
     std::cerr << "The proxy to the user's session bus was not successfully "
       "created." << std::endl;
+
+    loop->quit();
     return;
   }
 
   try
   {
-    // The proxy's call method returns a tuple of the value(s) that the method
-    // call produces so just get the tuple as a VariantContainerBase.
-    const Glib::VariantContainerBase result = proxy->call_sync("GetElapsedTime");
+    const Glib::VariantContainerBase result = proxy->call_sync(this->argv[1]);
 
-    // Now extract the single item in the variant container which is the
-    // array of strings (the names).
-    Glib::Variant< std::vector<Glib::ustring> > names_variant;
+    Glib::Variant<Glib::ustring> names_variant;
     result.get_child(names_variant);
 
-    // Get the vector of strings.
-    std::vector<Glib::ustring> names = names_variant.get();
+    Glib::ustring remainer = names_variant.get();
+
+    std::cout << remainer << std::endl;
 
   }
   catch(const Glib::Error& error)
@@ -83,13 +83,13 @@ void DbusClient::on_dbus_proxy_available(Glib::RefPtr<Gio::AsyncResult>& result)
     std::cerr << "Got an error: '" << error.what() << "'." << std::endl;
   }
 
-  // Connect an idle callback to the main loop to quit when the main loop is
-  // idle now that the method call is finished.
-  Glib::signal_idle().connect(sigc::mem_fun(*this, &DbusClient::on_main_loop_idle));
+  Glib::signal_idle().
+    connect(sigc::mem_fun(*this, &DbusClient::on_main_loop_idle));
 }
 
 bool DbusClient::on_main_loop_idle()
 {
+  loop->quit();
   return false;
 }
 
