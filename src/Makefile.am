@@ -20,6 +20,7 @@ gnomato_SOURCES = main.cc \
 									task.cc \
 									config.cc \
 									dbus_client.cc \
+									python_executor.cc \
 									utils.cc
 
 gnomato_LDADD = ${Gnomato_LIBS}

@@ -284,15 +284,28 @@ void WinMain::on_systray_popup(guint button, guint activate_time)
 
 void WinMain::on_button_start_clicked()
 {
+  PythonExecutor *pe;
+
   if(started){
     started = false;
     btnStart->set_label(_("Start"));
     timeout.disconnect();
+
+    // execute script
+    pe = new PythonExecutor("on_start.py");
+    pe->execute();
+
   }else{
     started = true;
     btnStart->set_label(_("Pause"));
     timeout = Glib::signal_timeout().connect(timer, 1000);
+
+    // execute script
+    pe = new PythonExecutor("on_pause.py");
+    pe->execute();
+
   }
+  delete(pe);
 }
 
 void WinMain::on_button_restart_clicked()

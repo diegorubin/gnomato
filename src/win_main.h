@@ -33,6 +33,8 @@
 #include "dialog_task.h"
 #include "dialog_preferences.h"
 #include "config.h"
+#include "utils.h"
+#include "python_executor.h"
 
 using namespace Gtk;
 
