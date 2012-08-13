@@ -381,6 +381,7 @@ bool WinMain::on_timeout(int timer_number)
       // execute script
       pe = new PythonExecutor("on_break.py");
       pe->execute(currentTask->get_name());
+      delete(pe);
 
       notify(_("Take a break"));
       inc_current_task();
@@ -394,6 +395,7 @@ bool WinMain::on_timeout(int timer_number)
       // execute script
       pe = new PythonExecutor("on_work.py");
       pe->execute(currentTask->get_name());
+      delete(pe);
 
       notify(_("End of break"));
 	    time_elapsed = atoi(configs.work_interval.c_str()) * 60;
@@ -412,7 +414,6 @@ bool WinMain::on_timeout(int timer_number)
   timeout.disconnect();
   timeout = Glib::signal_timeout().connect(timer, 1000);
 
-  delete(pe);
 }
 
 void WinMain::on_cursor_changed()
