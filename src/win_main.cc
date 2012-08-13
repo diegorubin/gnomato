@@ -292,8 +292,8 @@ void WinMain::on_button_start_clicked()
     timeout.disconnect();
 
     // execute script
-    pe = new PythonExecutor("on_start.py");
-    pe->execute();
+    pe = new PythonExecutor("on_pause.py");
+    pe->execute(currentTask->get_name());
 
   }else{
     started = true;
@@ -301,8 +301,8 @@ void WinMain::on_button_start_clicked()
     timeout = Glib::signal_timeout().connect(timer, 1000);
 
     // execute script
-    pe = new PythonExecutor("on_pause.py");
-    pe->execute();
+    pe = new PythonExecutor("on_start.py");
+    pe->execute(currentTask->get_name());
 
   }
   delete(pe);

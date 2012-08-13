@@ -37,7 +37,7 @@ class PythonExecutor
   virtual ~PythonExecutor();
 
   //methods
-  void execute();
+  void execute(string title_task);
 
   private:
 

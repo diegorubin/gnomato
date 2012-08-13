@@ -35,7 +35,7 @@ PythonExecutor::~PythonExecutor()
   Py_Finalize();
 }
 
-void PythonExecutor::execute()
+void PythonExecutor::execute(string title_task)
 {
   string python_script = home();
   python_script.append("/scripts/");
@@ -50,7 +50,7 @@ void PythonExecutor::execute()
   PyRun_SimpleFile(python, python_script.c_str());
 
   execute_function = PyDict_GetItemString(dict, "execute");
-  result = PyObject_CallFunction(execute_function, "");
+  result = PyObject_CallFunction(execute_function, "s", title_task.c_str());
 
 }
 
