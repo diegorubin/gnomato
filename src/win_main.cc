@@ -319,7 +319,14 @@ void WinMain::on_button_restart_clicked()
 
 void WinMain::on_button_finish_clicked()
 {
+  PythonExecutor *pe;
+
   if(currentTask){
+
+    // execute script
+    pe = new PythonExecutor("on_finish.py");
+    pe->execute(currentTask->get_name());
+
     currentTask->finish();
 
     load_tasks();
@@ -327,6 +334,8 @@ void WinMain::on_button_finish_clicked()
 
     currentTask = 0;
   }
+
+  delete(pe);
 
 }
 
@@ -362,10 +371,17 @@ void WinMain::on_button_del_task_clicked()
 
 bool WinMain::on_timeout(int timer_number)
 {
+  PythonExecutor *pe;
+
 	if(!time_elapsed){
 	  cycle_number++;
 
 	  if(cycle_number % 2){
+      
+      // execute script
+      pe = new PythonExecutor("on_break.py");
+      pe->execute(currentTask->get_name());
+
       notify(_("Take a break"));
       inc_current_task();
 	    if(cycle_number == 7)
@@ -374,6 +390,11 @@ bool WinMain::on_timeout(int timer_number)
         time_elapsed = atoi(configs.break_interval.c_str()) * 60;
     }
     else{
+
+      // execute script
+      pe = new PythonExecutor("on_work.py");
+      pe->execute(currentTask->get_name());
+
       notify(_("End of break"));
 	    time_elapsed = atoi(configs.work_interval.c_str()) * 60;
     }
@@ -390,16 +411,26 @@ bool WinMain::on_timeout(int timer_number)
  
   timeout.disconnect();
   timeout = Glib::signal_timeout().connect(timer, 1000);
+
+  delete(pe);
 }
 
 void WinMain::on_cursor_changed()
 {
+  PythonExecutor *pe;
+
   currentTask = get_current_task();
   if(currentTask){
+
+    // execute script
+    pe = new PythonExecutor("on_change_task.py");
+    pe->execute(currentTask->get_name());
+
     lblTaskTitle->set_text(currentTask->get_name());
     frmWorkOn->show();
     generate_pomodoros();
   }
+  delete(pe);
 }
 
 // callbacks implementations - menu
