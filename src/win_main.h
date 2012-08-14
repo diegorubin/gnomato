@@ -120,6 +120,7 @@ private:
   void notify(const char *message);
   Task* get_current_task();
   void inc_current_task();
+  void execute(string script);
 
   // callback methods
   virtual void on_systray_activated();

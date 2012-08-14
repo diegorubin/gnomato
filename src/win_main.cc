@@ -262,6 +262,15 @@ void WinMain::inc_current_task()
   }
 }
 
+void WinMain::execute(string script)
+{
+  if(currentTask) {
+    PythonExecutor *pe = new PythonExecutor(script);
+    pe->execute(currentTask->get_name());
+    if(pe != NULL) delete(pe);
+  }
+}
+
 // callbacks implementations
 void WinMain::on_systray_activated()
 {
@@ -284,28 +293,22 @@ void WinMain::on_systray_popup(guint button, guint activate_time)
 
 void WinMain::on_button_start_clicked()
 {
-  PythonExecutor *pe;
 
   if(started){
     started = false;
     btnStart->set_label(_("Start"));
     timeout.disconnect();
 
-    // execute script
-    pe = new PythonExecutor("on_pause.py");
-    pe->execute(currentTask->get_name());
+    execute("on_pause.py");
 
   }else{
     started = true;
     btnStart->set_label(_("Pause"));
     timeout = Glib::signal_timeout().connect(timer, 1000);
 
-    // execute script
-    pe = new PythonExecutor("on_start.py");
-    pe->execute(currentTask->get_name());
+    execute("on_start.py");
 
   }
-  delete(pe);
 }
 
 void WinMain::on_button_restart_clicked()
@@ -319,13 +322,9 @@ void WinMain::on_button_restart_clicked()
 
 void WinMain::on_button_finish_clicked()
 {
-  PythonExecutor *pe;
-
   if(currentTask){
 
-    // execute script
-    pe = new PythonExecutor("on_finish.py");
-    pe->execute(currentTask->get_name());
+    execute("on_finish.py");
 
     currentTask->finish();
 
@@ -334,8 +333,6 @@ void WinMain::on_button_finish_clicked()
 
     currentTask = 0;
   }
-
-  delete(pe);
 
 }
 
@@ -371,17 +368,13 @@ void WinMain::on_button_del_task_clicked()
 
 bool WinMain::on_timeout(int timer_number)
 {
-  PythonExecutor *pe;
 
 	if(!time_elapsed){
 	  cycle_number++;
 
 	  if(cycle_number % 2){
       
-      // execute script
-      pe = new PythonExecutor("on_break.py");
-      pe->execute(currentTask->get_name());
-      delete(pe);
+      execute("on_break.py");
 
       notify(_("Take a break"));
       inc_current_task();
@@ -392,10 +385,7 @@ bool WinMain::on_timeout(int timer_number)
     }
     else{
 
-      // execute script
-      pe = new PythonExecutor("on_work.py");
-      pe->execute(currentTask->get_name());
-      delete(pe);
+      execute("on_work.py");
 
       notify(_("End of break"));
 	    time_elapsed = atoi(configs.work_interval.c_str()) * 60;
@@ -418,20 +408,16 @@ bool WinMain::on_timeout(int timer_number)
 
 void WinMain::on_cursor_changed()
 {
-  PythonExecutor *pe;
 
   currentTask = get_current_task();
   if(currentTask){
 
-    // execute script
-    pe = new PythonExecutor("on_change_task.py");
-    pe->execute(currentTask->get_name());
+    execute("on_change_task.py");
 
     lblTaskTitle->set_text(currentTask->get_name());
     frmWorkOn->show();
     generate_pomodoros();
   }
-  delete(pe);
 }
 
 // callbacks implementations - menu
