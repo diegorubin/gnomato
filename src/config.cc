@@ -27,6 +27,7 @@ Config::Config()
     work_interval = "25";
     break_interval = "5";
     long_interval = "15";
+    wunderlist_token = "";
     
     config_file = cfgfile();
 
@@ -55,6 +56,7 @@ bool Config::save()
     file << "[work_interval]" << work_interval << "\n";
     file << "[break_interval]" << break_interval << "\n";
     file << "[long_interval]" << long_interval << "\n";
+    file << "[wunderlist_token]" << wunderlist_token << "\n";
 
     file.close();
     return true;
@@ -107,5 +109,6 @@ void Config::set_value(ATTR attr, VALUE value)
     if(!strcmp(attr,"work_interval")) work_interval = value;
     if(!strcmp(attr,"break_interval")) break_interval = value;
     if(!strcmp(attr,"long_interval")) long_interval = value;
+    if(!strcmp(attr,"wunderlist_token")) wunderlist_token = value;
 }
 

@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 /*!
-* config.h
+* wunderlist.cc
 * Copyright (C) Diego Rubin 2011 <rubin.diego@gmail.com>
 *
 * Gnomato is free software: you can redistribute it and/or modify it
@@ -20,51 +20,4 @@
 *
 */
 
-#ifndef _CONFIG_H_
-#define _CONFIG_H_
-
-#include <iostream>
-#include <fstream>
-#include <stdlib.h>
-#include <string.h>
-
-#include "utils.h"
-
-enum tokens {
-    T_BEGIN_ATTR = '[',
-    T_END_ATTR = ']',
-    T_END_VALUE = '\n'
-};
-
-typedef char ATTR[255];
-typedef char VALUE[10000];
-
-using namespace std;
-
-class Config
-{
-public:
-    Config();
-    Config(string config_file);
-    virtual ~Config();
-
-    string config_file;
-
-    // preferences attributes
-    string work_interval;
-    string break_interval;
-    string long_interval;
-
-    string wunderlist_token;
-
-    // parse methods
-    bool save();
-    bool load();
-
-private:
-    void set_value(ATTR attr, VALUE value);
-    bool config_file_exists();
-};
-
-#endif //_CONFIG_H_
-
+#include "wunderlist.h"
