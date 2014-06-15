@@ -21,3 +21,19 @@
 */
 
 #include "wunderlist.h"
+
+Wunderlist::Wunderlist()
+{
+}
+
+Wunderlist::~Wunderlist()
+{
+}
+
+string Wunderlist::auth(string email, string password)
+{
+  string token = "";
+
+  return token;
+}
+

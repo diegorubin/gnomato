@@ -20,3 +20,25 @@
 *
 */
 
+#ifndef _WUNDERLIST_H_
+#define _WUNDERLIST_H_
+
+#include <iostream>
+#include <Python.h>
+
+using namespace std;
+
+class Wunderlist
+{
+
+  public:
+  Wunderlist();
+  virtual ~Wunderlist();
+
+  //methods
+  string auth(string email, string password);
+
+};
+
+#endif // _WUNDERLIST_H_
+
