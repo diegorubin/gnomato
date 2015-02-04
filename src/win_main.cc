@@ -67,6 +67,11 @@ WinMain::WinMain(BaseObjectType* cobject,
   timer = sigc::bind(sigc::mem_fun(*this,
               &WinMain::on_timeout), 0);
 
+  // inactive_timer
+  inactive_timer = sigc::bind(sigc::mem_fun(*this,
+              &WinMain::on_inactive_timeout), 0);
+  Glib::signal_timeout().connect(inactive_timer, 60000);
+
   // connect signals
   btnStart->signal_clicked().
             connect(sigc::mem_fun(*this, &WinMain::on_button_start_clicked));
@@ -403,6 +408,17 @@ bool WinMain::on_timeout(int timer_number)
  
   timeout.disconnect();
   timeout = Glib::signal_timeout().connect(timer, 1000);
+
+}
+
+bool WinMain::on_inactive_timeout(int timer_number)
+{
+
+  if(!currentTask) {
+    notify(_("are you not doing anything?"));
+  }
+  // wait one minute
+  Glib::signal_timeout().connect(inactive_timer, 600000);
 
 }
 

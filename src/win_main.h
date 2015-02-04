@@ -73,8 +73,13 @@ private:
 
   Task *currentTask;
 
+  // For pomodoro
   sigc::slot<bool> timer;
   sigc::connection timeout;
+
+  // For inactive
+  sigc::slot<bool> inactive_timer;
+  sigc::connection check_inactive;
 
   Glib::RefPtr<Gtk::Builder> m_refGlade;
 
@@ -132,6 +137,7 @@ private:
                                                TreeViewColumn* column);
   virtual void on_button_del_task_clicked();
   virtual bool on_timeout(int timer_number);
+  virtual bool on_inactive_timeout(int timer_number);
   virtual void on_cursor_changed();
 
   // callback methods - menu
