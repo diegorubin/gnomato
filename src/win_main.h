@@ -38,6 +38,8 @@
 
 using namespace Gtk;
 
+const int MINUTE_IN_SECONDS = 60000;
+
 class WinMain: public Gtk::Window
 {
 public:

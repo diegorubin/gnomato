@@ -47,6 +47,7 @@ private:
   SpinButton *spnWork;
   SpinButton *spnShortBreak;
   SpinButton *spnLongBreak;
+  SpinButton *spnInactiveInterval;
   
   Glib::RefPtr<Gtk::Builder> m_refGlade;
 

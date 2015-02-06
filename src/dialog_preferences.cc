@@ -37,9 +37,11 @@ DialogPreferences::DialogPreferences(BaseObjectType* cobject,
   m_refGlade->get_widget("spnWork", spnWork);
   m_refGlade->get_widget("spnShortBreak", spnShortBreak);
   m_refGlade->get_widget("spnLongBreak", spnLongBreak);
+  m_refGlade->get_widget("spnInactiveInterval", spnInactiveInterval);
   spnWork->set_value(atoi(this->configs.work_interval.c_str()));
   spnShortBreak->set_value(atoi(this->configs.break_interval.c_str()));
   spnLongBreak->set_value(atoi(this->configs.long_interval.c_str()));
+  spnInactiveInterval->set_value(atoi(this->configs.inactive_interval.c_str()));
 
   // connect signals
   btnCancel->signal_clicked().connect(sigc::mem_fun(*this,&DialogPreferences::on_button_cancel_clicked));
@@ -62,6 +64,7 @@ void DialogPreferences::on_button_ok_clicked()
   configs.work_interval = spnWork->get_text();
   configs.break_interval = spnShortBreak->get_text();
   configs.long_interval = spnLongBreak->get_text();
+  configs.inactive_interval = spnInactiveInterval->get_text();
   
   configs.save();
   hide();

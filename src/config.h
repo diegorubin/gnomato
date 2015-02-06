@@ -54,6 +54,7 @@ public:
     string work_interval;
     string break_interval;
     string long_interval;
+    string inactive_interval;
 
     string wunderlist_token;
 

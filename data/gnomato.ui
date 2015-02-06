@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.16.1 -->
+<!-- Generated with glade 3.18.3 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
   <object class="GtkDialog" id="DialogTask">
@@ -98,6 +98,13 @@
     </action-widgets>
   </object>
   <object class="GtkAction" id="action1"/>
+  <object class="GtkAdjustment" id="adjInactiveInterval">
+    <property name="lower">1</property>
+    <property name="upper">100</property>
+    <property name="value">1</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">5</property>
+  </object>
   <object class="GtkAdjustment" id="adjLongBreak">
     <property name="lower">1</property>
     <property name="upper">99</property>
@@ -191,8 +198,6 @@
                   <packing>
                     <property name="left_attach">0</property>
                     <property name="top_attach">2</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
                   </packing>
                 </child>
                 <child>
@@ -204,8 +209,6 @@
                   <packing>
                     <property name="left_attach">0</property>
                     <property name="top_attach">1</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
                   </packing>
                 </child>
                 <child>
@@ -217,8 +220,6 @@
                   <packing>
                     <property name="left_attach">0</property>
                     <property name="top_attach">0</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
                   </packing>
                 </child>
                 <child>
@@ -231,8 +232,6 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="top_attach">0</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
                   </packing>
                 </child>
                 <child>
@@ -245,8 +244,6 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="top_attach">1</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
                   </packing>
                 </child>
                 <child>
@@ -259,8 +256,6 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="top_attach">2</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
                   </packing>
                 </child>
                 <child>
@@ -278,8 +273,6 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="top_attach">0</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
                   </packing>
                 </child>
                 <child>
@@ -297,8 +290,6 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="top_attach">1</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
                   </packing>
                 </child>
                 <child>
@@ -315,8 +306,46 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="top_attach">2</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="lblInactiveInterval">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Show message inactive in:</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">0</property>
+                    <property name="top_attach">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="lblMinutesInactive">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">minutes</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">2</property>
+                    <property name="top_attach">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="spnInactiveInterval">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="invisible_char">●</property>
+                    <property name="text" translatable="yes">1</property>
+                    <property name="progress_pulse_step">1</property>
+                    <property name="adjustment">adjInactiveInterval</property>
+                    <property name="climb_rate">1</property>
+                    <property name="snap_to_ticks">True</property>
+                    <property name="update_policy">if-valid</property>
+                    <property name="value">1</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">3</property>
                   </packing>
                 </child>
               </object>
@@ -344,8 +373,6 @@
                   <packing>
                     <property name="left_attach">0</property>
                     <property name="top_attach">0</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
                   </packing>
                 </child>
                 <child>
@@ -356,8 +383,6 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="top_attach">0</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
                   </packing>
                 </child>
                 <child>
@@ -369,8 +394,6 @@
                   <packing>
                     <property name="left_attach">0</property>
                     <property name="top_attach">1</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
                   </packing>
                 </child>
                 <child>
@@ -383,8 +406,6 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="top_attach">1</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
                   </packing>
                 </child>
               </object>
@@ -873,6 +894,7 @@
     <property name="website">http://diegorubin.com</property>
     <property name="website_label" translatable="yes">Gnomato Website</property>
     <property name="authors">Diego Rubin </property>
+    <property name="logo_icon_name">image-missing</property>
     <property name="license_type">gpl-2-0</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="aboutdialog-vbox1">
