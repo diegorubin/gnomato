@@ -415,7 +415,6 @@ bool WinMain::on_timeout(int timer_number)
 
 bool WinMain::on_inactive_timeout(int timer_number)
 {
-  std::cout << "on_inactive_timeout:" << configs.inactive_interval.c_str() << std::endl;
   if(!(currentTask && started)) {
     notify(_("are you not doing anything?"));
   }
