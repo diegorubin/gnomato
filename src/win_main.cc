@@ -70,7 +70,8 @@ WinMain::WinMain(BaseObjectType* cobject,
   // inactive_timer
   inactive_timer = sigc::bind(sigc::mem_fun(*this,
               &WinMain::on_inactive_timeout), 0);
-  Glib::signal_timeout().
+
+  check_inactive = Glib::signal_timeout().
     connect(inactive_timer, atoi(configs.inactive_interval.c_str()) * MINUTE_IN_SECONDS);
 
   // connect signals
@@ -414,13 +415,14 @@ bool WinMain::on_timeout(int timer_number)
 
 bool WinMain::on_inactive_timeout(int timer_number)
 {
-
+  std::cout << "on_inactive_timeout:" << configs.inactive_interval.c_str() << std::endl;
   if(!(currentTask && started)) {
     notify(_("are you not doing anything?"));
   }
-  Glib::signal_timeout().
-    connect(inactive_timer, atoi(configs.inactive_interval.c_str()) * MINUTE_IN_SECONDS);
 
+  check_inactive.disconnect();
+  check_inactive = Glib::signal_timeout().
+    connect(inactive_timer, atoi(configs.inactive_interval.c_str()) * MINUTE_IN_SECONDS);
 }
 
 void WinMain::on_cursor_changed()
