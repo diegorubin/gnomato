@@ -20,54 +20,42 @@
 *
 */
 
-#ifndef _TASK_H_
-#define _TASK_H_
+#ifndef _TASK_LIST_H_
+#define _TASK_LIST_H_
 
 #include "database.h"
-#include "task_list.h"
 #include <list>
 
-class Task : public Database {
+class TaskList : public Database {
 public:
-  Task();
-  Task(std::string id);
-  virtual ~Task();
+  TaskList();
+  TaskList(std::string id);
+  virtual ~TaskList();
 
   //methods
   bool create();
   bool save();
   bool destroy();
-  bool finish();
 
   //setters
   void set_id(std::string id);
   void set_name(std::string value);
-  void set_pomodoros(int value);
-  void set_done(int value);
-  void set_task_list_id(std::string value);
 
   //getters
   std::string get_id();
   std::string get_name();
-  int get_pomodoros();
-  int get_done();
-  std::string get_task_list_id();
-  TaskList get_task_list();
 
-  static std::list<Task*> all();
+  static std::list<TaskList*> all();
     
 private:
   // attributes
   std::string id;
   std::string name;
-  std::string task_list_id;
-  int pomodoros;
-  int done;
   
 };
 
 static int load(void *NotUsed, int argc, char **argv, char **azColName);
 bool execute_query(char query[1000]);
 
-#endif //_TASK_H_
+#endif //_TASK_LIST_H_
 
