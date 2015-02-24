@@ -45,7 +45,7 @@ Task::Task(std::string id)
   this->id = tasks_aux.front()->get_id();
   this->name = tasks_aux.front()->get_name();
   this->name = tasks_aux.front()->get_name();
-  this->task_list_id = tasks_aux.front()->get_name();
+  this->list = tasks_aux.front()->get_name();
   this->pomodoros = tasks_aux.front()->get_pomodoros();
   this->done = tasks_aux.front()->get_done();
 }
@@ -57,7 +57,7 @@ Task::~Task()
 bool Task::create()
 {
   char sql[500];
-  sprintf(sql, INSERT_TASK, name.c_str(), pomodoros, task_list_id.c_str(), done);
+  sprintf(sql, INSERT_TASK, name.c_str(), pomodoros, list.c_str(), done);
   
   return execute_query(sql);
 }
@@ -74,7 +74,7 @@ bool Task::save()
 {
   char sql[500];
   sprintf(sql, UPDATE_TASK, name.c_str(), pomodoros, 
-    task_list_id.c_str(), done, id.c_str());
+    list.c_str(), done, id.c_str());
 
   return execute_query(sql);
 }
@@ -106,9 +106,9 @@ void Task::set_done(int value)
   done = value; 
 }
 
-void Task::set_task_list_id(std::string value)
+void Task::set_list(std::string value)
 {
-  task_list_id = value; 
+  list = value; 
 }
 
 // getters
@@ -132,9 +132,9 @@ int Task::get_done()
   return done;
 }
 
-std::string Task::get_task_list_id()
+std::string Task::get_list()
 {
-  return task_list_id;
+  return list;
 }
 
 std::list<Task*> Task::all()
@@ -173,7 +173,7 @@ load (void *NotUsed, int argc, char **argv, char **azColName)
   task_aux->set_name(argv[1] ? argv[1] : "");
   task_aux->set_pomodoros(argv[2] ? atoi(argv[2]) : 0);
   task_aux->set_done(argv[3] ? atoi(argv[3]) : 0);
-  task_aux->set_task_list_id(argv[4] ? argv[4] : "");
+  task_aux->set_list(argv[4] ? argv[4] : "");
 
   tasks_aux.push_back(task_aux);
 

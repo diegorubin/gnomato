@@ -24,7 +24,6 @@
 #define _TASK_H_
 
 #include "database.h"
-#include "task_list.h"
 #include <list>
 
 class Task : public Database {
@@ -44,15 +43,14 @@ public:
   void set_name(std::string value);
   void set_pomodoros(int value);
   void set_done(int value);
-  void set_task_list_id(std::string value);
+  void set_list(std::string value);
 
   //getters
   std::string get_id();
   std::string get_name();
   int get_pomodoros();
   int get_done();
-  std::string get_task_list_id();
-  TaskList get_task_list();
+  std::string get_list();
 
   static std::list<Task*> all();
     
@@ -60,7 +58,7 @@ private:
   // attributes
   std::string id;
   std::string name;
-  std::string task_list_id;
+  std::string list;
   int pomodoros;
   int done;
   

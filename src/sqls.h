@@ -30,7 +30,7 @@
                            name VARCHAR(200), \
                            pomodoros INTEGER, \
                            done INTEGER, \
-                           task_list_id INTEGER, \
+                           list VARCHAR(200), \
                            primary key(id)\
                          )"
 
@@ -43,14 +43,14 @@
                         ( \
                           name,\
                           pomodoros,\
-                          task_list_id,\
+                          list,\
                           done \
                         )\
                       VALUES \
                         (\
                           '%s',\
                            %d, \
-                           %s,\
+                           '%s',\
                            %d \
                          );"
 
@@ -59,41 +59,13 @@
                      SET \
                        name = '%s', \
                        pomodoros = %d,\
-                       task_list_id = %s,\
+                       list = '%s',\
                        done = %d \
                      WHERE \
                        id = %s;"
 
 #define DELETE_TASK "DELETE FROM Task WHERE id = %s;"
 
-#define CREATE_TASK_LIST "CREATE TABLE \
-                       TaskList \
-                         (\
-                           id INTEGER, \
-                           name VARCHAR(200), \
-                           primary key(id)\
-                         )"
-
-#define SELECT_TASK_LIST "SELECT * FROM TaskList WHERE id = %s;"
-
-#define INSERT_TASK_LIST "INSERT INTO \
-                      TaskList \
-                        ( \
-                          name\
-                        )\
-                      VALUES \
-                        (\
-                          '%s'\
-                         );"
-
-#define UPDATE_TASK_LIST "UPDATE \
-                       Task \
-                     SET \
-                       name = '%s' \
-                     WHERE \
-                       id = %s;"
-
-#define DELETE_TASK_LIST "DELETE FROM TaskList WHERE id = %s;"
-
+#define SELECT_ALL_TASK_LIST "SELECT list FROM Task WHERE done = 0 GROUP BY list;"
 
 #endif //_SQLS_

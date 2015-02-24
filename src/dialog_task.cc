@@ -32,6 +32,7 @@ DialogTask::DialogTask(BaseObjectType* cobject,
   m_refGlade->get_widget("btnTaskCancel", btnCancel);
 
   m_refGlade->get_widget("entTaskName", entName);
+  m_refGlade->get_widget("entTaskList", entList);
 
   // connect signals
   btnCancel->signal_clicked().
@@ -59,24 +60,29 @@ void DialogTask::set_id(std::string value)
   Task t(id);
 
   entName->set_text(t.get_name());
+  entList->set_text(t.get_list());
 }
 
 void DialogTask::on_button_cancel_clicked()
 {
   id = "";
   entName->set_text("");
+  entList->set_text("");
   hide();
 }
 
 void DialogTask::on_button_ok_clicked()
 {
+  // [TODO] - Refactor, many repetitions
   if(id == ""){
     task = new Task();
     task->set_name(entName->get_text().c_str());
+    task->set_list(entList->get_text().c_str());
     task->create();
   }else{
     task = new Task(id);
     task->set_name(entName->get_text().c_str());
+    task->set_list(entList->get_text().c_str());
     task->save();
   }
 
@@ -84,5 +90,6 @@ void DialogTask::on_button_ok_clicked()
 
   id = "";
   entName->set_text("");
+  entList->set_text("");
 }
 
