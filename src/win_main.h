@@ -107,12 +107,16 @@ private:
   TreeView *trvTasks;
 	ModelColumns mdlColumn;
 
+  ComboBox *cmbLists;
+	ModelColumns mdlLists;
+
   Glib::RefPtr<StatusIcon> systray;
   Glib::RefPtr<Gtk::UIManager> mnuSystray;
 
   Glib::RefPtr<ActionGroup> actMenu;
   Glib::RefPtr<Action> mnuIniciar;
   Glib::RefPtr<ListStore> treTasks;
+  Glib::RefPtr<ListStore> treLists;
 
   //dialogs
   DialogTask *dlgTask;
@@ -122,6 +126,7 @@ private:
   std::string generate_display();
   std::string generate_cycle();
   void generate_pomodoros();
+  void load_lists();
   void load_tasks();
   void show_task();
   void notify(const char *message);

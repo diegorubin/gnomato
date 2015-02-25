@@ -52,7 +52,7 @@ public:
   int get_done();
   std::string get_list();
 
-  static std::list<Task*> all();
+  static std::list<Task*> all(std::string list);
     
 private:
   // attributes

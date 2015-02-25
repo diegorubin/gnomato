@@ -36,7 +36,7 @@
 
 #define SELECT_TASK "SELECT * FROM Task WHERE id = %s;"
 
-#define SELECT_ALL_TASK "SELECT * FROM Task WHERE done = 0;" 
+#define SELECT_ALL_TASK "SELECT * FROM Task WHERE done = 0 AND list = '%s';" 
 
 #define INSERT_TASK "INSERT INTO \
                       Task \

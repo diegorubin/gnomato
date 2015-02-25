@@ -137,12 +137,12 @@ std::string Task::get_list()
   return list;
 }
 
-std::list<Task*> Task::all()
+std::list<Task*> Task::all(std::string list)
 {
   tasks_aux.clear();
 
   char sql[500];
-  sprintf(sql, SELECT_ALL_TASK);
+  sprintf(sql, SELECT_ALL_TASK, list.c_str());
   execute_query(sql);
 
   return tasks_aux;
