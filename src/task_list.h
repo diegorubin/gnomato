@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 /*!
-* database.cc
-* Copyright (C) Diego Rubin 2011 <rubin.diego@gmail.com>
+* task_list.h
+* Copyright (C) Diego Rubin 2015 <rubin.diego@gmail.com>
 *
 * Gnomato is free software: you can redistribute it and/or modify it
 * under the terms of the GNU General Public License as published by the
@@ -20,29 +20,35 @@
 *
 */
 
+#ifndef _TASK_LIST_H_
+#define _TASK_LIST_H_
+
 #include "database.h"
+#include <list>
 
+class TaskList : public Database {
+public:
+  TaskList();
+  virtual ~TaskList();
 
-Database::Database()
-{
-}
+  //setters
+  void set_id(std::string id);
+  void set_name(std::string value);
 
-Database::~Database()
-{
-}
+  //getters
+  std::string get_id();
+  std::string get_name();
 
-bool Database::execute_query(char query[1000], int (*callback)(void*,int,char**,char**))
-{
-  int rc;
-  char *cError = 0;
-
-  rc = sqlite3_exec(db, query, callback, 0, &cError);
-  if(rc != SQLITE_OK){
-    std::cerr << "Sqlite3: " << cError << std::endl;
-    sqlite3_free(cError);
-    return false;
-  }
+  static std::list<TaskList*> all();
+    
+private:
+  // attributes
+  std::string id;
+  std::string name;
   
-  return true;
-}
+};
+
+static int load_task_list(void *NotUsed, int argc, char **argv, char **azColName);
+
+#endif //_TASK_LIST_H_
 

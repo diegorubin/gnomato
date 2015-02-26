@@ -219,11 +219,13 @@ void WinMain::load_lists()
 {
   treLists->clear();
 
+  std::list<TaskList*> lists = TaskList::all();
   while(!lists.empty()){
     Gtk::TreeModel::Row row = *(treLists->append());
 
-    row[mdlColumn.id] = lists.front()->get_id();
-    row[mdlColumn.title] = lists.front()->get_title();
+    // [TODO] - change per position in list?
+    //row[mdlColumn.id] = lists.front()->get_id();
+    row[mdlColumn.title] = lists.front()->get_name();
 
     lists.pop_front();
   }

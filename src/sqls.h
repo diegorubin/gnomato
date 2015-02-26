@@ -66,6 +66,6 @@
 
 #define DELETE_TASK "DELETE FROM Task WHERE id = %s;"
 
-#define SELECT_ALL_TASK_LIST "SELECT list FROM Task WHERE done = 0 GROUP BY list;"
+#define SELECT_ALL_TASK_LISTS "SELECT list FROM Task WHERE done = 0 GROUP BY list ORDER BY list;"
 
 #endif //_SQLS_

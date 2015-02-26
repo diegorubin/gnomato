@@ -64,8 +64,7 @@ private:
   
 };
 
-static int load(void *NotUsed, int argc, char **argv, char **azColName);
-bool execute_query(char query[1000]);
+static int load_task(void *NotUsed, int argc, char **argv, char **azColName);
 
 #endif //_TASK_H_
 

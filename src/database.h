@@ -36,8 +36,12 @@ extern sqlite3 *db;
 
 class Database {
 public:
-    Database();
-    virtual ~Database();
+  Database();
+  virtual ~Database();
+
+protected:
+
+  static bool execute_query(char query[1000], int (*callback)(void*,int,char**,char**));
 
 };
 

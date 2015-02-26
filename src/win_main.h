@@ -30,6 +30,7 @@
 #include <sstream>
 
 #include "task.h"
+#include "task_list.h"
 #include "dialog_task.h"
 #include "dialog_preferences.h"
 #include "config.h"

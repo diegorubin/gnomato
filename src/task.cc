@@ -23,29 +23,24 @@
 #include "task.h"
 
 std::list<Task*> tasks_aux;
-char *cError = 0;
 
 Task::Task()
 {
   pomodoros = 0;
   done = 0;
-  
-  cError = 0;
 }
 
 Task::Task(std::string id)
 {
-  cError = 0;
   tasks_aux.clear();
 
   char sql[500];
   sprintf(sql, SELECT_TASK, id.c_str());
-  execute_query(sql);
+  execute_query(sql, load_task);
    
   this->id = tasks_aux.front()->get_id();
   this->name = tasks_aux.front()->get_name();
-  this->name = tasks_aux.front()->get_name();
-  this->list = tasks_aux.front()->get_name();
+  this->list = tasks_aux.front()->get_list();
   this->pomodoros = tasks_aux.front()->get_pomodoros();
   this->done = tasks_aux.front()->get_done();
 }
@@ -59,7 +54,7 @@ bool Task::create()
   char sql[500];
   sprintf(sql, INSERT_TASK, name.c_str(), pomodoros, list.c_str(), done);
   
-  return execute_query(sql);
+  return execute_query(sql, load_task);
 }
 
 bool Task::destroy()
@@ -67,7 +62,7 @@ bool Task::destroy()
   char sql[500];
   sprintf(sql, DELETE_TASK, id.c_str());
   
-  return execute_query(sql);
+  return execute_query(sql, load_task);
 }
 
 bool Task::save()
@@ -76,7 +71,7 @@ bool Task::save()
   sprintf(sql, UPDATE_TASK, name.c_str(), pomodoros, 
     list.c_str(), done, id.c_str());
 
-  return execute_query(sql);
+  return execute_query(sql, load_task);
 }
 
 bool Task::finish()
@@ -143,28 +138,12 @@ std::list<Task*> Task::all(std::string list)
 
   char sql[500];
   sprintf(sql, SELECT_ALL_TASK, list.c_str());
-  execute_query(sql);
+  execute_query(sql, load_task);
 
   return tasks_aux;
 }
 
-bool execute_query(char query[1000])
-{
-  int rc;
-
-  rc = sqlite3_exec(db, query, load, 0, &cError);
-  if(rc != SQLITE_OK){
-    std::cerr << "Sqlite3: " << cError << std::endl;
-    sqlite3_free(cError);
-    return false;
-  }
-  
-  return true;
-}
-
-
-static int
-load (void *NotUsed, int argc, char **argv, char **azColName)
+static int load_task(void *NotUsed, int argc, char **argv, char **azColName)
 {
 
   Task *task_aux = new Task();
