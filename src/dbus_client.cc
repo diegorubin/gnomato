@@ -93,3 +93,28 @@ bool DbusClient::on_main_loop_idle()
   return false;
 }
 
+bool DbusClient::check_if_running(char **argv)
+{
+
+  char **new_argv;
+
+  new_argv = (char **) malloc(2);
+
+  new_argv[0] = (char *) malloc(strlen(argv[0]));
+  strcpy(new_argv[0], argv[0]);
+
+  new_argv[1] = (char *) malloc(strlen("ShowWindow"));
+  strcpy(new_argv[1], "ShowWindow");
+
+  try
+  {
+    DbusClient *client = new DbusClient(2, new_argv);
+  }
+  catch(const Glib::Error& error)
+  {
+    return false;
+  }
+
+  free(new_argv);
+}
+

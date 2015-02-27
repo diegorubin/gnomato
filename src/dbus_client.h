@@ -26,6 +26,7 @@
 #include <giomm.h>
 #include <glibmm.h>
 #include <iostream>
+#include <string.h>
 
 using namespace std;
 
@@ -34,6 +35,8 @@ class DbusClient
 public:
     DbusClient(int argc, char **argv);
     virtual ~DbusClient();
+
+    static bool check_if_running(char **argv);
 
 private:
     int argc;

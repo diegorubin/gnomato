@@ -58,6 +58,8 @@ static Glib::ustring introspection_xml =
   "    <method name='GetCycle'>"
   "      <arg type='s' name='iso8601' direction='out'/>"
   "    </method>"
+  "    <method name='ShowWindow'>"
+  "    </method>"
   "  </interface>"
   "</node>";
 
@@ -101,6 +103,10 @@ static void on_method_call(const Glib::RefPtr<Gio::DBus::Connection>& /* connect
 
     // Return the tuple with the included time.
     invocation->return_value(response);
+  }
+  else if(method_name == "ShowWindow")
+  {
+    winMain->force_show();
   }
   else
   {
@@ -207,6 +213,8 @@ int main(int argc, char **argv)
   }
   else // gui
   {
+
+    if(DbusClient::check_if_running(argv)) return 0;
 
     Gtk::Main kit(argc, argv);
 
