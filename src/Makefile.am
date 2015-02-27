@@ -18,6 +18,7 @@ gnomato_SOURCES = main.cc \
 									dialog_task.cc \
 									database.cc \
 									task.cc \
+									task_list.cc \
 									config.cc \
 									dbus_client.cc \
 									python_executor.cc \

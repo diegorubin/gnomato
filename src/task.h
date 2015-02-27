@@ -43,26 +43,30 @@ public:
   void set_name(std::string value);
   void set_pomodoros(int value);
   void set_done(int value);
+  void set_list(std::string value);
 
   //getters
   std::string get_id();
   std::string get_name();
   int get_pomodoros();
   int get_done();
+  std::string get_list();
 
   static std::list<Task*> all();
+  static std::list<Task*> all(std::string list);
+  static std::list<Task*> all_by_sql(char *sql);
     
 private:
   // attributes
   std::string id;
   std::string name;
+  std::string list;
   int pomodoros;
   int done;
   
 };
 
-static int load(void *NotUsed, int argc, char **argv, char **azColName);
-bool execute_query(char query[1000]);
+static int load_task(void *NotUsed, int argc, char **argv, char **azColName);
 
 #endif //_TASK_H_
 

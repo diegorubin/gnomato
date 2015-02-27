@@ -47,6 +47,7 @@ private:
   Button *btnCancel;
 
   Entry *entName;
+  Entry *entList;
 
   Task *task;
   Glib::RefPtr<Gtk::Builder> m_refGlade;

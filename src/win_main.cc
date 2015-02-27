@@ -52,6 +52,7 @@ WinMain::WinMain(BaseObjectType* cobject,
   m_refGlade->get_widget("btnFinish", btnFinish);
   
   m_refGlade->get_widget("trvTasks", trvTasks);
+  m_refGlade->get_widget("cmbLists", cmbLists);
 
   m_refGlade->get_widget("mnuNew", mnuNew);
   m_refGlade->get_widget("mnuQuit", mnuQuit);
@@ -96,6 +97,9 @@ WinMain::WinMain(BaseObjectType* cobject,
   trvTasks->signal_cursor_changed().
             connect(sigc::mem_fun(*this, &WinMain::on_cursor_changed));
 
+  cmbLists->signal_changed().
+    connect(sigc::mem_fun(*this, &WinMain::on_list_changed));
+
   // connect menu
   mnuNew->signal_activate().
             connect(sigc::mem_fun(*this, &WinMain::on_menu_file_new_task));
@@ -106,6 +110,7 @@ WinMain::WinMain(BaseObjectType* cobject,
   mnuAbout->signal_activate().
             connect(sigc::mem_fun(*this, &WinMain::on_menu_help_about));
 
+  load_lists();
   load_tasks();
 
 	show_all_children();
@@ -210,9 +215,32 @@ void WinMain::generate_pomodoros()
   lblPomodoros->set_text(pomodoros);
 }
 
+void WinMain::load_lists()
+{
+
+  cmbLists->remove_all();
+
+  lists = TaskList::all();
+  while(!lists.empty()){
+    cmbLists->append(lists.front()->get_name());
+    lists.pop_front();
+  }
+}
+
 void WinMain::load_tasks()
 {
-  std::list<Task*> tasks = Task::all();
+  std::list<Task*> tasks;
+  Gtk::TreeModel::iterator iter = cmbLists->get_active();
+
+  if(iter) {
+    Gtk::TreeModel::Row row = *iter;
+    if(row) {
+      tasks = Task::all(cmbLists->get_active_text().c_str());
+    }
+  }
+
+  if(tasks.empty()) tasks = Task::all();
+  
   treTasks->clear();
   trvTasks->remove_all_columns();
 
@@ -335,6 +363,7 @@ void WinMain::on_button_finish_clicked()
 
     currentTask->finish();
 
+    load_lists();
     load_tasks();
     frmWorkOn->hide();
 
@@ -355,6 +384,7 @@ void WinMain::on_treeview_tasks_row_activated(const TreeModel::Path& path,
     dlgTask->set_id((Glib::ustring)row[mdlColumn.id]);
     dlgTask->run();
   
+    load_lists();
     load_tasks();
   
     frmWorkOn->hide();
@@ -366,6 +396,7 @@ void WinMain::on_button_del_task_clicked()
   if(currentTask){
     currentTask->destroy();
 
+    load_lists();
     load_tasks();
     frmWorkOn->hide();
 
@@ -438,6 +469,11 @@ void WinMain::on_cursor_changed()
   }
 }
 
+void WinMain::on_list_changed()
+{
+  load_tasks();
+}
+
 // callbacks implementations - menu
 void WinMain::on_menu_file_new_task()
 {
@@ -446,6 +482,7 @@ void WinMain::on_menu_file_new_task()
   m_refGlade->get_widget_derived("DialogTask",dlgTask);
   dlgTask->run();
 
+  load_lists();
   load_tasks();
 }
 

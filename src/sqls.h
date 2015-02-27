@@ -30,6 +30,7 @@
                            name VARCHAR(200), \
                            pomodoros INTEGER, \
                            done INTEGER, \
+                           list VARCHAR(200), \
                            primary key(id)\
                          )"
 
@@ -37,17 +38,21 @@
 
 #define SELECT_ALL_TASK "SELECT * FROM Task WHERE done = 0;" 
 
+#define SELECT_ALL_TASK_BY_LIST "SELECT * FROM Task WHERE done = 0 AND list = '%s';" 
+
 #define INSERT_TASK "INSERT INTO \
                       Task \
                         ( \
                           name,\
                           pomodoros,\
+                          list,\
                           done \
                         )\
                       VALUES \
                         (\
                           '%s',\
                            %d, \
+                           '%s',\
                            %d \
                          );"
 
@@ -56,10 +61,13 @@
                      SET \
                        name = '%s', \
                        pomodoros = %d,\
+                       list = '%s',\
                        done = %d \
                      WHERE \
                        id = %s;"
 
 #define DELETE_TASK "DELETE FROM Task WHERE id = %s;"
+
+#define SELECT_ALL_TASK_LISTS "SELECT list FROM Task WHERE done = 0 GROUP BY list ORDER BY list;"
 
 #endif //_SQLS_
