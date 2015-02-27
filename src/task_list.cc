@@ -59,7 +59,7 @@ static int load_task_list(void *NotUsed, int argc, char **argv, char **azColName
 {
 
   TaskList *task_list_aux = new TaskList();
-  task_list_aux->set_name(argv[1] ? argv[1] : "");
+  task_list_aux->set_name(argv[0] ? argv[0] : "");
   task_lists_aux.push_back(task_list_aux);
 
   return 0;

@@ -56,14 +56,14 @@ protected:
 
 private:
 
-	class ModelColumns : public Gtk::TreeModel::ColumnRecord
-	{
-	public:
-	   ModelColumns()
-	   { add(id); add(title); }
-	   Gtk::TreeModelColumn< Glib::ustring > id;
-	   Gtk::TreeModelColumn< Glib::ustring > title;
-	};
+  class ModelColumns : public Gtk::TreeModel::ColumnRecord
+  {
+  public:
+     ModelColumns()
+     { add(id); add(title); }
+     Gtk::TreeModelColumn<Glib::ustring> id;
+     Gtk::TreeModelColumn<Glib::ustring> title;
+  };
 
   // attributes
   bool showed;
@@ -75,6 +75,7 @@ private:
   Config configs;
 
   Task *currentTask;
+  std::list<TaskList*> lists;
 
   // For pomodoro
   sigc::slot<bool> timer;
@@ -106,10 +107,9 @@ private:
   Frame *frmWorkOn;
 
   TreeView *trvTasks;
-	ModelColumns mdlColumn;
+  ModelColumns mdlColumn;
 
-  ComboBox *cmbLists;
-	ModelColumns mdlLists;
+  ComboBoxText *cmbLists;
 
   Glib::RefPtr<StatusIcon> systray;
   Glib::RefPtr<Gtk::UIManager> mnuSystray;
@@ -117,7 +117,6 @@ private:
   Glib::RefPtr<ActionGroup> actMenu;
   Glib::RefPtr<Action> mnuIniciar;
   Glib::RefPtr<ListStore> treTasks;
-  Glib::RefPtr<ListStore> treLists;
 
   //dialogs
   DialogTask *dlgTask;
@@ -147,6 +146,7 @@ private:
   virtual bool on_timeout(int timer_number);
   virtual bool on_inactive_timeout(int timer_number);
   virtual void on_cursor_changed();
+  virtual void on_list_changed();
 
   // callback methods - menu
   virtual void on_menu_file_new_task();

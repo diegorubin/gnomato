@@ -62,9 +62,6 @@ WinMain::WinMain(BaseObjectType* cobject,
   treTasks = Gtk::ListStore::create(mdlColumn);
   trvTasks->set_model(treTasks);
 
-  treLists = Gtk::ListStore::create(mdlLists);
-  cmbLists->set_model(treLists);
-
   on_button_restart_clicked();
 
   // timer
@@ -99,6 +96,9 @@ WinMain::WinMain(BaseObjectType* cobject,
 
   trvTasks->signal_cursor_changed().
             connect(sigc::mem_fun(*this, &WinMain::on_cursor_changed));
+
+  cmbLists->signal_changed().
+    connect(sigc::mem_fun(*this, &WinMain::on_list_changed));
 
   // connect menu
   mnuNew->signal_activate().
@@ -217,16 +217,12 @@ void WinMain::generate_pomodoros()
 
 void WinMain::load_lists()
 {
-  treLists->clear();
 
-  std::list<TaskList*> lists = TaskList::all();
+  cmbLists->remove_all();
+
+  lists = TaskList::all();
   while(!lists.empty()){
-    Gtk::TreeModel::Row row = *(treLists->append());
-
-    // [TODO] - change per position in list?
-    //row[mdlColumn.id] = lists.front()->get_id();
-    row[mdlColumn.title] = lists.front()->get_name();
-
+    cmbLists->append(lists.front()->get_name());
     lists.pop_front();
   }
 }
@@ -239,12 +235,11 @@ void WinMain::load_tasks()
   if(iter) {
     Gtk::TreeModel::Row row = *iter;
     if(row) {
-      Glib::ustring title = row[mdlLists.title];
-      tasks = Task::all(title.c_str());
+      tasks = Task::all(cmbLists->get_active_text().c_str());
     }
   }
 
-  if(tasks.empty()) tasks = Task::all("");
+  if(tasks.empty()) tasks = Task::all();
   
   treTasks->clear();
   trvTasks->remove_all_columns();
@@ -472,6 +467,11 @@ void WinMain::on_cursor_changed()
     frmWorkOn->show();
     generate_pomodoros();
   }
+}
+
+void WinMain::on_list_changed()
+{
+  load_tasks();
 }
 
 // callbacks implementations - menu

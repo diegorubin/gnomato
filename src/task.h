@@ -52,7 +52,9 @@ public:
   int get_done();
   std::string get_list();
 
+  static std::list<Task*> all();
   static std::list<Task*> all(std::string list);
+  static std::list<Task*> all_by_sql(char *sql);
     
 private:
   // attributes

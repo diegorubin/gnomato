@@ -32,18 +32,15 @@ public:
   virtual ~TaskList();
 
   //setters
-  void set_id(std::string id);
   void set_name(std::string value);
 
   //getters
-  std::string get_id();
   std::string get_name();
 
   static std::list<TaskList*> all();
     
 private:
   // attributes
-  std::string id;
   std::string name;
   
 };
