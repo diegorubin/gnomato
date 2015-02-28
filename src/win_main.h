@@ -47,6 +47,7 @@ public:
   WinMain(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
   virtual ~WinMain();
 
+  void force_show();
   void set_systray(Glib::RefPtr<Gtk::StatusIcon> tray);
   Glib::ustring get_current_time();
   Glib::ustring get_current_task_title();

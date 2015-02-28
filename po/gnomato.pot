@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-05 16:37-0300\n"
+"POT-Creation-Date: 2015-02-28 11:35-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,67 +18,67 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../data/gnomato.ui.h:1
-msgid "00:00"
+msgid "List:"
 msgstr ""
 
 #: ../data/gnomato.ui.h:2
-msgid "<b>Tasks</b>"
-msgstr ""
-
-#: ../data/gnomato.ui.h:3
-msgid "<b>Work On</b>"
-msgstr ""
-
-#: ../data/gnomato.ui.h:4
-msgid "<i>minutes</i>"
-msgstr ""
-
-#: ../data/gnomato.ui.h:5
-msgid "Finish"
-msgstr ""
-
-#: ../data/gnomato.ui.h:6
-msgid "Gnomato"
-msgstr ""
-
-#: ../data/gnomato.ui.h:7
-msgid "Gnomato Website"
-msgstr ""
-
-#: ../data/gnomato.ui.h:8
-msgid "Intervals"
-msgstr ""
-
-#: ../data/gnomato.ui.h:9
-msgid "Long Break:"
-msgstr ""
-
-#: ../data/gnomato.ui.h:10
 msgid "Name:"
 msgstr ""
 
-#: ../data/gnomato.ui.h:11
+#: ../data/gnomato.ui.h:3
 msgid "Preferences - Gnomato"
 msgstr ""
 
-#: ../data/gnomato.ui.h:12
-msgid "Restart"
+#: ../data/gnomato.ui.h:4
+msgid "Long Break:"
 msgstr ""
 
-#: ../data/gnomato.ui.h:13
+#: ../data/gnomato.ui.h:5
 msgid "Short Break:"
 msgstr ""
 
-#: ../data/gnomato.ui.h:14 ../src/win_main.cc:247
-msgid "Start"
+#: ../data/gnomato.ui.h:6
+msgid "Work:"
+msgstr ""
+
+#: ../data/gnomato.ui.h:7
+msgid "<i>minutes</i>"
+msgstr ""
+
+#: ../data/gnomato.ui.h:8
+msgid "Show message inactive in:"
+msgstr ""
+
+#: ../data/gnomato.ui.h:9
+msgid "minutes"
+msgstr ""
+
+#: ../data/gnomato.ui.h:10
+msgid "1"
+msgstr ""
+
+#: ../data/gnomato.ui.h:11
+msgid "Intervals"
+msgstr ""
+
+#: ../data/gnomato.ui.h:12
+msgid "Email:"
+msgstr ""
+
+#: ../data/gnomato.ui.h:13
+msgid "Password:"
+msgstr ""
+
+#: ../data/gnomato.ui.h:14
+msgid "Wunderlist"
 msgstr ""
 
 #: ../data/gnomato.ui.h:15
-msgid "W - B - W - B - W - B - W - LB"
+msgid "_File"
 msgstr ""
 
 #: ../data/gnomato.ui.h:16
-msgid "Work:"
+msgid "_New Task"
 msgstr ""
 
 #: ../data/gnomato.ui.h:17
@@ -86,71 +86,107 @@ msgid "_Edit"
 msgstr ""
 
 #: ../data/gnomato.ui.h:18
-msgid "_File"
-msgstr ""
-
-#: ../data/gnomato.ui.h:19
 msgid "_Help"
 msgstr ""
 
-#: ../data/gnomato.ui.h:20
-msgid "_New Task"
+#: ../data/gnomato.ui.h:19
+msgid "00:00"
 msgstr ""
 
-#: ../src/main.cc:54
+#: ../data/gnomato.ui.h:20
+msgid "W - B - W - B - W - B - W - LB"
+msgstr ""
+
+#: ../data/gnomato.ui.h:21 ../src/win_main.cc:340
+msgid "Start"
+msgstr ""
+
+#: ../data/gnomato.ui.h:22
+msgid "Restart"
+msgstr ""
+
+#: ../data/gnomato.ui.h:23
+msgid "Cancel"
+msgstr ""
+
+#: ../data/gnomato.ui.h:24
+msgid "Finish"
+msgstr ""
+
+#: ../data/gnomato.ui.h:25
+msgid "<b>Work On</b>"
+msgstr ""
+
+#: ../data/gnomato.ui.h:26
+msgid "<b>Tasks</b>"
+msgstr ""
+
+#: ../data/gnomato.ui.h:27
+msgid "Gnomato"
+msgstr ""
+
+#: ../data/gnomato.ui.h:28
+msgid "Gnomato Website"
+msgstr ""
+
+#: ../src/main.cc:174
 msgid "Creating database"
 msgstr ""
 
-#: ../src/main.cc:66
+#: ../src/main.cc:186
 msgid "Database successfully created "
 msgstr ""
 
-#: ../src/main.cc:91
+#: ../src/main.cc:211
 msgid "Could not open the database. Error: "
 msgstr ""
 
-#: ../src/win_main.cc:109
+#: ../src/win_main.cc:130
 msgid "Start/Pause"
 msgstr ""
 
 #. break
-#: ../src/win_main.cc:167 ../src/win_main.cc:176
+#: ../src/win_main.cc:188 ../src/win_main.cc:197
 msgid "W -"
 msgstr ""
 
-#: ../src/win_main.cc:168
+#: ../src/win_main.cc:189
 msgid "<span color=\"red\"><b>LB</b></span>"
 msgstr ""
 
-#: ../src/win_main.cc:169
+#: ../src/win_main.cc:190
 msgid "<span color=\"red\"><b>B</b></span> -"
 msgstr ""
 
 #. pomodoro
-#: ../src/win_main.cc:171
+#: ../src/win_main.cc:192
 msgid "<span color=\"green\"><b>W</b></span> -"
 msgstr ""
 
-#: ../src/win_main.cc:172 ../src/win_main.cc:177
+#: ../src/win_main.cc:193 ../src/win_main.cc:198
 msgid "LB"
 msgstr ""
 
-#: ../src/win_main.cc:173 ../src/win_main.cc:178
+#: ../src/win_main.cc:194 ../src/win_main.cc:199
 msgid "B -"
 msgstr ""
 
-#: ../src/win_main.cc:201
+#: ../src/win_main.cc:257
 msgid "Title"
 msgstr ""
 
-#: ../src/win_main.cc:251
+#: ../src/win_main.cc:347
 msgid "Pause"
 msgstr ""
 
-#: ../src/win_main.cc:301
+#: ../src/win_main.cc:423
 msgid "Take a break"
 msgstr ""
 
-#: ../src/win_main.cc:308
+#: ../src/win_main.cc:434
 msgid "End of break"
+msgstr ""
+
+#: ../src/win_main.cc:456
+msgid "are you not doing anything?"
 msgstr ""

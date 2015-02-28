@@ -276,6 +276,12 @@ void WinMain::notify(const char *message)
   notify_notification_show(notMessage,&error);
 }
 
+void WinMain::force_show()
+{
+  showed = true;
+  show();
+}
+
 Task* WinMain::get_current_task()
 {
   std::vector<Gtk::TreePath> paths = trvTasks->get_selection()->get_selected_rows();

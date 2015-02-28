@@ -1,3 +1,5 @@
 [type: gettext/glade]data/gnomato.ui
 src/main.cc
 src/win_main.cc
+src/dialog_preferences.cc
+src/dialog_task.cc
