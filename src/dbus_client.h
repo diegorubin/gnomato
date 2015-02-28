@@ -33,14 +33,19 @@ using namespace std;
 class DbusClient
 {
 public:
+    static const char *SHOW_WINDOW_SERVICE;
+
     DbusClient(int argc, char **argv);
     virtual ~DbusClient();
+
+    bool get_last_call_success();
 
     static bool check_if_running(char **argv);
 
 private:
     int argc;
     char **argv;
+    bool last_call_success;
 
     Glib::RefPtr<Glib::MainLoop> loop;
 

@@ -59,6 +59,7 @@ static Glib::ustring introspection_xml =
   "      <arg type='s' name='iso8601' direction='out'/>"
   "    </method>"
   "    <method name='ShowWindow'>"
+  "      <arg type='s' name='iso8601' direction='out'/>"
   "    </method>"
   "  </interface>"
   "</node>";
@@ -79,7 +80,6 @@ static void on_method_call(const Glib::RefPtr<Gio::DBus::Connection>& /* connect
     Glib::VariantContainerBase response =
       Glib::VariantContainerBase::create_tuple(time_var);
 
-    // Return the tuple with the included time.
     invocation->return_value(response);
   }
   else if(method_name == "GetCurrentTask")
@@ -90,7 +90,6 @@ static void on_method_call(const Glib::RefPtr<Gio::DBus::Connection>& /* connect
     Glib::VariantContainerBase response =
       Glib::VariantContainerBase::create_tuple(time_var);
 
-    // Return the tuple with the included time.
     invocation->return_value(response);
   }
   else if(method_name == "GetCycle")
@@ -101,12 +100,19 @@ static void on_method_call(const Glib::RefPtr<Gio::DBus::Connection>& /* connect
     Glib::VariantContainerBase response =
       Glib::VariantContainerBase::create_tuple(time_var);
 
-    // Return the tuple with the included time.
     invocation->return_value(response);
   }
   else if(method_name == "ShowWindow")
   {
+
+    const Glib::Variant<Glib::ustring> vector =
+      Glib::Variant<Glib::ustring>::create("");
+
+    Glib::VariantContainerBase response =
+      Glib::VariantContainerBase::create_tuple(vector);
+
     winMain->force_show();
+    invocation->return_value(response);
   }
   else
   {

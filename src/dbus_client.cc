@@ -22,6 +22,7 @@
 
 #include "dbus_client.h"
 
+const char *DbusClient::SHOW_WINDOW_SERVICE = "ShowWindow";
 DbusClient::DbusClient(int argc, char **argv) 
 {
   this->argc = argc;
@@ -76,15 +77,22 @@ void DbusClient::on_dbus_proxy_available(Glib::RefPtr<Gio::AsyncResult>& result)
     Glib::ustring remainer = names_variant.get();
 
     std::cout << remainer << std::endl;
+    last_call_success = true;
 
   }
   catch(const Glib::Error& error)
   {
+    last_call_success = false;
     std::cerr << "Got an error: '" << error.what() << "'." << std::endl;
   }
 
   Glib::signal_idle().
     connect(sigc::mem_fun(*this, &DbusClient::on_main_loop_idle));
+}
+
+bool DbusClient::get_last_call_success()
+{
+  return last_call_success;
 }
 
 bool DbusClient::on_main_loop_idle()
@@ -96,25 +104,14 @@ bool DbusClient::on_main_loop_idle()
 bool DbusClient::check_if_running(char **argv)
 {
 
-  char **new_argv;
-
-  new_argv = (char **) malloc(2);
+  char *new_argv[2];
 
   new_argv[0] = (char *) malloc(strlen(argv[0]));
   strcpy(new_argv[0], argv[0]);
 
-  new_argv[1] = (char *) malloc(strlen("ShowWindow"));
-  strcpy(new_argv[1], "ShowWindow");
+  new_argv[1] = strdup(DbusClient::SHOW_WINDOW_SERVICE);
 
-  try
-  {
-    DbusClient *client = new DbusClient(2, new_argv);
-  }
-  catch(const Glib::Error& error)
-  {
-    return false;
-  }
-
-  free(new_argv);
+  DbusClient *client = new DbusClient(2, new_argv);
+  return client->get_last_call_success();
 }
 
