@@ -416,6 +416,7 @@ bool WinMain::on_timeout(int timer_number)
 	if(!time_elapsed){
 	  cycle_number++;
 
+    std::cout << "cycle_number: " << cycle_number << std::endl;
 	  if(cycle_number % 2){
       
       execute("on_break.py");
@@ -437,8 +438,7 @@ bool WinMain::on_timeout(int timer_number)
 
     lblCycle->set_markup(generate_cycle());
 
-	  if(cycle_number == 7)
-      cycle_number = 0;
+	  if(cycle_number == 7) cycle_number = -1;
   
   }
 
