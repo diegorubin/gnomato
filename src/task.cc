@@ -22,6 +22,8 @@
 
 #include "task.h"
 
+const int SQL_SIZE = 2048;
+
 std::list<Task*> tasks_aux;
 
 Task::Task()
@@ -34,7 +36,7 @@ Task::Task(std::string id)
 {
   tasks_aux.clear();
 
-  char sql[500];
+  char sql[SQL_SIZE];
   sprintf(sql, SELECT_TASK, id.c_str());
   execute_query(sql, load_task);
    
@@ -51,7 +53,7 @@ Task::~Task()
 
 bool Task::create()
 {
-  char sql[500];
+  char sql[SQL_SIZE];
   sprintf(sql, INSERT_TASK, name.c_str(), pomodoros, list.c_str(), done);
   
   return execute_query(sql, load_task);
@@ -59,7 +61,7 @@ bool Task::create()
 
 bool Task::destroy()
 {
-  char sql[500];
+  char sql[SQL_SIZE];
   sprintf(sql, DELETE_TASK, id.c_str());
   
   return execute_query(sql, load_task);
@@ -67,7 +69,7 @@ bool Task::destroy()
 
 bool Task::save()
 {
-  char sql[500];
+  char sql[SQL_SIZE];
   sprintf(sql, UPDATE_TASK, name.c_str(), pomodoros, 
     list.c_str(), done, id.c_str());
 
@@ -134,14 +136,14 @@ std::string Task::get_list()
 
 std::list<Task*> Task::all()
 {
-  char sql[500];
+  char sql[SQL_SIZE];
   sprintf(sql, SELECT_ALL_TASK);
   return all_by_sql(sql);
 }
 
 std::list<Task*> Task::all(std::string list)
 {
-  char sql[500];
+  char sql[SQL_SIZE];
   sprintf(sql, SELECT_ALL_TASK_BY_LIST, list.c_str());
   return all_by_sql(sql);
 }

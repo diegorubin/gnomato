@@ -38,6 +38,7 @@ public:
 
   //methods
   void set_id(std::string value);
+  void set_list(std::string value);
 
 private:
 

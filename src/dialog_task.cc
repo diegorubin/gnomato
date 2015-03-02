@@ -31,8 +31,11 @@ DialogTask::DialogTask(BaseObjectType* cobject,
   m_refGlade->get_widget("btnTaskOk", btnOk);
   m_refGlade->get_widget("btnTaskCancel", btnCancel);
 
+  // entries
   m_refGlade->get_widget("entTaskName", entName);
   m_refGlade->get_widget("entTaskList", entList);
+  
+  entList->grab_focus();
 
   // connect signals
   btnCancel->signal_clicked().
@@ -61,6 +64,14 @@ void DialogTask::set_id(std::string value)
 
   entName->set_text(t.get_name());
   entList->set_text(t.get_list());
+}
+
+void DialogTask::set_list(std::string value)
+{
+  if(entList->get_text().empty() && !value.empty()) {
+    entList->set_text(value);
+    entName->grab_focus();
+  }
 }
 
 void DialogTask::on_button_cancel_clicked()

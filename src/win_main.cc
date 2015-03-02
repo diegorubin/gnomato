@@ -217,7 +217,7 @@ void WinMain::generate_pomodoros()
 
 void WinMain::load_lists()
 {
-
+  Glib::ustring previous = cmbLists->get_active_text();
   cmbLists->remove_all();
 
   lists = TaskList::all();
@@ -225,6 +225,8 @@ void WinMain::load_lists()
     cmbLists->append(lists.front()->get_name());
     lists.pop_front();
   }
+
+  cmbLists->set_active_text(previous);
 }
 
 void WinMain::load_tasks()
@@ -486,6 +488,7 @@ void WinMain::on_menu_file_new_task()
   DialogTask *dlgTask = 0;
 
   m_refGlade->get_widget_derived("DialogTask",dlgTask);
+  dlgTask->set_list(cmbLists->get_active_text());
   dlgTask->run();
 
   load_lists();
