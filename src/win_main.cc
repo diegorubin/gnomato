@@ -309,7 +309,7 @@ void WinMain::execute(string script)
 {
   if(currentTask) {
     PythonExecutor *pe = new PythonExecutor(script);
-    pe->execute(currentTask->get_name());
+    pe->execute(cmbLists->get_active_text(), currentTask->get_name());
     if(pe != NULL) delete(pe);
   }
 }
