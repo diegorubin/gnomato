@@ -44,6 +44,7 @@ sqlite3 *db;
 char dbpath[1000];
 WinMain* winMain;
 
+// [TODO] - Remove logic of dbus to a class.
 static Glib::RefPtr<Gio::DBus::NodeInfo> introspection_data;
 
 static Glib::ustring introspection_xml =
