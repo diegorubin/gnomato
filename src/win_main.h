@@ -29,6 +29,8 @@
 #include <iostream>
 #include <sstream>
 
+#include "boost/date_time/posix_time/posix_time.hpp" 
+
 #include "task.h"
 #include "task_list.h"
 #include "dialog_task.h"
@@ -38,6 +40,7 @@
 #include "python_executor.h"
 
 using namespace Gtk;
+using namespace boost::posix_time;
 
 const int MINUTE_IN_SECONDS = 60000;
 
@@ -104,6 +107,7 @@ private:
   Label *lblCycle;
   Label *lblTaskTitle;
   Label *lblPomodoros;
+  Label *lblNotification;
 
   Frame *frmWorkOn;
 
@@ -134,6 +138,7 @@ private:
   Task* get_current_task();
   void inc_current_task();
   void execute(string script);
+  void set_notification(string notification);
 
   // callback methods
   virtual void on_systray_activated();

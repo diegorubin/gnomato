@@ -25,5 +25,6 @@ gnomato_SOURCES = main.cc \
 									wunderlist.cc \
 									utils.cc
 
-gnomato_LDADD = ${Gnomato_LIBS}
+# [TODO] - Add boost in configure.ac
+gnomato_LDADD = ${Gnomato_LIBS} -lboost_date_time
 
