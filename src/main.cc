@@ -62,6 +62,11 @@ static Glib::ustring introspection_xml =
   "    <method name='ShowWindow'>"
   "      <arg type='s' name='iso8601' direction='out'/>"
   "    </method>"
+  "    <method name='CreateTask'>"
+  "      <arg type='s' name='iso8601' direction='in'/>"
+  "      <arg type='s' name='iso8601' direction='in'/>"
+  "      <arg type='s' name='iso8601' direction='out'/>"
+  "    </method>"
   "  </interface>"
   "</node>";
 
@@ -113,6 +118,31 @@ static void on_method_call(const Glib::RefPtr<Gio::DBus::Connection>& /* connect
       Glib::VariantContainerBase::create_tuple(vector);
 
     winMain->force_show();
+    invocation->return_value(response);
+  }
+  else if(method_name == "CreateTask")
+  {
+    Glib::Variant<Glib::ustring> param;
+    parameters.get_child(param);
+
+    // Get the time string.
+    const Glib::ustring list_name = param.get();
+    const Glib::ustring task = param.get();
+
+    Task t;
+    t.set_list(list_name);
+    t.set_name(task);
+    t.create();
+
+    winMain->load_lists();
+    winMain->load_tasks();
+
+    const Glib::Variant<Glib::ustring> vector =
+      Glib::Variant<Glib::ustring>::create("");
+
+    Glib::VariantContainerBase response =
+      Glib::VariantContainerBase::create_tuple(vector);
+
     invocation->return_value(response);
   }
   else
