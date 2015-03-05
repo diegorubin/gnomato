@@ -51,7 +51,10 @@ public:
   virtual ~WinMain();
 
   void force_show();
+  void load_lists();
+  void load_tasks();
   void set_systray(Glib::RefPtr<Gtk::StatusIcon> tray);
+
   Glib::ustring get_current_time();
   Glib::ustring get_current_task_title();
   Glib::ustring get_cycle();
@@ -131,8 +134,6 @@ private:
   std::string generate_display();
   std::string generate_cycle();
   void generate_pomodoros();
-  void load_lists();
-  void load_tasks();
   void show_task();
   void notify(const char *message);
   Task* get_current_task();
