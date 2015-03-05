@@ -38,6 +38,7 @@ class PythonExecutor
 
   //methods
   void execute(string list_name, string title_task);
+  string get_result_as_string();
 
   private:
 

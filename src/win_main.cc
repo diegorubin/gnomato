@@ -42,6 +42,7 @@ WinMain::WinMain(BaseObjectType* cobject,
   m_refGlade->get_widget("lblCycle", lblCycle);
   m_refGlade->get_widget("lblTaskTitle", lblTaskTitle);
   m_refGlade->get_widget("lblPomodoros", lblPomodoros);
+  m_refGlade->get_widget("lblNotification", lblNotification);
 
   m_refGlade->get_widget("frmWorkOn", frmWorkOn);
 
@@ -305,11 +306,25 @@ void WinMain::inc_current_task()
   }
 }
 
+void WinMain::set_notification(string notification)
+{
+  string timestamp = to_simple_string(second_clock::local_time());
+
+  string status = "[";
+  status.append(timestamp);
+  status.append("] - ");
+  status.append(notification);
+
+  lblNotification->set_text(status);
+}
+
 void WinMain::execute(string script)
 {
+  // [TODO] - execute this code in another thread.
   if(currentTask) {
     PythonExecutor *pe = new PythonExecutor(script);
     pe->execute(cmbLists->get_active_text(), currentTask->get_name());
+    set_notification(pe->get_result_as_string());
     if(pe != NULL) delete(pe);
   }
 }
