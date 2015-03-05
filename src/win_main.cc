@@ -227,7 +227,10 @@ void WinMain::load_lists()
     lists.pop_front();
   }
 
-  cmbLists->set_active_text(previous);
+  if(!previous.empty())
+    cmbLists->set_active_text(previous);
+  else
+    cmbLists->set_active(0);
 }
 
 void WinMain::load_tasks()
@@ -308,14 +311,17 @@ void WinMain::inc_current_task()
 
 void WinMain::set_notification(string notification)
 {
-  string timestamp = to_simple_string(second_clock::local_time());
 
-  string status = "[";
-  status.append(timestamp);
-  status.append("] - ");
-  status.append(notification);
+  if(!notification.empty()) {
+    string timestamp = to_simple_string(second_clock::local_time());
 
-  lblNotification->set_text(status);
+    string status = "[";
+    status.append(timestamp);
+    status.append("] - ");
+    status.append(notification);
+
+    lblNotification->set_text(status);
+  }
 }
 
 void WinMain::execute(string script)

@@ -35,7 +35,10 @@ PythonExecutor::~PythonExecutor()
 
 string PythonExecutor::get_result_as_string() 
 {
-  return PyString_AsString(result);
+  if(result)
+    return PyString_AsString(result);
+  else
+    return "";
 }
 
 void PythonExecutor::execute(string list_name, string title_task)
