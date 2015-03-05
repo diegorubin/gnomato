@@ -25,14 +25,17 @@
 PythonExecutor::PythonExecutor(string script)
 {
   this->script = script;
-
   Py_Initialize();
-
 }
 
 PythonExecutor::~PythonExecutor()
 {
   Py_Finalize();
+}
+
+string PythonExecutor::get_result_as_string() 
+{
+  return PyString_AsString(result);
 }
 
 void PythonExecutor::execute(string list_name, string title_task)
