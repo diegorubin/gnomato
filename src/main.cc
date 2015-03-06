@@ -123,10 +123,11 @@ static void on_method_call(const Glib::RefPtr<Gio::DBus::Connection>& /* connect
   else if(method_name == "CreateTask")
   {
     Glib::Variant<Glib::ustring> param;
-    parameters.get_child(param);
 
     // Get the time string.
+    parameters.get_child(param, 0);
     const Glib::ustring list_name = param.get();
+    parameters.get_child(param, 1);
     const Glib::ustring task = param.get();
 
     Task t;
