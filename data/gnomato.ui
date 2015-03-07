@@ -701,7 +701,6 @@
                 <child>
                   <object class="GtkFrame" id="frmWorkOn">
                     <property name="can_focus">False</property>
-                    <property name="no_show_all">True</property>
                     <property name="label_xalign">0</property>
                     <property name="shadow_type">out</property>
                     <child>

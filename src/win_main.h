@@ -100,6 +100,7 @@ private:
   Button *btnAddTask;
   Button *btnDelTask;
   Button *btnFinish;
+  Button *btnCancelTask;
 
   ImageMenuItem *mnuNew;
   ImageMenuItem *mnuQuit;
@@ -141,12 +142,16 @@ private:
   void execute(string script);
   void set_notification(string notification);
 
+  void show_task_buttons();
+  void hide_task_buttons();
+
   // callback methods
   virtual void on_systray_activated();
   virtual void on_systray_popup(guint button, guint activate_time);
   virtual void on_button_start_clicked();
   virtual void on_button_restart_clicked();
   virtual void on_button_finish_clicked();
+  virtual void on_button_cancel_clicked();
   virtual void on_treeview_tasks_row_activated(const TreeModel::Path& path,
                                                TreeViewColumn* column);
   virtual void on_button_del_task_clicked();

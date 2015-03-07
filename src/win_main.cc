@@ -51,6 +51,7 @@ WinMain::WinMain(BaseObjectType* cobject,
   m_refGlade->get_widget("btnAddTask", btnAddTask);
   m_refGlade->get_widget("btnDelTask", btnDelTask);
   m_refGlade->get_widget("btnFinish", btnFinish);
+  m_refGlade->get_widget("btnCancelTask", btnCancelTask);
   
   m_refGlade->get_widget("trvTasks", trvTasks);
   m_refGlade->get_widget("cmbLists", cmbLists);
@@ -86,6 +87,9 @@ WinMain::WinMain(BaseObjectType* cobject,
   btnFinish->signal_clicked().
             connect(sigc::mem_fun(*this, &WinMain::on_button_finish_clicked));
 
+  btnCancelTask->signal_clicked().
+            connect(sigc::mem_fun(*this, &WinMain::on_button_cancel_clicked));
+
   btnAddTask->signal_clicked().
               connect(sigc::mem_fun(*this, &WinMain::on_menu_file_new_task));
 
@@ -115,6 +119,7 @@ WinMain::WinMain(BaseObjectType* cobject,
   load_tasks();
 
 	show_all_children();
+  hide_task_buttons();
 }
 
 WinMain::~WinMain()
@@ -228,7 +233,8 @@ void WinMain::load_lists()
   }
 
   if(!previous.empty()) cmbLists->set_active_text(previous);
-  if(!cmbLists->activate()) cmbLists->set_active(0);
+  if(cmbLists->get_active_text().empty()) cmbLists->set_active(0);
+  
 }
 
 void WinMain::load_tasks()
@@ -322,6 +328,19 @@ void WinMain::set_notification(string notification)
   }
 }
 
+void WinMain::show_task_buttons() 
+{
+  btnFinish->show();
+  btnCancelTask->show();
+}
+
+void WinMain::hide_task_buttons()
+{
+  btnFinish->hide();
+  btnCancelTask->hide();
+  lblTaskTitle->set_text("are you not doing anything?");
+}
+
 void WinMain::execute(string script)
 {
   // [TODO] - execute this code in another thread.
@@ -392,13 +411,22 @@ void WinMain::on_button_finish_clicked()
 
     load_lists();
     load_tasks();
-    frmWorkOn->hide();
+    hide_task_buttons();
 
     currentTask = 0;
   }
 
 }
 
+void WinMain::on_button_cancel_clicked()
+{
+  if(currentTask){
+    execute("on_cancel_task.py");
+    hide_task_buttons();
+    currentTask = 0;
+  }
+
+}
 void WinMain::on_treeview_tasks_row_activated(const TreeModel::Path& path,
                                               TreeViewColumn* column)
 {
@@ -414,7 +442,7 @@ void WinMain::on_treeview_tasks_row_activated(const TreeModel::Path& path,
     load_lists();
     load_tasks();
   
-    frmWorkOn->hide();
+    hide_task_buttons();
   }
 }
 
@@ -425,7 +453,7 @@ void WinMain::on_button_del_task_clicked()
 
     load_lists();
     load_tasks();
-    frmWorkOn->hide();
+    hide_task_buttons();
 
     currentTask = NULL;
   }
@@ -487,12 +515,12 @@ void WinMain::on_cursor_changed()
 
   currentTask = get_current_task();
   if(currentTask){
+    lblTaskTitle->set_text(currentTask->get_name());
+    generate_pomodoros();
+
+    show_task_buttons();
 
     execute("on_change_task.py");
-
-    lblTaskTitle->set_text(currentTask->get_name());
-    frmWorkOn->show();
-    generate_pomodoros();
   }
 }
 
