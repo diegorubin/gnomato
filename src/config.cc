@@ -24,93 +24,29 @@
 
 Config::Config()
 {
-    work_interval = "25";
-    break_interval = "5";
-    long_interval = "15";
-    inactive_interval = "1";
-    
-    config_file = cfgfile();
-
-}
-
-Config::Config(string config_file)
-{
-    this->config_file = config_file;
+  Gio::init();
+  settings = Gio::Settings::create("com.diegorubin.gnomato");
 }
 
 Config::~Config()
 {
 }
 
-bool Config::config_file_exists()
-{
-}
-
 bool Config::save()
 {
-    ofstream file;
-    file.open(config_file.c_str(), std::ios::out);
-
-    if(!file.is_open()) return false;
-
-    file << "[work_interval]" << work_interval << "\n";
-    file << "[break_interval]" << break_interval << "\n";
-    file << "[long_interval]" << long_interval << "\n";
-    file << "[inactive_interval]" << inactive_interval << "\n";
-    file << "[wunderlist_token]" << wunderlist_token << "\n";
-
-    file.close();
-    return true;
+  settings->set_string("work-interval", work_interval);
+  settings->set_string("break-interval", break_interval);
+  settings->set_string("long-interval", long_interval);
+  settings->set_string("inactive-interval", inactive_interval);
+  return true;
 }
 
 bool Config::load()
 {
-    char c;
-    VALUE value;
-    ATTR attr;
-    int pos_attr = 0;
-    int pos_value = 0;
-
-    bool is_value = false;
-    ifstream file;
-    file.open(config_file.c_str(), std::ios::in);
-
-    if(!file.is_open()) return false;
-
-    while(file.get(c)){
-        switch(c){
-            case T_BEGIN_ATTR:{
-                pos_attr = 0;
-                break;
-            }
-            case T_END_ATTR:{
-                pos_value = 0;
-                is_value = true;
-                attr[pos_attr] = 0;
-                break;
-            }
-            case T_END_VALUE:{
-                is_value = false;
-                value[pos_value] = 0;
-                set_value(attr,value);
-                break;
-            }
-            default:{
-                if(is_value) value[pos_value++] = c;
-                else attr[pos_attr++] = c;
-            }
-        }
-    }
-    file.close();
-    return true;
-}
-
-void Config::set_value(ATTR attr, VALUE value)
-{
-    if(!strcmp(attr,"work_interval")) work_interval = value;
-    if(!strcmp(attr,"break_interval")) break_interval = value;
-    if(!strcmp(attr,"long_interval")) long_interval = value;
-    if(!strcmp(attr,"inactive_interval")) inactive_interval = value;
-    if(!strcmp(attr,"wunderlist_token")) wunderlist_token = value;
+  work_interval = settings->get_string("work-interval");
+  break_interval = settings->get_string("break-interval");
+  long_interval = settings->get_string("long-interval");
+  inactive_interval = settings->get_string("inactive-interval");
+  return true;
 }
 

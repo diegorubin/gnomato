@@ -38,11 +38,3 @@ const char* dbfile()
 
   return file.c_str();
 }
-
-const char* cfgfile()
-{
-  string file = getenv("HOME");
-  file.append(CFGPATH);
-
-  return file.c_str();
-}

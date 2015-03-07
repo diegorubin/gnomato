@@ -29,10 +29,8 @@
 using namespace std;
 
 #define DBPATH "/.gnomato/gnomato.db"
-#define CFGPATH  "/.gnomato/config"
 
 const char* home();
 const char* dbfile();
-const char* cfgfile();
 
 #endif // _UTILS_H_
