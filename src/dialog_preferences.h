@@ -25,7 +25,6 @@
 
 #include <gtkmm.h>
 #include "config.h"
-#include "wunderlist.h"
 
 using namespace Gtk;
 
