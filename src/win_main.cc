@@ -227,10 +227,8 @@ void WinMain::load_lists()
     lists.pop_front();
   }
 
-  if(!previous.empty())
-    cmbLists->set_active_text(previous);
-  else
-    cmbLists->set_active(0);
+  if(!previous.empty()) cmbLists->set_active_text(previous);
+  if(!cmbLists->activate()) cmbLists->set_active(0);
 }
 
 void WinMain::load_tasks()
