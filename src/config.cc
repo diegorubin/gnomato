@@ -28,7 +28,6 @@ Config::Config()
     break_interval = "5";
     long_interval = "15";
     inactive_interval = "1";
-    wunderlist_token = "";
     
     config_file = cfgfile();
 

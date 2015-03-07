@@ -29,3 +29,4 @@ po/stamp-it
 mkinstalldirs
 *.gmo
 po/POTFILES
+*.valid

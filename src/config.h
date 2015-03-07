@@ -56,8 +56,6 @@ public:
     string long_interval;
     string inactive_interval;
 
-    string wunderlist_token;
-
     // parse methods
     bool save();
     bool load();

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schemalist>
+
+  <schema>
+
+    <key name="work_interval" type="s">
+      <default l10n="messages">"25"</default>
+      <summary>Work Interval</summary>
+      <description>
+        Work Interval
+      </description>
+    </key>
+
+    <key name="break_interval" type="s">
+      <default l10n="messages">"5"</default>
+      <summary>Break Interval</summary>
+      <description>
+        Break Interval
+      </description>
+    </key>
+
+    <key name="long_interval" type="s">
+      <default l10n="messages">"15"</default>
+      <summary>Long Break Interval</summary>
+      <description>
+        Long Break Interval
+      </description>
+    </key>
+
+    <key name="inactive_interval" type="s">
+      <default l10n="messages">"5"</default>
+      <summary>Inactive Interval</summary>
+      <description>
+        Inactive Interval
+      </description>
+    </key>
+  </schema>
+
+</schemalist>
