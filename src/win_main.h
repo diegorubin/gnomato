@@ -140,6 +140,7 @@ private:
   Task* get_current_task();
   void inc_current_task();
   void execute(string script);
+  void run_python_script(string script);
   void set_notification(string notification);
 
   void show_task_buttons();

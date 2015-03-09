@@ -22,15 +22,19 @@
 
 #include "python_executor.h"
 
-PythonExecutor::PythonExecutor(string script)
+PythonExecutor::PythonExecutor()
 {
-  this->script = script;
   Py_Initialize();
 }
 
 PythonExecutor::~PythonExecutor()
 {
   Py_Finalize();
+}
+
+void PythonExecutor::set_script(string script)
+{
+  this->script = script;
 }
 
 string PythonExecutor::get_result_as_string() 

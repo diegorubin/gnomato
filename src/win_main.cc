@@ -343,13 +343,19 @@ void WinMain::hide_task_buttons()
 
 void WinMain::execute(string script)
 {
-  // [TODO] - execute this code in another thread.
   if(currentTask) {
-    PythonExecutor *pe = new PythonExecutor(script);
-    pe->execute(cmbLists->get_active_text(), currentTask->get_name());
-    set_notification(pe->get_result_as_string());
-    if(pe != NULL) delete(pe);
+    Glib::Threads::Thread::create(
+      sigc::bind(sigc::mem_fun(this, &WinMain::run_python_script), script));
   }
+}
+
+void WinMain::run_python_script(string script)
+{
+  PythonExecutor *pe = new PythonExecutor();
+  pe->set_script(script);
+  pe->execute(cmbLists->get_active_text(), currentTask->get_name());
+  set_notification(pe->get_result_as_string());
+  if(pe != NULL) delete(pe);
 }
 
 // callbacks implementations

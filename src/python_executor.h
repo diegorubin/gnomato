@@ -33,10 +33,11 @@ using namespace std;
 class PythonExecutor 
 {
   public:
-  PythonExecutor(string script);
+  PythonExecutor();
   virtual ~PythonExecutor();
 
   //methods
+  void set_script(string script);
   void execute(string list_name, string title_task);
   string get_result_as_string();
 
