@@ -50,6 +50,17 @@ DialogTask::DialogTask(BaseObjectType* cobject,
          connect(sigc::mem_fun(*this,
                &DialogTask::on_button_ok_clicked));
 
+  // Configure the Completion
+  ecpLists = Gtk::EntryCompletion::create();
+  lstLists = Gtk::ListStore::create(mcpLists);
+
+  ecpLists->set_model(lstLists);
+  entList->set_completion(ecpLists);
+  ecpLists->set_text_column (mcpLists.col_text);
+  ecpLists->set_minimum_key_length(1);
+  ecpLists->set_popup_completion(true);
+
+  this->load_lists();
   show_all();
 }
 
@@ -71,6 +82,18 @@ void DialogTask::set_list(std::string value)
   if(entList->get_text().empty() && !value.empty()) {
     entList->set_text(value);
     entName->grab_focus();
+  }
+}
+
+void DialogTask::load_lists()
+{
+  Gtk::TreeModel::Row row;
+  std::list<TaskList*> lists = TaskList::all();
+
+  while(!lists.empty()){
+    row =*(lstLists->append());
+    row[mcpLists.col_text] = lists.front()->get_name();
+    lists.pop_front();
   }
 }
 

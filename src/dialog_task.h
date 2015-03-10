@@ -25,6 +25,7 @@
 
 #include <gtkmm.h>
 #include "task.h"
+#include "task_list.h"
 
 using namespace Gtk;
 
@@ -52,6 +53,21 @@ private:
 
   Task *task;
   Glib::RefPtr<Gtk::Builder> m_refGlade;
+
+  Glib::RefPtr<Gtk::EntryCompletion> ecpLists;
+  Glib::RefPtr<Gtk::ListStore> lstLists; 
+
+  class CompletionRecord : public Gtk::TreeModel::ColumnRecord
+  {
+    public:
+    CompletionRecord() {
+        add(col_text);
+    }
+    Gtk::TreeModelColumn<Glib::ustring> col_text;
+  };
+
+  CompletionRecord mcpLists;
+  void load_lists();
 
   // callback methods
   virtual void on_button_cancel_clicked();
