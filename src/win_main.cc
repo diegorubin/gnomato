@@ -37,6 +37,8 @@ WinMain::WinMain(BaseObjectType* cobject,
 
   configs.load();
 
+  pe = new PythonExecutor();
+
   // get widgets
   m_refGlade->get_widget("lblDisplay", lblDisplay);
   m_refGlade->get_widget("lblCycle", lblCycle);
@@ -124,6 +126,7 @@ WinMain::WinMain(BaseObjectType* cobject,
 
 WinMain::~WinMain()
 {
+  if(pe != NULL) delete(pe);
 }
 
 void WinMain::set_systray(Glib::RefPtr<StatusIcon> tray)
@@ -341,21 +344,18 @@ void WinMain::hide_task_buttons()
   lblTaskTitle->set_text("are you not doing anything?");
 }
 
-void WinMain::execute(string script)
+void WinMain::execute(string hook)
 {
   if(currentTask) {
     Glib::Threads::Thread::create(
-      sigc::bind(sigc::mem_fun(this, &WinMain::run_python_script), script));
+      sigc::bind(sigc::mem_fun(this, &WinMain::run_python_script), hook));
   }
 }
 
-void WinMain::run_python_script(string script)
+void WinMain::run_python_script(string hook)
 {
-  PythonExecutor *pe = new PythonExecutor();
-  pe->set_script(script);
-  pe->execute(cmbLists->get_active_text(), currentTask->get_name());
+  pe->execute(hook, cmbLists->get_active_text(), currentTask->get_name());
   set_notification(pe->get_result_as_string());
-  if(pe != NULL) delete(pe);
 }
 
 // callbacks implementations
@@ -386,14 +386,14 @@ void WinMain::on_button_start_clicked()
     btnStart->set_label(_("Start"));
     timeout.disconnect();
 
-    execute("on_pause.py");
+    execute("on_pause");
 
   }else{
     started = true;
     btnStart->set_label(_("Pause"));
     timeout = Glib::signal_timeout().connect(timer, 1000);
 
-    execute("on_start.py");
+    execute("on_start");
 
   }
 }
@@ -411,7 +411,7 @@ void WinMain::on_button_finish_clicked()
 {
   if(currentTask){
 
-    execute("on_finish.py");
+    execute("on_finish");
 
     currentTask->finish();
 
@@ -427,7 +427,7 @@ void WinMain::on_button_finish_clicked()
 void WinMain::on_button_cancel_clicked()
 {
   if(currentTask){
-    execute("on_cancel_task.py");
+    execute("on_cancel_task");
     hide_task_buttons();
     currentTask = 0;
   }
@@ -474,7 +474,7 @@ bool WinMain::on_timeout(int timer_number)
     std::cout << "cycle_number: " << cycle_number << std::endl;
 	  if(cycle_number % 2){
       
-      execute("on_break.py");
+      execute("on_break");
 
       notify(_("Take a break"));
       inc_current_task();
@@ -485,7 +485,7 @@ bool WinMain::on_timeout(int timer_number)
     }
     else{
 
-      execute("on_work.py");
+      execute("on_work");
 
       notify(_("End of break"));
 	    time_elapsed = atoi(configs.work_interval.c_str()) * 60;
@@ -526,7 +526,7 @@ void WinMain::on_cursor_changed()
 
     show_task_buttons();
 
-    execute("on_change_task.py");
+    execute("on_change_task");
   }
 }
 

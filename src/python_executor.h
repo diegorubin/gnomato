@@ -37,8 +37,7 @@ class PythonExecutor
   virtual ~PythonExecutor();
 
   //methods
-  void set_script(string script);
-  void execute(string list_name, string title_task);
+  void execute(string hook, string list_name, string title_task);
   string get_result_as_string();
 
   private:
@@ -47,7 +46,9 @@ class PythonExecutor
   PyObject *main_module, *dict;
   PyObject *execute_function, *result;
 
-  string script;
+  PyObject *module;
+  PyObject *klass;
+  PyObject *gnomato;
 
   FILE *python;
 

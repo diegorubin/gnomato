@@ -127,6 +127,8 @@ private:
   Glib::RefPtr<Action> mnuIniciar;
   Glib::RefPtr<ListStore> treTasks;
 
+  PythonExecutor *pe;
+
   //dialogs
   DialogTask *dlgTask;
   AboutDialog *abtDialog;
