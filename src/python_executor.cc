@@ -31,11 +31,13 @@ PythonExecutor::PythonExecutor()
   
   PyObject *sysPath = PySys_GetObject("path");
   PyObject *path = PyString_FromString(python_script.c_str());
-  int result = PyList_Insert(sysPath, 0, path);
-
+  PyList_Insert(sysPath, 0, path);
   module = PyImport_ImportModule("gnomato");
-  klass = PyObject_GetAttrString(module, "Gnomato");
-  gnomato = PyObject_CallObject(klass, NULL);
+
+  if(module != NULL) {
+    klass = PyObject_GetAttrString(module, "Gnomato");
+    gnomato = PyObject_CallObject(klass, NULL);
+  }
 }
 
 PythonExecutor::~PythonExecutor()
@@ -53,20 +55,22 @@ string PythonExecutor::get_result_as_string()
 
 void PythonExecutor::execute(string hook, string list_name, string title_task)
 {
-  char *_hook = new char[hook.length() + 1];
-  strcpy(_hook, hook.c_str());
+  if((module != NULL) && (klass != NULL) && (gnomato != NULL)) {
+    char *_hook = new char[hook.length() + 1];
+    strcpy(_hook, hook.c_str());
 
-  char *_list_name = new char[list_name.length() + 1];
-  strcpy(_list_name, list_name.c_str());
+    char *_list_name = new char[list_name.length() + 1];
+    strcpy(_list_name, list_name.c_str());
 
-  char *_title_task = new char[title_task.length() + 1];
-  strcpy(_title_task, title_task.c_str());
+    char *_title_task = new char[title_task.length() + 1];
+    strcpy(_title_task, title_task.c_str());
 
-  result = PyObject_CallMethod(gnomato, _hook, "ss", _list_name, _title_task);
+    result = PyObject_CallMethod(gnomato, _hook, "ss", _list_name, _title_task);
 
-  delete [] _hook;
-  delete [] _list_name;
-  delete [] _title_task;
+    delete [] _hook;
+    delete [] _list_name;
+    delete [] _title_task;
+  }
 
 }
 
