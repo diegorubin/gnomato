@@ -471,7 +471,6 @@ bool WinMain::on_timeout(int timer_number)
 	if(!time_elapsed){
 	  cycle_number++;
 
-    std::cout << "cycle_number: " << cycle_number << std::endl;
 	  if(cycle_number % 2){
       
       execute("on_break");
