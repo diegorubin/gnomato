@@ -200,7 +200,7 @@ void bootstrap()
 
   fhome = new std::ifstream(dbfile());
   
-  // banco nao exite
+  // database not exists
   if(!*fhome){
    
     std::cout << _("Creating database") << std::endl;
