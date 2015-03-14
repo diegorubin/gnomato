@@ -342,6 +342,7 @@ void WinMain::hide_task_buttons()
   btnFinish->hide();
   btnCancelTask->hide();
   lblTaskTitle->set_text("are you not doing anything?");
+  lblPomodoros->set_text("");
 }
 
 void WinMain::execute(string hook)

@@ -47,7 +47,7 @@ PythonExecutor::~PythonExecutor()
 
 PyObject *PythonExecutor::execute(string hook, string list_name, string title_task)
 {
-  PyObject *result;
+  PyObject *result = NULL;
 
   if((module != NULL) && (klass != NULL) && (gnomato != NULL)) {
     char *_hook = new char[hook.length() + 1];
@@ -71,7 +71,7 @@ PyObject *PythonExecutor::execute(string hook, string list_name, string title_ta
 
 std::string PythonExecutor::result_as_string(PyObject *result)
 {
-  if(result) {
+  if(result != NULL) {
     return PyString_AsString(result);
   } else {
     return "";
