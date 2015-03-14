@@ -28,7 +28,7 @@
 
 using namespace std;
 
-#define DBPATH "/.gnomato/gnomato.db"
+#define DBPATH "/.gnomato/gnomato1.0.1.db"
 
 const char* home();
 const char* dbfile();
