@@ -4,6 +4,7 @@ Pomodoro Technique timer for GNU/Linux.
 
 ##Requirements
 
+* Boost
 * Gtkmm 3.0
 * Libnotify
 * Python 2.7
