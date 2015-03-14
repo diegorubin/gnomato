@@ -1,6 +1,6 @@
 #Gnomato
 
-Pomodoro Tracker for GNU/Linux.
+Pomodoro Technique timer for GNU/Linux.
 
 ##Requirements
 
