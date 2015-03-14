@@ -45,16 +45,10 @@ PythonExecutor::~PythonExecutor()
   Py_Finalize();
 }
 
-string PythonExecutor::get_result_as_string() 
+PyObject *PythonExecutor::execute(string hook, string list_name, string title_task)
 {
-  if(result)
-    return PyString_AsString(result);
-  else
-    return "";
-}
+  PyObject *result = NULL;
 
-void PythonExecutor::execute(string hook, string list_name, string title_task)
-{
   if((module != NULL) && (klass != NULL) && (gnomato != NULL)) {
     char *_hook = new char[hook.length() + 1];
     strcpy(_hook, hook.c_str());
@@ -72,5 +66,15 @@ void PythonExecutor::execute(string hook, string list_name, string title_task)
     delete [] _title_task;
   }
 
+  return result;
+}
+
+std::string PythonExecutor::result_as_string(PyObject *result)
+{
+  if(result != NULL) {
+    return PyString_AsString(result);
+  } else {
+    return "";
+  }
 }
 
