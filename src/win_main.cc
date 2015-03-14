@@ -354,8 +354,9 @@ void WinMain::execute(string hook)
 
 void WinMain::run_python_script(string hook)
 {
-  pe->execute(hook, cmbLists->get_active_text(), currentTask->get_name());
-  set_notification(pe->get_result_as_string());
+  PyObject *result = pe->execute(hook, cmbLists->get_active_text(), 
+                                 currentTask->get_name());
+  set_notification(PythonExecutor::result_as_string(result));
 }
 
 // callbacks implementations

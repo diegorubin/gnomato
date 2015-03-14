@@ -37,14 +37,14 @@ class PythonExecutor
   virtual ~PythonExecutor();
 
   //methods
-  void execute(string hook, string list_name, string title_task);
-  string get_result_as_string();
+  PyObject *execute(string hook, string list_name, string title_task);
+  static string result_as_string(PyObject *result);
 
   private:
 
   //attribute
   PyObject *main_module, *dict;
-  PyObject *execute_function, *result;
+  PyObject *execute_function;
 
   PyObject *module;
   PyObject *klass;
