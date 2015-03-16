@@ -2,7 +2,7 @@
 
 Pomodoro Technique timer for GNU/Linux.
 
-![Gnomato](/images/gnomato "Gnomato Interface")
+![Gnomato](http://diegorubin.com/images/gnomato "Gnomato Interface")
 
 ##Requirements
 
