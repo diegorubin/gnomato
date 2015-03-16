@@ -2,6 +2,8 @@
 
 Pomodoro Technique timer for GNU/Linux.
 
+![Gnomato](/images/gnomato "Gnomato Interface")
+
 ##Requirements
 
 * Boost

@@ -463,7 +463,7 @@ void WinMain::on_button_del_task_clicked()
     load_tasks();
     hide_task_buttons();
 
-    currentTask = NULL;
+    currentTask = 0;
   }
 }
 
