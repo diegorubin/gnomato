@@ -1,5 +1,7 @@
 #Gnomato
 
+[![Stories in Ready](https://badge.waffle.io/diegorubin/gnomato.svg?label=ready&title=Ready)](http://waffle.io/diegorubin/gnomato) 
+
 Pomodoro Technique timer for GNU/Linux.
 
 ![Gnomato](http://diegorubin.com/images/gnomato "Gnomato Interface")
