@@ -35,6 +35,14 @@
         Inactive Interval
       </description>
     </key>
+
+    <key name="current-list" type="s">
+      <default>""</default>
+      <summary>Current List</summary>
+      <description>
+        Current List
+      </description>
+    </key>
   </schema>
 
 </schemalist>

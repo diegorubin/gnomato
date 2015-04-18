@@ -226,7 +226,7 @@ void WinMain::generate_pomodoros()
 
 void WinMain::load_lists()
 {
-  Glib::ustring previous = cmbLists->get_active_text();
+  Glib::ustring previous = configs.current_list;
   cmbLists->remove_all();
 
   lists = TaskList::all();
@@ -533,6 +533,11 @@ void WinMain::on_cursor_changed()
 
 void WinMain::on_list_changed()
 {
+  Gtk::TreeModel::iterator iter = cmbLists->get_active();
+  if(iter) {
+    configs.current_list = cmbLists->get_active_text().c_str();
+    configs.save();
+  }
   load_tasks();
 }
 
