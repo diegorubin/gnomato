@@ -45,6 +45,7 @@ public:
     string break_interval;
     string long_interval;
     string inactive_interval;
+    string current_list;
 
     // parse methods
     bool save();

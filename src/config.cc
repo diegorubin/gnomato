@@ -38,6 +38,7 @@ bool Config::save()
   settings->set_string("break-interval", break_interval);
   settings->set_string("long-interval", long_interval);
   settings->set_string("inactive-interval", inactive_interval);
+  settings->set_string("current-list", current_list);
   return true;
 }
 
@@ -47,6 +48,7 @@ bool Config::load()
   break_interval = settings->get_string("break-interval");
   long_interval = settings->get_string("long-interval");
   inactive_interval = settings->get_string("inactive-interval");
+  current_list = settings->get_string("current-list");
   return true;
 }
 
