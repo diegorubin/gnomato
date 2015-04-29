@@ -1,0 +1,160 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# FULL NAME <EMAIL@ADDRESS>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-08-05 16:37-0300\n"
+"PO-Revision-Date: 2015-04-20 13:20-0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Gtranslator 2.91.6\n"
+
+#: ../data/gnomato.ui.h:1
+msgid "00:00"
+msgstr "00:00"
+
+#: ../data/gnomato.ui.h:2
+msgid "<b>Tasks</b>"
+msgstr "<b>Tareas</b>"
+
+#: ../data/gnomato.ui.h:3
+msgid "<b>Work On</b>"
+msgstr "<b>Trabajando En</b>"
+
+#: ../data/gnomato.ui.h:4
+msgid "<i>minutes</i>"
+msgstr "<i>minutos</i>"
+
+#: ../data/gnomato.ui.h:5
+msgid "Finish"
+msgstr "Fin"
+
+#: ../data/gnomato.ui.h:6
+msgid "Gnomato"
+msgstr "Gnomato"
+
+#: ../data/gnomato.ui.h:7
+msgid "Gnomato Website"
+msgstr "Sitio del Gnomato"
+
+#: ../data/gnomato.ui.h:8
+msgid "Intervals"
+msgstr "Intervalos"
+
+#: ../data/gnomato.ui.h:9
+msgid "Long Break:"
+msgstr "Pausa Mayor:"
+
+#: ../data/gnomato.ui.h:10
+msgid "Name:"
+msgstr "Nombre:"
+
+#: ../data/gnomato.ui.h:11
+msgid "Preferences - Gnomato"
+msgstr "Preferencias - Gnomato"
+
+#: ../data/gnomato.ui.h:12
+msgid "Restart"
+msgstr "Reiniciar"
+
+#: ../data/gnomato.ui.h:13
+msgid "Short Break:"
+msgstr "Pausa Menor:"
+
+#: ../data/gnomato.ui.h:14 ../src/win_main.cc:247
+msgid "Start"
+msgstr "Iniciar"
+
+#: ../data/gnomato.ui.h:15
+msgid "W - B - W - B - W - B - W - LB"
+msgstr "T - P - T - P - T - P - T - PM"
+
+#: ../data/gnomato.ui.h:16
+msgid "Work:"
+msgstr "Trabajo:"
+
+#: ../data/gnomato.ui.h:17
+msgid "_Edit"
+msgstr "_Editar"
+
+#: ../data/gnomato.ui.h:18
+msgid "_File"
+msgstr "_Archivo"
+
+#: ../data/gnomato.ui.h:19
+msgid "_Help"
+msgstr "A_yuda"
+
+#: ../data/gnomato.ui.h:20
+msgid "_New Task"
+msgstr "_Nueva Tarea"
+
+#: ../src/main.cc:54
+msgid "Creating database"
+msgstr "Creando la base de datos"
+
+#: ../src/main.cc:66
+msgid "Database successfully created "
+msgstr "Base de datos creada con éxito"
+
+#: ../src/main.cc:91
+msgid "Could not open the database. Error: "
+msgstr "No fue posible acceder la base de datos. Error: "
+
+#: ../src/win_main.cc:109
+msgid "Start/Pause"
+msgstr "Iniciar/Pausar"
+
+#. break
+#: ../src/win_main.cc:167 ../src/win_main.cc:176
+msgid "W -"
+msgstr "T -"
+
+#: ../src/win_main.cc:168
+msgid "<span color=\"red\"><b>LB</b></span>"
+msgstr "<span color=\"red\"><b>PM</b></span>"
+
+#: ../src/win_main.cc:169
+msgid "<span color=\"red\"><b>B</b></span> -"
+msgstr "<span color=\"red\"><b>P</b></span> -"
+
+#. pomodoro
+#: ../src/win_main.cc:171
+msgid "<span color=\"green\"><b>W</b></span> -"
+msgstr "<span color=\"green\"><b>T</b></span> -"
+
+#: ../src/win_main.cc:172 ../src/win_main.cc:177
+msgid "LB"
+msgstr "PM"
+
+#: ../src/win_main.cc:173 ../src/win_main.cc:178
+msgid "B -"
+msgstr "P -"
+
+#: ../src/win_main.cc:201
+msgid "Title"
+msgstr "Título"
+
+#: ../src/win_main.cc:251
+msgid "Pause"
+msgstr "Pausar"
+
+#: ../src/win_main.cc:301
+msgid "Take a break"
+msgstr "Haz una pausa"
+
+#: ../src/win_main.cc:308
+msgid "End of break"
+msgstr "Fin de pausa"
+
+#~ msgid "Diego Rubin"
+#~ msgstr "Diego Rubin"
