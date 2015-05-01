@@ -39,6 +39,8 @@ bool Config::save()
   settings->set_string("long-interval", long_interval);
   settings->set_string("inactive-interval", inactive_interval);
   settings->set_string("current-list", current_list);
+  settings->set_int("window-width", window_width);
+  settings->set_int("window-height", window_height);
   return true;
 }
 
@@ -49,6 +51,10 @@ bool Config::load()
   long_interval = settings->get_string("long-interval");
   inactive_interval = settings->get_string("inactive-interval");
   current_list = settings->get_string("current-list");
+
+  window_width = settings->get_int("window-width");
+  window_height = settings->get_int("window-height");
+
   return true;
 }
 

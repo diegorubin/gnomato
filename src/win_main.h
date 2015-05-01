@@ -168,6 +168,10 @@ private:
   virtual void on_menu_file_quit();
   virtual void on_menu_edit_preferences();
   virtual void on_menu_help_about();
+
+  // callback methods - window
+  virtual void on_resize();
+
 };
 
 #endif //__WIN_MAIN_H_
