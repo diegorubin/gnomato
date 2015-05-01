@@ -47,6 +47,9 @@ public:
     string inactive_interval;
     string current_list;
 
+    int window_width;
+    int window_height;
+
     // parse methods
     bool save();
     bool load();

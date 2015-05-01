@@ -117,11 +117,15 @@ WinMain::WinMain(BaseObjectType* cobject,
   mnuAbout->signal_activate().
             connect(sigc::mem_fun(*this, &WinMain::on_menu_help_about));
 
+  // window events
+  signal_check_resize().connect(sigc::mem_fun(*this, &WinMain::on_resize));
+
   load_lists();
   load_tasks();
 
 	show_all_children();
   hide_task_buttons();
+  resize(configs.window_width, configs.window_height);
 }
 
 WinMain::~WinMain()
@@ -574,6 +578,15 @@ void WinMain::on_menu_help_about()
   m_refGlade->get_widget("winAbout", abtDialog);
   abtDialog->run();
   abtDialog->hide();
+}
+
+void WinMain::on_resize()
+{
+  int width, height;
+  get_size(width, height);
+  configs.window_width = width;
+  configs.window_height = height;
+  configs.save();
 }
 
 Glib::ustring WinMain::get_current_time()

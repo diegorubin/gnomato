@@ -43,6 +43,23 @@
         Current List
       </description>
     </key>
+
+    <key name="window-width" type="i">
+      <default>600</default>
+      <summary>Window Width</summary>
+      <description>
+        Window Width
+      </description>
+    </key>
+
+    <key name="window-height" type="i">
+      <default>600</default>
+      <summary>Window Width</summary>
+      <description>
+        Window Height
+      </description>
+    </key>
+
   </schema>
 
 </schemalist>
