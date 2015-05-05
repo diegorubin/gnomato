@@ -44,6 +44,13 @@ std::string TaskList::get_name()
   return name;
 }
 
+bool TaskList::destroy()
+{
+  char sql[500];
+  sprintf(sql, DELETE_ALL_TASK_LISTS, name.c_str());
+  return execute_query(sql, load_task_list);
+}
+
 std::list<TaskList*> TaskList::all()
 {
   task_lists_aux.clear();

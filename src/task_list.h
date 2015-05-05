@@ -37,6 +37,9 @@ public:
   //getters
   std::string get_name();
 
+  //methods
+  bool destroy();
+
   static std::list<TaskList*> all();
     
 private:
