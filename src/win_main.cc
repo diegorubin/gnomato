@@ -54,6 +54,7 @@ WinMain::WinMain(BaseObjectType* cobject,
   m_refGlade->get_widget("btnDelTask", btnDelTask);
   m_refGlade->get_widget("btnFinish", btnFinish);
   m_refGlade->get_widget("btnCancelTask", btnCancelTask);
+  m_refGlade->get_widget("btnClearList", btnClearList);
   
   m_refGlade->get_widget("trvTasks", trvTasks);
   m_refGlade->get_widget("cmbLists", cmbLists);
@@ -91,6 +92,9 @@ WinMain::WinMain(BaseObjectType* cobject,
 
   btnCancelTask->signal_clicked().
             connect(sigc::mem_fun(*this, &WinMain::on_button_cancel_clicked));
+
+  btnClearList->signal_clicked().
+            connect(sigc::mem_fun(*this, &WinMain::on_button_clear_list_clicked));
 
   btnAddTask->signal_clicked().
               connect(sigc::mem_fun(*this, &WinMain::on_menu_file_new_task));
@@ -240,7 +244,7 @@ void WinMain::load_lists()
   }
 
   if(!previous.empty()) cmbLists->set_active_text(previous);
-  if(cmbLists->get_active_text().empty()) cmbLists->set_active(0);
+  if(get_current_list().empty()) cmbLists->set_active(0);
   
 }
 
@@ -252,7 +256,7 @@ void WinMain::load_tasks()
   if(iter) {
     Gtk::TreeModel::Row row = *iter;
     if(row) {
-      tasks = Task::all(cmbLists->get_active_text().c_str());
+      tasks = Task::all(get_current_list().c_str());
     }
   }
 
@@ -359,7 +363,7 @@ void WinMain::execute(string hook)
 
 void WinMain::run_python_script(string hook)
 {
-  PyObject *result = pe->execute(hook, cmbLists->get_active_text(), 
+  PyObject *result = pe->execute(hook, get_current_list(), 
                                  currentTask->get_name());
   set_notification(PythonExecutor::result_as_string(result));
 }
@@ -439,6 +443,25 @@ void WinMain::on_button_cancel_clicked()
   }
 
 }
+
+void WinMain::on_button_clear_list_clicked()
+{
+  MessageDialog dialog(_("Are you sure you want to remove the list?"), 
+      true, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_YES_NO);
+  dialog.set_default_response(Gtk::RESPONSE_NO);
+
+  int result = dialog.run();
+
+  if(result == Gtk::RESPONSE_YES) {
+    TaskList list; 
+    list.set_name(get_current_list());
+    list.destroy();
+
+    load_lists();
+    load_tasks();
+  }
+}
+
 void WinMain::on_treeview_tasks_row_activated(const TreeModel::Path& path,
                                               TreeViewColumn* column)
 {
@@ -539,7 +562,7 @@ void WinMain::on_list_changed()
 {
   Gtk::TreeModel::iterator iter = cmbLists->get_active();
   if(iter) {
-    configs.current_list = cmbLists->get_active_text().c_str();
+    configs.current_list = get_current_list().c_str();
     configs.save();
   }
   load_tasks();
@@ -551,7 +574,7 @@ void WinMain::on_menu_file_new_task()
   DialogTask *dlgTask = 0;
 
   m_refGlade->get_widget_derived("DialogTask",dlgTask);
-  dlgTask->set_list(cmbLists->get_active_text());
+  dlgTask->set_list(get_current_list());
   dlgTask->run();
 
   load_lists();
@@ -614,3 +637,7 @@ Glib::ustring WinMain::get_cycle()
   return generate_cycle();
 }
 
+Glib::ustring WinMain::get_current_list()
+{
+  return cmbLists->get_active_text();
+}

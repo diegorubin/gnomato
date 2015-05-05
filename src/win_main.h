@@ -101,6 +101,7 @@ private:
   Button *btnDelTask;
   Button *btnFinish;
   Button *btnCancelTask;
+  Button *btnClearList;
 
   ImageMenuItem *mnuNew;
   ImageMenuItem *mnuQuit;
@@ -144,6 +145,7 @@ private:
   void execute(string script);
   void run_python_script(string script);
   void set_notification(string notification);
+  Glib::ustring get_current_list();
 
   void show_task_buttons();
   void hide_task_buttons();
@@ -155,6 +157,7 @@ private:
   virtual void on_button_restart_clicked();
   virtual void on_button_finish_clicked();
   virtual void on_button_cancel_clicked();
+  virtual void on_button_clear_list_clicked();
   virtual void on_treeview_tasks_row_activated(const TreeModel::Path& path,
                                                TreeViewColumn* column);
   virtual void on_button_del_task_clicked();

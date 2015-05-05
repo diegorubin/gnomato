@@ -67,6 +67,7 @@
                        id = %s;"
 
 #define DELETE_TASK "DELETE FROM Task WHERE id = %s;"
+#define DELETE_ALL_TASK_LISTS "DELETE FROM Task WHERE list = '%s';"
 
 #define SELECT_ALL_TASK_LISTS "SELECT list FROM Task WHERE done = 0 GROUP BY list ORDER BY list;"
 
