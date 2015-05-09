@@ -62,6 +62,9 @@ static Glib::ustring introspection_xml =
   "    <method name='ShowWindow'>"
   "      <arg type='s' name='iso8601' direction='out'/>"
   "    </method>"
+  "    <method name='ShowDialogTask'>"
+  "      <arg type='s' name='iso8601' direction='out'/>"
+  "    </method>"
   "    <method name='CreateTask'>"
   "      <arg type='s' name='iso8601' direction='in'/>"
   "      <arg type='s' name='iso8601' direction='in'/>"
@@ -118,6 +121,18 @@ static void on_method_call(const Glib::RefPtr<Gio::DBus::Connection>& /* connect
       Glib::VariantContainerBase::create_tuple(vector);
 
     winMain->force_show();
+    invocation->return_value(response);
+  }
+  else if(method_name == "ShowDialogTask")
+  {
+
+    const Glib::Variant<Glib::ustring> vector =
+      Glib::Variant<Glib::ustring>::create("");
+
+    Glib::VariantContainerBase response =
+      Glib::VariantContainerBase::create_tuple(vector);
+
+    winMain->on_menu_file_new_task();
     invocation->return_value(response);
   }
   else if(method_name == "CreateTask")
