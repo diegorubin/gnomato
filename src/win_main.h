@@ -50,6 +50,7 @@ public:
   WinMain(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
   virtual ~WinMain();
 
+  void on_menu_file_new_task();
   void force_show();
   void load_lists();
   void load_tasks();
@@ -167,7 +168,6 @@ private:
   virtual void on_list_changed();
 
   // callback methods - menu
-  virtual void on_menu_file_new_task();
   virtual void on_menu_file_quit();
   virtual void on_menu_edit_preferences();
   virtual void on_menu_help_about();
