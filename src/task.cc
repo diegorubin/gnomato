@@ -22,7 +22,7 @@
 
 #include "task.h"
 
-const int SQL_SIZE = 2048;
+const int SQL_SIZE = 10240;
 
 std::list<Task*> tasks_aux;
 
@@ -145,6 +145,13 @@ std::list<Task*> Task::all(std::string list)
 {
   char sql[SQL_SIZE];
   sprintf(sql, SELECT_ALL_TASK_BY_LIST, list.c_str());
+  return all_by_sql(sql);
+}
+
+std::list<Task*> Task::all(std::string list, std::string filter)
+{
+  char sql[SQL_SIZE];
+  sprintf(sql, SELECT_ALL_TASK_BY_LIST_AND_FILTER, list.c_str(), filter.c_str());
   return all_by_sql(sql);
 }
 

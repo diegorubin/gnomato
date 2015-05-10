@@ -46,6 +46,8 @@ WinMain::WinMain(BaseObjectType* cobject,
   m_refGlade->get_widget("lblPomodoros", lblPomodoros);
   m_refGlade->get_widget("lblNotification", lblNotification);
 
+  m_refGlade->get_widget("entFilter", entFilter);
+
   m_refGlade->get_widget("frmWorkOn", frmWorkOn);
 
   m_refGlade->get_widget("btnStart", btnStart);
@@ -81,6 +83,9 @@ WinMain::WinMain(BaseObjectType* cobject,
     connect(inactive_timer, atoi(configs.inactive_interval.c_str()) * MINUTE_IN_SECONDS);
 
   // connect signals
+  entFilter->signal_changed().
+    connect(sigc::mem_fun(*this, &WinMain::on_filter_changed));
+
   btnStart->signal_clicked().
             connect(sigc::mem_fun(*this, &WinMain::on_button_start_clicked));
 
@@ -256,12 +261,13 @@ void WinMain::load_tasks()
   if(iter) {
     Gtk::TreeModel::Row row = *iter;
     if(row) {
-      tasks = Task::all(get_current_list().c_str());
+      if(entFilter->get_text().empty())
+        tasks = Task::all(get_current_list().c_str());
+      else
+        tasks = Task::all(get_current_list().c_str(), entFilter->get_text().c_str());
     }
   }
 
-  if(tasks.empty()) tasks = Task::all();
-  
   treTasks->clear();
   trvTasks->remove_all_columns();
 
@@ -610,6 +616,11 @@ void WinMain::on_resize()
   configs.window_width = width;
   configs.window_height = height;
   configs.save();
+}
+
+void WinMain::on_filter_changed()
+{
+  load_tasks();
 }
 
 Glib::ustring WinMain::get_current_time()

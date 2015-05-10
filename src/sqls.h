@@ -40,6 +40,8 @@
 
 #define SELECT_ALL_TASK_BY_LIST "SELECT * FROM Task WHERE done = 0 AND list = '%s';" 
 
+#define SELECT_ALL_TASK_BY_LIST_AND_FILTER "SELECT * FROM Task WHERE done = 0 AND list = '%s' AND name like '%%%s%%';"
+
 #define INSERT_TASK "INSERT INTO \
                       Task \
                         ( \

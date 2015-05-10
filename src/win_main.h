@@ -115,6 +115,8 @@ private:
   Label *lblPomodoros;
   Label *lblNotification;
 
+  Entry *entFilter;
+
   Frame *frmWorkOn;
 
   TreeView *trvTasks;
@@ -152,6 +154,7 @@ private:
   void hide_task_buttons();
 
   // callback methods
+  virtual void on_filter_changed();
   virtual void on_systray_activated();
   virtual void on_systray_popup(guint button, guint activate_time);
   virtual void on_button_start_clicked();
