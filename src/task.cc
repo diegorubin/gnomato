@@ -30,6 +30,7 @@ Task::Task()
 {
   pomodoros = 0;
   done = 0;
+  position = 0;
 }
 
 Task::Task(std::string id)
@@ -45,6 +46,7 @@ Task::Task(std::string id)
   this->list = tasks_aux.front()->get_list();
   this->pomodoros = tasks_aux.front()->get_pomodoros();
   this->done = tasks_aux.front()->get_done();
+  this->position = tasks_aux.front()->get_position();
 }
 
 Task::~Task()
@@ -108,6 +110,11 @@ void Task::set_list(std::string value)
   list = value; 
 }
 
+void Task::set_position(int value) 
+{
+  position = value;
+}
+
 // getters
 std::string Task::get_id()
 {
@@ -132,6 +139,11 @@ int Task::get_done()
 std::string Task::get_list()
 {
   return list;
+}
+
+int Task::get_position()
+{
+  return position;
 }
 
 std::list<Task*> Task::all()
@@ -174,6 +186,7 @@ static int load_task(void *NotUsed, int argc, char **argv, char **azColName)
   task_aux->set_pomodoros(argv[2] ? atoi(argv[2]) : 0);
   task_aux->set_done(argv[3] ? atoi(argv[3]) : 0);
   task_aux->set_list(argv[4] ? argv[4] : "");
+  task_aux->set_position(argv[5] ? argv[5] : 0);
 
   tasks_aux.push_back(task_aux);
 

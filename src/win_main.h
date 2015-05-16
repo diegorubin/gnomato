@@ -60,7 +60,13 @@ public:
   Glib::ustring get_current_task_title();
   Glib::ustring get_cycle();
 
-protected:
+  class TaskTreeStore : public Gtk::ListStore
+  {
+    protected:
+      virtual bool row_draggable_vfunc(const Gtk::TreeModel::Path& path) const;
+      virtual bool row_drop_possible_vfunc(const Gtk::TreeModel::Path& dest, const Gtk::SelectionData& selection_data) const;
+ 
+  };
 
 private:
 
@@ -129,7 +135,7 @@ private:
 
   Glib::RefPtr<ActionGroup> actMenu;
   Glib::RefPtr<Action> mnuIniciar;
-  Glib::RefPtr<ListStore> treTasks;
+  Glib::RefPtr<TaskTreeStore> treTasks;
 
   PythonExecutor *pe;
 
