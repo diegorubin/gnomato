@@ -66,7 +66,7 @@ WinMain::WinMain(BaseObjectType* cobject,
   m_refGlade->get_widget("mnuPreferences", mnuPreferences);
   m_refGlade->get_widget("mnuAbout", mnuAbout);
 
-  treTasks = TaskTreeStore::create(mdlColumn);
+  treTasks = Gtk::ListStore::create(mdlColumn);
   trvTasks->set_model(treTasks);
 
   on_button_restart_clicked();

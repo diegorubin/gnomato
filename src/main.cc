@@ -228,8 +228,7 @@ void bootstrap()
     rc = sqlite3_exec(db,CREATE_TASK,NULL,NULL,&cError);
     if(rc != SQLITE_OK){
       cerr << "Sqlite3:" << cError << std::endl;
-    }
-    else{
+    } else {
       std::cout << _("Database successfully created ") << std::endl;
     }
 
@@ -241,11 +240,45 @@ void bootstrap()
   
 }
 
+void migrate_database() 
+{
+  int rc;
+  char *cError;
+
+  int result = sqlite3_open(dbpath, &db);
+
+  /* creating settings table */
+  rc = sqlite3_exec(db,CHECK_SETTINGS, NULL,NULL,&cError); 
+  if(rc != SQLITE_OK){
+    cout << _("Creating table for settings:") << cError << std::endl;
+    rc = sqlite3_exec(db,CREATE_SETTINGS, NULL,NULL,&cError); 
+  }
+
+  /* adding position into task table */
+  rc = sqlite3_exec(db,CHECK_TASK_POSITION, NULL,NULL,&cError); 
+  if(rc <= 0){
+    cout << _("adding position into task table:") << cError << std::endl;
+
+    rc = sqlite3_exec(db,ADD_TASK_POSITION, NULL,NULL,&cError); 
+    if(rc <= 0) {
+      cerr << _("problem in insert position:") << cError << std::endl;
+    }
+
+    rc = sqlite3_exec(db,INSERT_TASK_POSITION, NULL,NULL,&cError); 
+    if(rc <= 0) {
+      cerr << _("problem in insert position in settings:") << cError << std::endl;
+    }
+  }
+
+  sqlite3_close(db);
+}
+
 int main(int argc, char **argv)
 {
 
   sprintf(dbpath, "%s", dbfile());
   bootstrap();
+  migrate_database();
 
   //intltool
   bindtextdomain(GETTEXT_PACKAGE, GNOMATO_LOCALEDIR);
@@ -257,7 +290,7 @@ int main(int argc, char **argv)
   if (result) {
       cerr << _("Could not open the database. Error: ") << sqlite3_errmsg(db);
       exit(1);
-  }
+  }     
 
   if(argc > 1) // command
   {

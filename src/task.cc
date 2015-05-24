@@ -186,7 +186,7 @@ static int load_task(void *NotUsed, int argc, char **argv, char **azColName)
   task_aux->set_pomodoros(argv[2] ? atoi(argv[2]) : 0);
   task_aux->set_done(argv[3] ? atoi(argv[3]) : 0);
   task_aux->set_list(argv[4] ? argv[4] : "");
-  task_aux->set_position(argv[5] ? argv[5] : 0);
+  task_aux->set_position(argv[5] ? atoi(argv[5]) : 0);
 
   tasks_aux.push_back(task_aux);
 

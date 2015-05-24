@@ -34,6 +34,15 @@
                            primary key(id)\
                          )"
 
+#define CREATE_SETTINGS "CREATE TABLE \
+                       Settings \
+                         (\
+                           id INTEGER, \
+                           name VARCHAR(200), \
+                           value VARCHAR(200), \
+                           primary key(id)\
+                         )"
+
 #define SELECT_TASK "SELECT * FROM Task WHERE id = %s;"
 
 #define SELECT_ALL_TASK "SELECT * FROM Task WHERE done = 0;" 
@@ -72,5 +81,12 @@
 #define DELETE_ALL_TASK_LISTS "DELETE FROM Task WHERE list = '%s';"
 
 #define SELECT_ALL_TASK_LISTS "SELECT list FROM Task WHERE done = 0 GROUP BY list ORDER BY list;"
+
+// Migrations
+#define CHECK_SETTINGS "SELECT * FROM Settings;"
+
+#define CHECK_TASK_POSITION "SELECT name,value FROM Settings WHERE name = 'TASK_POSITION' AND value = 'CREATED';"
+#define ADD_TASK_POSITION "ALTER TABLE Task ADD position INTEGER DEFAULT 0;"
+#define INSERT_TASK_POSITION "INSERT INTO Settings (name, value) VALUES ('TASK_POSITION', 'CREATED');"
 
 #endif //_SQLS_
