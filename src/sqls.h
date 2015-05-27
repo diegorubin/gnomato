@@ -40,7 +40,8 @@
                            id INTEGER, \
                            name VARCHAR(200), \
                            value VARCHAR(200), \
-                           primary key(id)\
+                           primary key(id), \
+                           unique(name, value) \
                          )"
 
 #define SELECT_TASK "SELECT * FROM Task WHERE id = %s;"
@@ -85,7 +86,6 @@
 // Migrations
 #define CHECK_SETTINGS "SELECT * FROM Settings;"
 
-#define CHECK_TASK_POSITION "SELECT name,value FROM Settings WHERE name = 'TASK_POSITION' AND value = 'CREATED';"
 #define ADD_TASK_POSITION "ALTER TABLE Task ADD position INTEGER DEFAULT 0;"
 #define INSERT_TASK_POSITION "INSERT INTO Settings (name, value) VALUES ('TASK_POSITION', 'CREATED');"
 

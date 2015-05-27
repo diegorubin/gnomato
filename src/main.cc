@@ -255,18 +255,13 @@ void migrate_database()
   }
 
   /* adding position into task table */
-  rc = sqlite3_exec(db,CHECK_TASK_POSITION, NULL,NULL,&cError); 
+  rc = sqlite3_exec(db,INSERT_TASK_POSITION, NULL,NULL,&cError); 
   if(rc <= 0){
     cout << _("adding position into task table:") << cError << std::endl;
 
     rc = sqlite3_exec(db,ADD_TASK_POSITION, NULL,NULL,&cError); 
     if(rc <= 0) {
       cerr << _("problem in insert position:") << cError << std::endl;
-    }
-
-    rc = sqlite3_exec(db,INSERT_TASK_POSITION, NULL,NULL,&cError); 
-    if(rc <= 0) {
-      cerr << _("problem in insert position in settings:") << cError << std::endl;
     }
   }
 
