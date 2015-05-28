@@ -71,6 +71,18 @@ private:
      Gtk::TreeModelColumn<Glib::ustring> title;
   };
 
+  class TasksView: public Gtk::TreeView
+  {
+  
+  public:
+    TasksView(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
+  
+    void set_win_main_ref(WinMain *win_main);
+    Glib::RefPtr<Gtk::Builder> m_refGlade;
+    virtual void on_drag_end(const Glib::RefPtr< Gdk::DragContext >& context);
+    WinMain *win_main;
+  };
+
   // attributes
   bool showed;
   bool started;
@@ -117,7 +129,7 @@ private:
 
   Frame *frmWorkOn;
 
-  TreeView *trvTasks;
+  TasksView *trvTasks;
   ModelColumns mdlColumn;
 
   ComboBoxText *cmbLists;
@@ -147,6 +159,7 @@ private:
   void run_python_script(string script);
   void set_notification(string notification);
   Glib::ustring get_current_list();
+  void update_positions();
 
   void show_task_buttons();
   void hide_task_buttons();
@@ -166,6 +179,8 @@ private:
   virtual bool on_timeout(int timer_number);
   virtual bool on_inactive_timeout(int timer_number);
   virtual void on_cursor_changed();
+  virtual void on_rows_reordered(const Gtk::TreeModel::Path& path, 
+      const Gtk::TreeModel::iterator& iter, int* new_order);
   virtual void on_list_changed();
 
   // callback methods - menu
