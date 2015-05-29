@@ -34,13 +34,23 @@
                            primary key(id)\
                          )"
 
+#define CREATE_SETTINGS "CREATE TABLE \
+                       Settings \
+                         (\
+                           id INTEGER, \
+                           name VARCHAR(200), \
+                           value VARCHAR(200), \
+                           primary key(id), \
+                           unique(name, value) \
+                         )"
+
 #define SELECT_TASK "SELECT * FROM Task WHERE id = %s;"
 
-#define SELECT_ALL_TASK "SELECT * FROM Task WHERE done = 0;" 
+#define SELECT_ALL_TASK "SELECT * FROM Task WHERE done = 0 ORDER BY position asc;" 
 
-#define SELECT_ALL_TASK_BY_LIST "SELECT * FROM Task WHERE done = 0 AND list = '%s';" 
+#define SELECT_ALL_TASK_BY_LIST "SELECT * FROM Task WHERE done = 0 AND list = '%s' ORDER BY position asc;" 
 
-#define SELECT_ALL_TASK_BY_LIST_AND_FILTER "SELECT * FROM Task WHERE done = 0 AND list = '%s' AND name like '%%%s%%';"
+#define SELECT_ALL_TASK_BY_LIST_AND_FILTER "SELECT * FROM Task WHERE done = 0 AND list = '%s' AND name like '%%%s%%' ORDER BY position asc;"
 
 #define INSERT_TASK "INSERT INTO \
                       Task \
@@ -48,13 +58,15 @@
                           name,\
                           pomodoros,\
                           list,\
-                          done \
+                          done, \
+                          position \
                         )\
                       VALUES \
                         (\
                           '%s',\
                            %d, \
                            '%s',\
+                           %d, \
                            %d \
                          );"
 
@@ -64,7 +76,16 @@
                        name = '%s', \
                        pomodoros = %d,\
                        list = '%s',\
-                       done = %d \
+                       done = %d, \
+                       position = %d \
+                     WHERE \
+                       id = %s;"
+
+
+#define UPDATE_TASK_POSITION "UPDATE \
+                       Task \
+                     SET \
+                       position = %d \
                      WHERE \
                        id = %s;"
 
@@ -72,5 +93,11 @@
 #define DELETE_ALL_TASK_LISTS "DELETE FROM Task WHERE list = '%s';"
 
 #define SELECT_ALL_TASK_LISTS "SELECT list FROM Task WHERE done = 0 GROUP BY list ORDER BY list;"
+
+// Migrations
+#define CHECK_SETTINGS "SELECT * FROM Settings;"
+
+#define ADD_TASK_POSITION "ALTER TABLE Task ADD position INTEGER DEFAULT 0;"
+#define INSERT_TASK_POSITION "INSERT INTO Settings (name, value) VALUES ('TASK_POSITION', 'CREATED');"
 
 #endif //_SQLS_

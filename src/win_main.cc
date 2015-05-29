@@ -58,13 +58,14 @@ WinMain::WinMain(BaseObjectType* cobject,
   m_refGlade->get_widget("btnCancelTask", btnCancelTask);
   m_refGlade->get_widget("btnClearList", btnClearList);
   
-  m_refGlade->get_widget("trvTasks", trvTasks);
   m_refGlade->get_widget("cmbLists", cmbLists);
 
   m_refGlade->get_widget("mnuNew", mnuNew);
   m_refGlade->get_widget("mnuQuit", mnuQuit);
   m_refGlade->get_widget("mnuPreferences", mnuPreferences);
   m_refGlade->get_widget("mnuAbout", mnuAbout);
+
+  m_refGlade->get_widget_derived("trvTasks", trvTasks);
 
   treTasks = Gtk::ListStore::create(mdlColumn);
   trvTasks->set_model(treTasks);
@@ -113,6 +114,9 @@ WinMain::WinMain(BaseObjectType* cobject,
   trvTasks->signal_cursor_changed().
             connect(sigc::mem_fun(*this, &WinMain::on_cursor_changed));
 
+  treTasks->signal_rows_reordered().
+    connect(sigc::mem_fun(*this, &WinMain::on_rows_reordered));
+
   cmbLists->signal_changed().
     connect(sigc::mem_fun(*this, &WinMain::on_list_changed));
 
@@ -128,6 +132,10 @@ WinMain::WinMain(BaseObjectType* cobject,
 
   // window events
   signal_check_resize().connect(sigc::mem_fun(*this, &WinMain::on_resize));
+
+  // configure drag and drop of task list
+  trvTasks->set_win_main_ref(this);
+  trvTasks->set_reorderable();
 
   load_lists();
   load_tasks();
@@ -564,6 +572,12 @@ void WinMain::on_cursor_changed()
   }
 }
 
+void WinMain::on_rows_reordered(const Gtk::TreeModel::Path& path, 
+    const Gtk::TreeModel::iterator& iter, int* new_order)
+{
+    notify(_("are you not doing anything?"));
+}
+
 void WinMain::on_list_changed()
 {
   Gtk::TreeModel::iterator iter = cmbLists->get_active();
@@ -623,6 +637,19 @@ void WinMain::on_filter_changed()
   load_tasks();
 }
 
+// [TODO] - run this method in background
+void WinMain::update_positions()
+{
+  int position = 0;
+  Gtk::TreeModel::Children children = treTasks->children();
+  for(Gtk::TreeModel::Children::iterator iter = children.begin();
+      iter != children.end(); ++iter)
+  {
+    Gtk::TreeModel::Row row = *iter;
+    Task::update_position((Glib::ustring)row[mdlColumn.id], position++);
+  }
+}
+
 Glib::ustring WinMain::get_current_time()
 {
   return generate_display();
@@ -652,3 +679,21 @@ Glib::ustring WinMain::get_current_list()
 {
   return cmbLists->get_active_text();
 }
+
+WinMain::TasksView::TasksView(BaseObjectType* cobject, 
+                 const Glib::RefPtr<Gtk::Builder>& refGlade)
+: Gtk::TreeView(cobject),
+  m_refGlade(refGlade)
+{
+}
+
+void WinMain::TasksView::set_win_main_ref(WinMain *win_main)
+{
+  this->win_main = win_main;
+}
+
+void WinMain::TasksView::on_drag_end(const Glib::RefPtr< Gdk::DragContext >& context)
+{
+  win_main->update_positions();
+}
+

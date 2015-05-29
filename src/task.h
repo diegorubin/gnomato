@@ -44,6 +44,7 @@ public:
   void set_pomodoros(int value);
   void set_done(int value);
   void set_list(std::string value);
+  void set_position(int value);
 
   //getters
   std::string get_id();
@@ -51,11 +52,13 @@ public:
   int get_pomodoros();
   int get_done();
   std::string get_list();
+  int get_position();
 
   static std::list<Task*> all();
   static std::list<Task*> all(std::string list);
   static std::list<Task*> all(std::string list, std::string filter);
   static std::list<Task*> all_by_sql(char *sql);
+  static void update_position(std::string id, int position);
     
 private:
   // attributes
@@ -64,6 +67,7 @@ private:
   std::string list;
   int pomodoros;
   int done;
+  int position;
   
 };
 
