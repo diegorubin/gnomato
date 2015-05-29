@@ -58,13 +58,15 @@
                           name,\
                           pomodoros,\
                           list,\
-                          done \
+                          done, \
+                          position \
                         )\
                       VALUES \
                         (\
                           '%s',\
                            %d, \
                            '%s',\
+                           %d, \
                            %d \
                          );"
 
@@ -74,7 +76,16 @@
                        name = '%s', \
                        pomodoros = %d,\
                        list = '%s',\
-                       done = %d \
+                       done = %d, \
+                       position = %d \
+                     WHERE \
+                       id = %s;"
+
+
+#define UPDATE_TASK_POSITION "UPDATE \
+                       Task \
+                     SET \
+                       position = %d \
                      WHERE \
                        id = %s;"
 

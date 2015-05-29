@@ -56,7 +56,7 @@ Task::~Task()
 bool Task::create()
 {
   char sql[SQL_SIZE];
-  sprintf(sql, INSERT_TASK, name.c_str(), pomodoros, list.c_str(), done);
+  sprintf(sql, INSERT_TASK, name.c_str(), pomodoros, list.c_str(), done, position);
   
   return execute_query(sql, load_task);
 }
@@ -73,7 +73,7 @@ bool Task::save()
 {
   char sql[SQL_SIZE];
   sprintf(sql, UPDATE_TASK, name.c_str(), pomodoros, 
-    list.c_str(), done, id.c_str());
+    list.c_str(), done, position, id.c_str());
 
   return execute_query(sql, load_task);
 }
@@ -174,6 +174,18 @@ std::list<Task*> Task::all_by_sql(char *sql)
   execute_query(sql, load_task);
 
   return tasks_aux;
+}
+
+void Task::update_position(std::string id, int position)
+{
+  char sql[SQL_SIZE];
+  sprintf(sql, UPDATE_TASK_POSITION, position, id.c_str());
+  execute_query(sql, load_task);
+}
+
+static int update_position(void *NotUsed, int argc, char **argv, char **azColName)
+{
+  return 0;
 }
 
 static int load_task(void *NotUsed, int argc, char **argv, char **azColName)

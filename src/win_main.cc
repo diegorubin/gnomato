@@ -637,8 +637,17 @@ void WinMain::on_filter_changed()
   load_tasks();
 }
 
+// [TODO] - run this method in background
 void WinMain::update_positions()
 {
+  int position = 0;
+  Gtk::TreeModel::Children children = treTasks->children();
+  for(Gtk::TreeModel::Children::iterator iter = children.begin();
+      iter != children.end(); ++iter)
+  {
+    Gtk::TreeModel::Row row = *iter;
+    Task::update_position((Glib::ustring)row[mdlColumn.id], position++);
+  }
 }
 
 Glib::ustring WinMain::get_current_time()
