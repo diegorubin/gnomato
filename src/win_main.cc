@@ -114,9 +114,6 @@ WinMain::WinMain(BaseObjectType* cobject,
   trvTasks->signal_cursor_changed().
             connect(sigc::mem_fun(*this, &WinMain::on_cursor_changed));
 
-  treTasks->signal_rows_reordered().
-    connect(sigc::mem_fun(*this, &WinMain::on_rows_reordered));
-
   cmbLists->signal_changed().
     connect(sigc::mem_fun(*this, &WinMain::on_list_changed));
 
@@ -570,12 +567,6 @@ void WinMain::on_cursor_changed()
 
     execute("on_change_task");
   }
-}
-
-void WinMain::on_rows_reordered(const Gtk::TreeModel::Path& path, 
-    const Gtk::TreeModel::iterator& iter, int* new_order)
-{
-    notify(_("are you not doing anything?"));
 }
 
 void WinMain::on_list_changed()

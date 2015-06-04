@@ -179,8 +179,6 @@ private:
   virtual bool on_timeout(int timer_number);
   virtual bool on_inactive_timeout(int timer_number);
   virtual void on_cursor_changed();
-  virtual void on_rows_reordered(const Gtk::TreeModel::Path& path, 
-      const Gtk::TreeModel::iterator& iter, int* new_order);
   virtual void on_list_changed();
 
   // callback methods - menu
