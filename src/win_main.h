@@ -80,7 +80,11 @@ private:
     void set_win_main_ref(WinMain *win_main);
     Glib::RefPtr<Gtk::Builder> m_refGlade;
     virtual void on_drag_end(const Glib::RefPtr< Gdk::DragContext >& context);
+    virtual void on_menu_move_task();
+    virtual bool on_button_press_event(GdkEventButton *ev);
+
     WinMain *win_main;
+    Gtk::Menu menu;
   };
 
   // attributes

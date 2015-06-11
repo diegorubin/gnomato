@@ -676,6 +676,20 @@ WinMain::TasksView::TasksView(BaseObjectType* cobject,
 : Gtk::TreeView(cobject),
   m_refGlade(refGlade)
 {
+  Gtk::MenuItem* item;
+
+  item = Gtk::manage(new Gtk::MenuItem(_("_Move"), true));
+  item->signal_activate().connect(
+    sigc::mem_fun(*this, &TasksView::on_menu_move_task));
+  menu.append(*item);
+
+  menu.accelerate(*this);
+  menu.show_all();
+
+#ifndef GLIBMM_DEFAULT_SIGNAL_HANDLERS_ENABLED
+  signal_button_press_event()
+    .connect(sigc::mem_fun(*this, &TasksView::on_button_press_event), false);
+#endif
 }
 
 void WinMain::TasksView::set_win_main_ref(WinMain *win_main)
@@ -688,3 +702,24 @@ void WinMain::TasksView::on_drag_end(const Glib::RefPtr< Gdk::DragContext >& con
   win_main->update_positions();
 }
 
+void WinMain::TasksView::on_menu_move_task()
+{
+  std::cout << "A popup menu item was selected." << std::endl;
+}
+
+bool WinMain::TasksView::on_button_press_event(GdkEventButton* event)
+{
+  bool return_value = false;
+
+  //Call base class, to allow normal handling,
+  //such as allowing the row to be selected by the right-click:
+  return_value = TreeView::on_button_press_event(event);
+
+  //Then do our custom stuff:
+  if( (event->type == GDK_BUTTON_PRESS) && (event->button == 3) )
+  {
+    menu.popup(event->button, event->time);
+  }
+
+  return return_value;
+}
