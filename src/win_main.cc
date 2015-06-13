@@ -364,6 +364,16 @@ void WinMain::hide_task_buttons()
   lblPomodoros->set_text("");
 }
 
+void WinMain::move_task(string list)
+{
+  Task *task = get_current_task();
+  task->set_list(list);
+  task->save();
+
+  load_lists();
+  load_tasks();
+}
+
 void WinMain::execute(string hook)
 {
   if(currentTask) {
@@ -678,10 +688,14 @@ WinMain::TasksView::TasksView(BaseObjectType* cobject,
 {
   Gtk::MenuItem* item;
 
-  item = Gtk::manage(new Gtk::MenuItem(_("_Move"), true));
-  item->signal_activate().connect(
-    sigc::mem_fun(*this, &TasksView::on_menu_move_task));
-  menu.append(*item);
+  std::list<TaskList*> lists = TaskList::all();
+  while(!lists.empty()){
+    item = Gtk::manage(new Gtk::MenuItem(lists.front()->get_name(), true));
+    item->signal_activate().connect(
+      sigc::mem_fun(*this, &TasksView::on_menu_move_task));
+    menu.append(*item);
+    lists.pop_front();
+  }
 
   menu.accelerate(*this);
   menu.show_all();
@@ -704,7 +718,7 @@ void WinMain::TasksView::on_drag_end(const Glib::RefPtr< Gdk::DragContext >& con
 
 void WinMain::TasksView::on_menu_move_task()
 {
-  std::cout << "A popup menu item was selected." << std::endl;
+  win_main->move_task(menu.get_active()->get_label());
 }
 
 bool WinMain::TasksView::on_button_press_event(GdkEventButton* event)

@@ -164,6 +164,7 @@ private:
   void set_notification(string notification);
   Glib::ustring get_current_list();
   void update_positions();
+  void move_task(string list);
 
   void show_task_buttons();
   void hide_task_buttons();
