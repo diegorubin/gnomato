@@ -80,7 +80,11 @@ private:
     void set_win_main_ref(WinMain *win_main);
     Glib::RefPtr<Gtk::Builder> m_refGlade;
     virtual void on_drag_end(const Glib::RefPtr< Gdk::DragContext >& context);
+    virtual void on_menu_move_task();
+    virtual bool on_button_press_event(GdkEventButton *ev);
+
     WinMain *win_main;
+    Gtk::Menu menu;
   };
 
   // attributes
@@ -160,6 +164,7 @@ private:
   void set_notification(string notification);
   Glib::ustring get_current_list();
   void update_positions();
+  void move_task(string list);
 
   void show_task_buttons();
   void hide_task_buttons();
