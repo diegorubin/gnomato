@@ -39,6 +39,8 @@ WinMain::WinMain(BaseObjectType* cobject,
 
   pe = new PythonExecutor();
 
+  set_systray();
+
   // get widgets
   m_refGlade->get_widget("lblDisplay", lblDisplay);
   m_refGlade->get_widget("lblCycle", lblCycle);
@@ -147,9 +149,10 @@ WinMain::~WinMain()
   if(pe != NULL) delete(pe);
 }
 
-void WinMain::set_systray(Glib::RefPtr<StatusIcon> tray)
+void WinMain::set_systray()
 {
-  systray = tray;
+
+  systray = Gtk::StatusIcon::create_from_file(GNOMATO_DATADIR "/tomato.png");
 
   //criacao do menu para o systray
 	actMenu = Gtk::ActionGroup::create();
@@ -289,14 +292,27 @@ void WinMain::load_tasks()
   trvTasks->append_column(_("Title"), mdlColumn.title);
 }
 
+void WinMain::notify_with_gray_icon(const char *message)
+{
+  notify(GNOMATO_DATADIR "/tomato-gray.png", message);
+}
+
+void WinMain::notify_with_green_icon(const char *message)
+{
+  notify(GNOMATO_DATADIR "/tomato-green.png", message);
+}
+
 void WinMain::notify(const char *message)
+{
+  notify(GNOMATO_DATADIR "/tomato.png", message);
+}
+
+void WinMain::notify(const char *icon, const char *message)
 {
   NotifyNotification *notMessage;
   GError *error = NULL;
 
-  notMessage = notify_notification_new("Gnomato",
-                                       message,
-                                       GNOMATO_DATADIR "/tomato.png");
+  notMessage = notify_notification_new("Gnomato", message, icon);
   
   notify_notification_set_timeout(notMessage,3000);
 
@@ -418,6 +434,7 @@ void WinMain::on_button_start_clicked()
     timeout.disconnect();
 
     execute("on_pause");
+    set_gray_icon();
 
   }else{
     started = true;
@@ -425,6 +442,11 @@ void WinMain::on_button_start_clicked()
     timeout = Glib::signal_timeout().connect(timer, 1000);
 
     execute("on_start");
+    if(cycle_number % 2) {
+      set_red_icon();
+    } else {
+      set_green_icon();
+    }
 
   }
 }
@@ -524,8 +546,9 @@ bool WinMain::on_timeout(int timer_number)
 	  if(cycle_number % 2){
       
       execute("on_break");
-
       notify(_("Take a break"));
+      set_red_icon();
+
       inc_current_task();
 	    if(cycle_number == 7)
         time_elapsed = atoi(configs.long_interval.c_str()) * 60;
@@ -536,7 +559,8 @@ bool WinMain::on_timeout(int timer_number)
 
       execute("on_work");
 
-      notify(_("End of break"));
+      notify_with_green_icon(_("End of break"));
+      set_green_icon();
 	    time_elapsed = atoi(configs.work_interval.c_str()) * 60;
     }
 
@@ -557,7 +581,7 @@ bool WinMain::on_timeout(int timer_number)
 bool WinMain::on_inactive_timeout(int timer_number)
 {
   if(!(currentTask && started)) {
-    notify(_("are you not doing anything?"));
+    notify_with_gray_icon(_("are you not doing anything?"));
   }
 
   check_inactive.disconnect();
@@ -679,6 +703,21 @@ Glib::ustring WinMain::get_cycle()
 Glib::ustring WinMain::get_current_list()
 {
   return cmbLists->get_active_text();
+}
+
+void WinMain::set_green_icon()
+{
+  systray->set_from_file(GNOMATO_DATADIR "/tomato-green.png");
+}
+
+void WinMain::set_gray_icon()
+{
+  systray->set_from_file(GNOMATO_DATADIR "/tomato-gray.png");
+}
+
+void WinMain::set_red_icon()
+{
+  systray->set_from_file(GNOMATO_DATADIR "/tomato.png");
 }
 
 WinMain::TasksView::TasksView(BaseObjectType* cobject, 
