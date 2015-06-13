@@ -54,7 +54,10 @@ public:
   void force_show();
   void load_lists();
   void load_tasks();
-  void set_systray(Glib::RefPtr<Gtk::StatusIcon> tray);
+
+  void set_green_icon();
+  void set_red_icon();
+  void set_gray_icon();
 
   Glib::ustring get_current_time();
   Glib::ustring get_current_task_title();
@@ -156,7 +159,12 @@ private:
   std::string generate_cycle();
   void generate_pomodoros();
   void show_task();
+
+  void notify(const char *icon, const char *message);
   void notify(const char *message);
+  void notify_with_green_icon(const char *message);
+  void notify_with_gray_icon(const char *message);
+
   Task* get_current_task();
   void inc_current_task();
   void execute(string script);
@@ -165,6 +173,7 @@ private:
   Glib::ustring get_current_list();
   void update_positions();
   void move_task(string list);
+  void set_systray();
 
   void show_task_buttons();
   void hide_task_buttons();

@@ -317,9 +317,6 @@ int main(int argc, char **argv)
       return 1;
     }
 
-    Glib::RefPtr<Gtk::StatusIcon> systray = 
-      Gtk::StatusIcon::create_from_file(GNOMATO_DATADIR "/tomato.png");
-
     winMain = 0;
     refBuilder->get_widget_derived("winMain", winMain);
 
@@ -345,7 +342,7 @@ int main(int argc, char **argv)
     if(winMain)
     {
       winMain->set_icon_from_file(GNOMATO_DATADIR "/tomato.png");
-      winMain->set_systray(systray);
+      winMain->set_gray_icon();
       winMain->show();
       kit.run();
     }
