@@ -18,10 +18,10 @@ Pomodoro Technique timer for GNU/Linux.
 
 ##Installing
 
-Download the stable tarball [1.0.2](https://github.com/diegorubin/gnomato/releases/download/1.0.2/gnomato-1.0.2.tar.gz)
+Download the stable tarball [1.1.0](https://github.com/diegorubin/gnomato/releases/download/1.1.0/gnomato-1.1.0.tar.gz)
 
-    tar -zxvf gnomato-1.0.2.tar.gz
-    cd gnomato-1.0.2
+    tar -zxvf gnomato-1.1.0.tar.gz
+    cd gnomato-1.1.0
     ./configure
     make
     sudo make install
