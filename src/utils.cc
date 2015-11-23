@@ -22,19 +22,19 @@
 
 #include "utils.h"
 
-const char* home()
+std::string home()
 {
   string file = getenv("HOME");
   file.append("/.gnomato");
 
-  return file.c_str();
+  return file;
 }
 
-const char* dbfile()
+std::string dbfile()
 {
   string file = getenv("HOME");
   file.append(DBPATH);
   file.append("\0");
 
-  return file.c_str();
+  return file;
 }

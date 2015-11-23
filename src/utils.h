@@ -30,7 +30,7 @@ using namespace std;
 
 #define DBPATH "/.gnomato/gnomato1.0.1.db"
 
-const char* home();
-const char* dbfile();
+std::string home();
+std::string dbfile();
 
 #endif // _UTILS_H_

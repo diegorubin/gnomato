@@ -210,7 +210,8 @@ void bootstrap()
 
   // diretorio home nao existe
   if(!*fhome){
-    mkdir(home(),0700);   
+    std::cout << _("Creating home path:") << home().c_str() << std::endl;
+    mkdir(home().c_str(),0700);   
   }
 
   fhome = new std::ifstream(dbfile());
