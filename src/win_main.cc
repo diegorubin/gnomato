@@ -457,7 +457,10 @@ void WinMain::on_button_restart_clicked()
   time_elapsed = atoi(configs.work_interval.c_str())*60;
   
   lblCycle->set_markup(generate_cycle());
-	lblDisplay->set_text(generate_display());
+  lblDisplay->set_text(generate_display());
+  if (started) {
+      set_green_icon();
+  }
 }
 
 void WinMain::on_button_finish_clicked()
