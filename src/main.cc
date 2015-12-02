@@ -206,6 +206,7 @@ void on_name_lost(const Glib::RefPtr<Gio::DBus::Connection>& connection, const G
 
 void bootstrap()
 {
+
   std::ifstream *fhome = new std::ifstream(home());
 
   // diretorio home nao existe
@@ -214,10 +215,11 @@ void bootstrap()
     mkdir(home().c_str(),0700);   
   }
 
-  fhome = new std::ifstream(dbfile());
+  fhome = new std::ifstream(dbfile().c_str());
   
   // database not exists
   if(!*fhome){
+    cout << _("using db path: ") << dbfile().c_str() << std::endl;
    
     std::cout << _("Creating database") << std::endl;
 
@@ -272,7 +274,7 @@ void migrate_database()
 int main(int argc, char **argv)
 {
 
-  sprintf(dbpath, "%s", dbfile());
+  sprintf(dbpath, "%s", dbfile().c_str());
   bootstrap();
   migrate_database();
 
