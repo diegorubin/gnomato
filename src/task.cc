@@ -25,6 +25,7 @@
 const int SQL_SIZE = 10240;
 
 std::list<Task*> tasks_aux;
+unsigned int tasks_total;
 
 Task::Task()
 {
@@ -82,6 +83,14 @@ bool Task::finish()
 {
   done = 1;
   save();
+}
+
+bool Task::exists()
+{
+  char sql[SQL_SIZE];
+  sprintf(sql, TASK_EXISTS, name.c_str(), list.c_str());
+  execute_query(sql, check_exists);
+  return tasks_total == 1;
 }
 
 // setters
@@ -183,8 +192,9 @@ void Task::update_position(std::string id, int position)
   execute_query(sql, load_task);
 }
 
-static int update_position(void *NotUsed, int argc, char **argv, char **azColName)
+static int check_exists(void *NotUsed, int argc, char **argv, char **azColName)
 {
+  tasks_total = atoi(argv[0]);
   return 0;
 }
 

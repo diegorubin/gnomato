@@ -70,6 +70,11 @@ static Glib::ustring introspection_xml =
   "      <arg type='s' name='iso8601' direction='in'/>"
   "      <arg type='s' name='iso8601' direction='out'/>"
   "    </method>"
+  "    <method name='TaskExists'>"
+  "      <arg type='s' name='iso8601' direction='in'/>"
+  "      <arg type='s' name='iso8601' direction='in'/>"
+  "      <arg type='s' name='iso8601' direction='out'/>"
+  "    </method>"
   "  </interface>"
   "</node>";
 
@@ -81,6 +86,7 @@ static void on_method_call(const Glib::RefPtr<Gio::DBus::Connection>& /* connect
   const Glib::VariantContainerBase& parameters,
   const Glib::RefPtr<Gio::DBus::MethodInvocation>& invocation)
 {
+
   if(method_name == "GetRemainer")
   {
     const Glib::Variant<Glib::ustring> time_var =
@@ -139,7 +145,6 @@ static void on_method_call(const Glib::RefPtr<Gio::DBus::Connection>& /* connect
   {
     Glib::Variant<Glib::ustring> param;
 
-    // Get the time string.
     parameters.get_child(param, 0);
     const Glib::ustring list_name = param.get();
     parameters.get_child(param, 1);
@@ -160,6 +165,29 @@ static void on_method_call(const Glib::RefPtr<Gio::DBus::Connection>& /* connect
       Glib::VariantContainerBase::create_tuple(vector);
 
     invocation->return_value(response);
+  }
+  else if(method_name == "TaskExists")
+  {
+
+    Glib::Variant<Glib::ustring> param;
+
+    parameters.get_child(param, 0);
+    const Glib::ustring list_name = param.get();
+    parameters.get_child(param, 1);
+    const Glib::ustring task = param.get();
+
+    Task t;
+    t.set_list(list_name);
+    t.set_name(task);
+
+    const Glib::Variant<Glib::ustring> exists =
+      Glib::Variant<Glib::ustring>::create(t.exists() ? "true" : "false");
+
+    Glib::VariantContainerBase response =
+      Glib::VariantContainerBase::create_tuple(exists);
+
+    invocation->return_value(response);
+
   }
   else
   {

@@ -89,6 +89,11 @@
                      WHERE \
                        id = %s;"
 
+#define TASK_EXISTS "SELECT \
+                      COUNT(id) as TOTAL \
+                     FROM Task \
+                     WHERE name = '%s' AND list = '%s';"
+
 #define DELETE_TASK "DELETE FROM Task WHERE id = %s;"
 #define DELETE_ALL_TASK_LISTS "DELETE FROM Task WHERE list = '%s';"
 

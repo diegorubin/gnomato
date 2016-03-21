@@ -37,6 +37,7 @@ public:
   bool save();
   bool destroy();
   bool finish();
+  bool exists();
 
   //setters
   void set_id(std::string id);
@@ -72,6 +73,7 @@ private:
 };
 
 static int load_task(void *NotUsed, int argc, char **argv, char **azColName);
+static int check_exists(void *NotUsed, int argc, char **argv, char **azColName);
 
 #endif //_TASK_H_
 
