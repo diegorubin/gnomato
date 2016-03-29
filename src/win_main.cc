@@ -319,7 +319,7 @@ void WinMain::notify(const char *icon, const char *message)
   char category[30] = "Gnomato Notifications";
   notify_notification_set_category(notMessage,category);
 
-  notify_notification_set_urgency(notMessage,NOTIFY_URGENCY_CRITICAL);
+  notify_notification_set_urgency(notMessage,NOTIFY_URGENCY_NORMAL);
 
   notify_notification_show(notMessage,&error);
 }
