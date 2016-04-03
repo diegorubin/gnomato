@@ -43,6 +43,9 @@ DialogPreferences::DialogPreferences(BaseObjectType* cobject,
   spnLongBreak->set_value(atoi(this->configs.long_interval.c_str()));
   spnInactiveInterval->set_value(atoi(this->configs.inactive_interval.c_str()));
 
+  // page 2 - plugins
+  m_refGlade->get_widget("trvPlugins", trvPlugins);
+
   // connect signals
   btnCancel->signal_clicked().connect(sigc::mem_fun(*this,&DialogPreferences::on_button_cancel_clicked));
   btnOk->signal_clicked().connect(sigc::mem_fun(*this,&DialogPreferences::on_button_ok_clicked));

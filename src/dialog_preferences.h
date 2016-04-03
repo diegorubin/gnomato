@@ -38,6 +38,24 @@ public:
 protected:
 
 private:
+
+  class ModelColumns : public Gtk::TreeModel::ColumnRecord
+  {
+    public:
+      ModelColumns()
+      { add(title); add(description); }
+      Gtk::TreeModelColumn<Glib::ustring> title;
+      Gtk::TreeModelColumn<Glib::ustring> description;
+  };
+
+  class PluginsView: public Gtk::TreeView
+  {
+    public:
+      PluginsView(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
+
+      Glib::RefPtr<Gtk::Builder> m_refGlade;
+  }
+
   // attributes
   Config configs;
   Button *btnOk;
@@ -48,6 +66,9 @@ private:
   SpinButton *spnLongBreak;
   SpinButton *spnInactiveInterval;
   
+  TasksView *trvPlugins;
+  ModelColumns mdlColumn;
+
   Glib::RefPtr<Gtk::Builder> m_refGlade;
 
   // callback methods
