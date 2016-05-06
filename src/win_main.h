@@ -59,7 +59,6 @@ public:
   void set_green_icon();
   void set_red_icon();
   void set_gray_icon();
-  void set_systray();
 
   Glib::ustring get_current_time();
   Glib::ustring get_current_task_title();
@@ -174,6 +173,7 @@ private:
   Glib::ustring get_current_list();
   void update_positions();
   void move_task(string list);
+  void set_systray();
 
   void show_task_buttons();
   void hide_task_buttons();

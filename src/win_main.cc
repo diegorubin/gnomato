@@ -172,11 +172,10 @@ void WinMain::set_systray()
 
   mnuSystray->add_ui_from_string(ui_info);
 
-  systray_indicator = app_indicator_new("example-simple-client", "indicator-messages", APP_INDICATOR_CATEGORY_APPLICATION_STATUS);
+  systray_indicator = app_indicator_new("gnomato-appindicator", "tomato.png", APP_INDICATOR_CATEGORY_APPLICATION_STATUS);
   app_indicator_set_icon_theme_path(systray_indicator, GNOMATO_DATADIR);
   app_indicator_set_status (systray_indicator, APP_INDICATOR_STATUS_ACTIVE);
   app_indicator_set_menu(systray_indicator, static_cast<Gtk::Menu*>(mnuSystray->get_widget("/Popup"))->gobj());
-  set_red_icon();
 }
 
 // methods implementations
