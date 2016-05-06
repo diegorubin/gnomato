@@ -9,9 +9,9 @@ AC_PROG_INSTALL
 
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_MACRO_DIR([m4])
-
+                   
 PKG_CHECK_MODULES([Gnomato],[gtkmm-3.0 >= 3.0.0, sqlite3, libnotify >= 0.7.3,
-                   python2 >= 2.7])
+                   python2 >= 2.7, appindicator3-0.1 ])
 
 IT_PROG_INTLTOOL([0.35.0])
 

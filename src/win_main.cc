@@ -32,7 +32,6 @@ WinMain::WinMain(BaseObjectType* cobject,
 {
   currentTask = 0;
 
-  showed = false;
   started = false;
 
   configs.load();
@@ -151,9 +150,6 @@ WinMain::~WinMain()
 
 void WinMain::set_systray()
 {
-
-  systray = Gtk::StatusIcon::create_from_file(GNOMATO_DATADIR "/tomato.png");
-
   //criacao do menu para o systray
 	actMenu = Gtk::ActionGroup::create();
   
@@ -176,14 +172,11 @@ void WinMain::set_systray()
 
   mnuSystray->add_ui_from_string(ui_info);
 
-  systray->set_tooltip_text("Gnomato");
- 
-  systray->signal_popup_menu().
-           connect(sigc::mem_fun(*this,&WinMain::on_systray_popup));
-  
-  systray->signal_activate().
-           connect(sigc::mem_fun(*this,&WinMain::on_systray_activated));
-
+  systray_indicator = app_indicator_new("example-simple-client", "indicator-messages", APP_INDICATOR_CATEGORY_APPLICATION_STATUS);
+  app_indicator_set_icon_theme_path(systray_indicator, GNOMATO_DATADIR);
+  app_indicator_set_status (systray_indicator, APP_INDICATOR_STATUS_ACTIVE);
+  app_indicator_set_menu(systray_indicator, static_cast<Gtk::Menu*>(mnuSystray->get_widget("/Popup"))->gobj());
+  set_red_icon();
 }
 
 // methods implementations
@@ -326,7 +319,6 @@ void WinMain::notify(const char *icon, const char *message)
 
 void WinMain::force_show()
 {
-  showed = true;
   show();
 }
 
@@ -403,26 +395,6 @@ void WinMain::run_python_script(string hook)
   PyObject *result = pe->execute(hook, get_current_list(), 
                                  currentTask->get_name());
   set_notification(PythonExecutor::result_as_string(result));
-}
-
-// callbacks implementations
-void WinMain::on_systray_activated()
-{
-  if(showed){
-    showed = false;
-    hide();
-  }else{
-    showed = true;
-    show();
-  }
-}
-
-void WinMain::on_systray_popup(guint button, guint activate_time)
-{
-  Gtk::Menu* pMenu = static_cast<Gtk::Menu*>(mnuSystray->get_widget("/Popup"));
- 
-  if(pMenu)
-    pMenu->popup(button, activate_time);
 }
 
 void WinMain::on_button_start_clicked()
@@ -710,17 +682,17 @@ Glib::ustring WinMain::get_current_list()
 
 void WinMain::set_green_icon()
 {
-  systray->set_from_file(GNOMATO_DATADIR "/tomato-green.png");
+  app_indicator_set_icon (systray_indicator, "tomato-green.png");
 }
 
 void WinMain::set_gray_icon()
 {
-  systray->set_from_file(GNOMATO_DATADIR "/tomato-gray.png");
+  app_indicator_set_icon (systray_indicator, "tomato-gray.png");
 }
 
 void WinMain::set_red_icon()
 {
-  systray->set_from_file(GNOMATO_DATADIR "/tomato.png");
+  app_indicator_set_icon (systray_indicator, "tomato.png");
 }
 
 WinMain::TasksView::TasksView(BaseObjectType* cobject, 

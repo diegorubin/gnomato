@@ -28,6 +28,7 @@
 #include <libnotify/notify.h>
 #include <iostream>
 #include <sstream>
+#include <libappindicator/app-indicator.h>
 
 #include "boost/date_time/posix_time/posix_time.hpp" 
 
@@ -58,6 +59,7 @@ public:
   void set_green_icon();
   void set_red_icon();
   void set_gray_icon();
+  void set_systray();
 
   Glib::ustring get_current_time();
   Glib::ustring get_current_task_title();
@@ -91,7 +93,6 @@ private:
   };
 
   // attributes
-  bool showed;
   bool started;
   unsigned int time_elapsed;
   unsigned int minutes,seconds;
@@ -141,7 +142,7 @@ private:
 
   ComboBoxText *cmbLists;
 
-  Glib::RefPtr<StatusIcon> systray;
+  AppIndicator *systray_indicator;
   Glib::RefPtr<Gtk::UIManager> mnuSystray;
 
   Glib::RefPtr<ActionGroup> actMenu;
@@ -173,15 +174,12 @@ private:
   Glib::ustring get_current_list();
   void update_positions();
   void move_task(string list);
-  void set_systray();
 
   void show_task_buttons();
   void hide_task_buttons();
 
   // callback methods
   virtual void on_filter_changed();
-  virtual void on_systray_activated();
-  virtual void on_systray_popup(guint button, guint activate_time);
   virtual void on_button_start_clicked();
   virtual void on_button_restart_clicked();
   virtual void on_button_finish_clicked();
