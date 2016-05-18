@@ -136,6 +136,9 @@ WinMain::WinMain(BaseObjectType* cobject,
   trvTasks->set_win_main_ref(this);
   trvTasks->set_reorderable();
 
+
+  configure_interface();
+
   load_lists();
   load_tasks();
 
@@ -183,6 +186,35 @@ void WinMain::set_systray()
   
   systray->signal_activate().
            connect(sigc::mem_fun(*this,&WinMain::on_systray_activated));
+
+}
+
+void WinMain::configure_interface() {
+
+  // Timer color
+  Gdk::RGBA timer;
+  timer.set_rgba(
+    configs.colorTimerRed,
+    configs.colorTimerGreen,
+    configs.colorTimerBlue);
+
+  Pango::AttrColor attr_fg = Pango::Attribute::create_attr_foreground(
+    timer.get_red_u(), timer.get_green_u(), timer.get_blue_u());
+
+  Pango::AttrList attrs = lblDisplay->get_attributes();
+  Pango::AttrIter i = attrs.get_iter();
+  Pango::Attribute attr = i.get_attribute(Pango::ATTR_FOREGROUND);
+
+  if (attr.gobj() != nullptr) {
+    // We don't expect any other foreground attribute, so this should be
+    // safe.
+    attrs.change(attr_fg);
+  } else {
+    attrs.insert(attr_fg);
+  }
+
+
+  lblDisplay->set_attributes(attrs);
 
 }
 
@@ -642,6 +674,7 @@ void WinMain::on_menu_edit_preferences()
   dlgPreferences->run();
 
   configs.load();
+  configure_interface();
 }
 
 void WinMain::on_menu_help_about()

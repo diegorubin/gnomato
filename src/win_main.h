@@ -174,6 +174,7 @@ private:
   void update_positions();
   void move_task(string list);
   void set_systray();
+  void configure_interface();
 
   void show_task_buttons();
   void hide_task_buttons();

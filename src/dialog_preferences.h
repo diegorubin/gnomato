@@ -47,7 +47,9 @@ private:
   SpinButton *spnShortBreak;
   SpinButton *spnLongBreak;
   SpinButton *spnInactiveInterval;
-  
+
+  ColorButton *clrTimer;
+
   Glib::RefPtr<Gtk::Builder> m_refGlade;
 
   // callback methods
