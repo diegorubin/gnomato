@@ -34,11 +34,19 @@ Config::~Config()
 
 bool Config::save()
 {
+  // Intervals
   settings->set_string("work-interval", work_interval);
   settings->set_string("break-interval", break_interval);
   settings->set_string("long-interval", long_interval);
   settings->set_string("inactive-interval", inactive_interval);
   settings->set_string("current-list", current_list);
+
+  // Colors
+  settings->set_double("color-timer-red", colorTimerRed);
+  settings->set_double("color-timer-green", colorTimerGreen);
+  settings->set_double("color-timer-blue", colorTimerBlue);
+
+  // State
   settings->set_int("window-width", window_width);
   settings->set_int("window-height", window_height);
   return true;
@@ -46,12 +54,19 @@ bool Config::save()
 
 bool Config::load()
 {
+  // Intervals
   work_interval = settings->get_string("work-interval");
   break_interval = settings->get_string("break-interval");
   long_interval = settings->get_string("long-interval");
   inactive_interval = settings->get_string("inactive-interval");
   current_list = settings->get_string("current-list");
 
+  // Colors
+  colorTimerRed = settings->get_double("color-timer-red");
+  colorTimerGreen = settings->get_double("color-timer-green");
+  colorTimerBlue = settings->get_double("color-timer-blue");
+
+  // State
   window_width = settings->get_int("window-width");
   window_height = settings->get_int("window-height");
 

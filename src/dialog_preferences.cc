@@ -20,6 +20,7 @@
 *
 */
 
+#include <gdkmm/rgba.h>
 #include "dialog_preferences.h"
 
 DialogPreferences::DialogPreferences(BaseObjectType* cobject, 
@@ -42,6 +43,15 @@ DialogPreferences::DialogPreferences(BaseObjectType* cobject,
   spnShortBreak->set_value(atoi(this->configs.break_interval.c_str()));
   spnLongBreak->set_value(atoi(this->configs.long_interval.c_str()));
   spnInactiveInterval->set_value(atoi(this->configs.inactive_interval.c_str()));
+
+  // page 2 - colors
+  m_refGlade->get_widget("clrTimer", clrTimer);
+  Gdk::RGBA timer;
+  timer.set_rgba(
+    configs.colorTimerRed,
+    configs.colorTimerGreen,
+    configs.colorTimerBlue);
+  clrTimer->set_rgba(timer);
 
   // connect signals
   btnCancel->signal_clicked().connect(sigc::mem_fun(*this,&DialogPreferences::on_button_cancel_clicked));
@@ -66,6 +76,11 @@ void DialogPreferences::on_button_ok_clicked()
   configs.long_interval = spnLongBreak->get_text();
   configs.inactive_interval = spnInactiveInterval->get_text();
   
+  Gdk::RGBA timer = clrTimer->get_rgba();
+  configs.colorTimerRed = timer.get_red();
+  configs.colorTimerGreen = timer.get_green();
+  configs.colorTimerBlue = timer.get_blue();
+
   configs.save();
   hide();
 }

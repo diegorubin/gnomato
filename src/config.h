@@ -47,6 +47,8 @@ public:
     string inactive_interval;
     string current_list;
 
+    double colorTimerRed, colorTimerGreen, colorTimerBlue;
+
     int window_width;
     int window_height;
 

@@ -4,6 +4,8 @@
 
   <schema id="com.diegorubin.gnomato" path="/com/diegorubin/gnomato/">
 
+    <!-- Intervals -->
+
     <key name="work-interval" type="s">
       <default>"25"</default>
       <summary>Work Interval</summary>
@@ -35,6 +37,36 @@
         Inactive Interval
       </description>
     </key>
+
+
+    <!-- Colors -->
+
+    <key name="color-timer-red" type="d">
+      <default>0.0</default>
+      <summary>Timer Color -- Red Component</summary>
+      <description>
+        Timer Color -- Red Component
+      </description>
+    </key>
+
+    <key name="color-timer-green" type="d">
+      <default>1.0</default>
+      <summary>Timer Color -- Green Component</summary>
+      <description>
+        Timer Color -- Green Component
+      </description>
+    </key>
+
+    <key name="color-timer-blue" type="d">
+      <default>0.18</default>
+      <summary>Timer Color -- Blue Component</summary>
+      <description>
+        Timer Color -- Blue Component
+      </description>
+    </key>
+
+
+    <!-- State -->
 
     <key name="current-list" type="s">
       <default>""</default>
