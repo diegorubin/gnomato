@@ -1,55 +1,53 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 /*!
-* python_executor.cc
-* Copyright (C) Diego Rubin 2011 <rubin.diego@gmail.com>
-*
-* Gnomato is free software: you can redistribute it and/or modify it
-* under the terms of the GNU General Public License as published by the
-* Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* Gnomato is distributed in the hope that it will be useful, but
-* WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program. If not, see <http://www.gnu.org/licenses/>.
-*
-* Author: Diego Rubin <rubin.diego@gmail.com>
-*
-*/
+ * python_executor.cc
+ * Copyright (C) Diego Rubin 2011 <rubin.diego@gmail.com>
+ *
+ * Gnomato is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Gnomato is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Author: Diego Rubin <rubin.diego@gmail.com>
+ *
+ */
 
 #include "python_executor.h"
 
-PythonExecutor::PythonExecutor()
-{
+PythonExecutor::PythonExecutor() {
   Py_Initialize();
 
   string python_script = home();
   python_script.append("/scripts");
-  
+
   PyObject *sysPath = PySys_GetObject("path");
-  PyObject *path = PyString_FromString(python_script.c_str());
+
+  PyObject *path = PyUnicode_FromString(python_script.c_str());
+
   PyList_Insert(sysPath, 0, path);
   module = PyImport_ImportModule("gnomato");
 
-  if(module != NULL) {
+  if (module != NULL) {
     klass = PyObject_GetAttrString(module, "Gnomato");
     gnomato = PyObject_CallObject(klass, NULL);
   }
 }
 
-PythonExecutor::~PythonExecutor()
-{
-  Py_Finalize();
-}
+PythonExecutor::~PythonExecutor() { Py_Finalize(); }
 
-PyObject *PythonExecutor::execute(string hook, string list_name, string title_task)
-{
+PyObject *PythonExecutor::execute(string hook, string list_name,
+                                  string title_task) {
   PyObject *result = NULL;
 
-  if((module != NULL) && (klass != NULL) && (gnomato != NULL)) {
+  if ((module != NULL) && (klass != NULL) && (gnomato != NULL)) {
     char *_hook = new char[hook.length() + 1];
     strcpy(_hook, hook.c_str());
 
@@ -61,20 +59,10 @@ PyObject *PythonExecutor::execute(string hook, string list_name, string title_ta
 
     result = PyObject_CallMethod(gnomato, _hook, "ss", _list_name, _title_task);
 
-    delete [] _hook;
-    delete [] _list_name;
-    delete [] _title_task;
+    delete[] _hook;
+    delete[] _list_name;
+    delete[] _title_task;
   }
 
   return result;
 }
-
-std::string PythonExecutor::result_as_string(PyObject *result)
-{
-  if(result != NULL) {
-    return PyString_AsString(result);
-  } else {
-    return "";
-  }
-}
-

@@ -1,6 +1,6 @@
-AC_INIT([Gnomato],[1.0.2],[rubin.diego@gmail.com])
+AC_INIT([Gnomato],[1.0.3],[rubin.diego@gmail.com])
 
-AM_INIT_AUTOMAKE(gnomato,1.0.2)
+AM_INIT_AUTOMAKE(gnomato,1.0.3)
 
 AC_PROG_CC
 AC_PROG_CXX
@@ -11,7 +11,7 @@ AC_CONFIG_SRCDIR([src])
 AC_CONFIG_MACRO_DIR([m4])
 
 PKG_CHECK_MODULES([Gnomato],[gtkmm-3.0 >= 3.0.0, sqlite3, libnotify >= 0.7.3,
-                   python2 >= 2.7])
+                   python3 >= 3.5])
 
 IT_PROG_INTLTOOL([0.35.0])
 
