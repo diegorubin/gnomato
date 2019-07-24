@@ -1,4 +1,5 @@
-#Gnomato
+Gnomato
+=======
 
 [![Join the chat at https://gitter.im/diegorubin/gnomato](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/diegorubin/gnomato?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -8,7 +9,7 @@ Pomodoro Technique timer for GNU/Linux.
 
 ![Gnomato](http://diegorubin.com/images/gnomato "Gnomato Interface")
 
-##Requirements
+## Requirements
 
 * Boost
 * Gtkmm 3.0
@@ -16,7 +17,7 @@ Pomodoro Technique timer for GNU/Linux.
 * Python 2.7
 * Sqlite3
 
-##Installing
+## Installing
 
 Download the stable tarball [1.1.0](https://github.com/diegorubin/gnomato/releases/download/1.1.0/gnomato-1.1.0.tar.gz)
 
@@ -26,7 +27,7 @@ Download the stable tarball [1.1.0](https://github.com/diegorubin/gnomato/releas
     make
     sudo make install
 
-##Building
+## Building
 
 To build the project you need to have installed all development libraries 
 of the projects listed in Requirements.
@@ -37,7 +38,7 @@ To generate `configure` script and `Makefiles` execute:
 
     autoreconf -vi
 
-##Contacting
+## Contacting
 
 To report bugs send email to rubin.diego[at]gmail.com or
 create issues in this github repository.
