@@ -1,4 +1,5 @@
 .deps/
+.nproject
 .dirstamp
 *.o
 *.swp
