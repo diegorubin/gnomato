@@ -1,6 +1,6 @@
-AC_INIT([Gnomato],[1.0.3],[rubin.diego@gmail.com])
+AC_INIT([Gnomato],[1.2.0],[rubin.diego@gmail.com])
 
-AM_INIT_AUTOMAKE(gnomato,1.0.3)
+AM_INIT_AUTOMAKE(gnomato,1.2.0)
 
 AC_PROG_CC
 AC_PROG_CXX

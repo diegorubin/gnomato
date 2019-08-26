@@ -24,7 +24,7 @@
 
 WinMain::WinMain(BaseObjectType *cobject,
                  const Glib::RefPtr<Gtk::Builder> &refGlade)
-    : Gtk::Window(cobject), m_refGlade(refGlade),
+    : Gtk::ShortcutsWindow(cobject), m_refGlade(refGlade),
 
       lblDisplay(0)
 
