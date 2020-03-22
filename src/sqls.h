@@ -32,7 +32,7 @@
                            done INTEGER, \
                            list VARCHAR(200), \
                            primary key(id)\
-                         )"
+)"
 
 #define CREATE_SETTINGS "CREATE TABLE \
                        Settings \
@@ -42,13 +42,23 @@
                            value VARCHAR(200), \
                            primary key(id), \
                            unique(name, value) \
-                         )"
+)"
+
+#define CREATE_WORLOG_ENTRIES "CREATE TABLE \
+                       WorkLogEntries \
+                         (\
+                           task_id INTEGER, \
+                           start_date_entry VARCHAR(10), \
+                           end_date_entry VARCHAR(10), \
+                           start_hour_entry INTEGER, \
+                           end_hour_entry INTEGER \
+)"
 
 #define SELECT_TASK "SELECT * FROM Task WHERE id = %s;"
 
-#define SELECT_ALL_TASK "SELECT * FROM Task WHERE done = 0 ORDER BY position asc;" 
+#define SELECT_ALL_TASK "SELECT * FROM Task WHERE done = 0 ORDER BY position asc;"
 
-#define SELECT_ALL_TASK_BY_LIST "SELECT * FROM Task WHERE done = 0 AND list = '%s' ORDER BY position asc;" 
+#define SELECT_ALL_TASK_BY_LIST "SELECT * FROM Task WHERE done = 0 AND list = '%s' ORDER BY position asc;"
 
 #define SELECT_ALL_TASK_BY_LIST_AND_FILTER "SELECT * FROM Task WHERE done = 0 AND list = '%s' AND name like '%%%s%%' ORDER BY position asc;"
 
@@ -68,7 +78,7 @@
                            '%s',\
                            %d, \
                            %d \
-                         );"
+);"
 
 #define UPDATE_TASK "UPDATE \
                        Task \
@@ -79,7 +89,7 @@
                        done = %d, \
                        position = %d \
                      WHERE \
-                       id = %s;"
+id = %s;"
 
 
 #define UPDATE_TASK_POSITION "UPDATE \
@@ -87,12 +97,12 @@
                      SET \
                        position = %d \
                      WHERE \
-                       id = %s;"
+id = %s;"
 
 #define TASK_EXISTS "SELECT \
                       COUNT(id) as TOTAL \
                      FROM Task \
-                     WHERE name = '%s' AND list = '%s';"
+WHERE name = '%s' AND list = '%s';"
 
 #define DELETE_TASK "DELETE FROM Task WHERE id = %s;"
 #define DELETE_ALL_TASK_LISTS "DELETE FROM Task WHERE list = '%s';"
@@ -101,6 +111,7 @@
 
 // Migrations
 #define CHECK_SETTINGS "SELECT * FROM Settings;"
+#define CHECK_WORKLOG_ENTRIES "SELECT * FROM WorkLogEntries;"
 
 #define ADD_TASK_POSITION "ALTER TABLE Task ADD position INTEGER DEFAULT 0;"
 #define INSERT_TASK_POSITION "INSERT INTO Settings (name, value) VALUES ('TASK_POSITION', 'CREATED');"

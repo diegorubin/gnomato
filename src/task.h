@@ -23,57 +23,88 @@
 #ifndef _TASK_H_
 #define _TASK_H_
 
-#include "database.h"
 #include <list>
 
-class Task : public Database {
-public:
-  Task();
-  Task(std::string id);
-  virtual ~Task();
+#include "boost/date_time/gregorian/gregorian.hpp"
+#include "boost/date_time/posix_time/posix_time.hpp"
+#include "database.h"
 
-  //methods
-  bool create();
-  bool save();
-  bool destroy();
-  bool finish();
-  bool exists();
+using namespace boost::gregorian;
+using namespace boost::posix_time;
 
-  //setters
-  void set_id(std::string id);
-  void set_name(std::string value);
-  void set_pomodoros(int value);
-  void set_done(int value);
-  void set_list(std::string value);
-  void set_position(int value);
+class WorkLogEntry {
+    public:
+        WorkLogEntry(std::string task_id);
+        WorkLogEntry(std::string task_id, std::string start_date_entry, int start_hour_entry);
+        WorkLogEntry(std::string task_id, std::string start_date_entry, int start_hour_entry, std::string end_date_entry, int end_hour_entry);
 
-  //getters
-  std::string get_id();
-  std::string get_name();
-  int get_pomodoros();
-  int get_done();
-  std::string get_list();
-  int get_position();
+        //methods
+        bool finish();
 
-  static std::list<Task*> all();
-  static std::list<Task*> all(std::string list);
-  static std::list<Task*> all(std::string list, std::string filter);
-  static std::list<Task*> all_by_sql(char *sql);
-  static void update_position(std::string id, int position);
-    
-private:
-  // attributes
-  std::string id;
-  std::string name;
-  std::string list;
-  int pomodoros;
-  int done;
-  int position;
-  
+        //getters
+        std::string get_task_id();
+        std::string get_start_date_entry();
+        std::string get_end_date_entry();
+        int get_start_hour_entry();
+        int get_end_hour_entry();
+
+    private:
+        std::string task_id;
+        std::string start_date_entry;
+        std::string end_date_entry;
+        int start_hour_entry;
+        int end_hour_entry;
+
+        bool save();
 };
 
-static int load_task(void *NotUsed, int argc, char **argv, char **azColName);
-static int check_exists(void *NotUsed, int argc, char **argv, char **azColName);
+class Task : public Database {
+    public:
+        Task();
+        Task(std::string id);
+        virtual ~Task();
+
+        //methods
+        bool create();
+        bool save();
+        bool destroy();
+        bool finish();
+        bool exists();
+
+        //setters
+        void set_id(std::string id);
+        void set_name(std::string value);
+        void set_pomodoros(int value);
+        void set_done(int value);
+        void set_list(std::string value);
+        void set_position(int value);
+
+        //getters
+        std::string get_id();
+        std::string get_name();
+        int get_pomodoros();
+        int get_done();
+        std::string get_list();
+        int get_position();
+
+        static std::list<Task*> all();
+        static std::list<Task*> all(std::string list);
+        static std::list<Task*> all(std::string list, std::string filter);
+        static std::list<Task*> all_by_sql(char* sql);
+        static void update_position(std::string id, int position);
+
+    private:
+        // attributes
+        std::string id;
+        std::string name;
+        std::string list;
+        int pomodoros;
+        int done;
+        int position;
+
+};
+
+static int load_task(void* NotUsed, int argc, char** argv, char** azColName);
+static int check_exists(void* NotUsed, int argc, char** argv, char** azColName);
 
 #endif //_TASK_H_
-
