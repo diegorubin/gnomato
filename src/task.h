@@ -32,7 +32,7 @@
 using namespace boost::gregorian;
 using namespace boost::posix_time;
 
-class WorkLogEntry {
+class WorkLogEntry : public Database {
     public:
         WorkLogEntry(std::string task_id);
         WorkLogEntry(std::string task_id, std::string start_date_entry, int start_hour_entry);
@@ -55,6 +55,7 @@ class WorkLogEntry {
         int start_hour_entry;
         int end_hour_entry;
 
+        // methods
         bool save();
 };
 
@@ -65,6 +66,8 @@ class Task : public Database {
         virtual ~Task();
 
         //methods
+        void start();
+        void pause();
         bool create();
         bool save();
         bool destroy();
@@ -101,6 +104,7 @@ class Task : public Database {
         int pomodoros;
         int done;
         int position;
+        WorkLogEntry* workLlogEntry;
 
 };
 

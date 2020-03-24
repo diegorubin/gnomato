@@ -80,13 +80,17 @@ bool WorkLogEntry::finish() {
 
 bool WorkLogEntry::save() {
     char sql[SQL_SIZE];
-    return true;
+    sprintf(sql, INSERT_WORK_LOG_ENTRY, task_id.c_str(), start_date_entry.c_str(),
+            start_hour_entry, end_date_entry.c_str(), end_hour_entry);
+
+    return execute_query(sql, load_task);
 }
 
 Task::Task() {
     pomodoros = 0;
     done = 0;
     position = 0;
+    workLlogEntry = NULL;
 }
 
 Task::Task(std::string id) {
@@ -105,6 +109,14 @@ Task::Task(std::string id) {
 }
 
 Task::~Task() {
+}
+
+void Task::start() {
+    workLlogEntry = new WorkLogEntry(id);
+}
+
+void Task::pause() {
+    workLlogEntry->finish();
 }
 
 bool Task::create() {

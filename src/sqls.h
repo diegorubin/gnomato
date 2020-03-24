@@ -62,6 +62,25 @@
 
 #define SELECT_ALL_TASK_BY_LIST_AND_FILTER "SELECT * FROM Task WHERE done = 0 AND list = '%s' AND name like '%%%s%%' ORDER BY position asc;"
 
+#define INSERT_WORK_LOG_ENTRY "INSERT INTO \
+                      WorkLogEntries \
+                        ( \
+                          task_id,\
+                          start_date_entry,\
+                          start_hour_entry,\
+                          end_date_entry, \
+                          end_hour_entry\
+                        )\
+                      VALUES \
+                        (\
+                          '%s',\
+                          '%s',\
+                          %d, \
+                          '%s',\
+                          %d \
+);"
+
+
 #define INSERT_TASK "INSERT INTO \
                       Task \
                         ( \
