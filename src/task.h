@@ -39,6 +39,8 @@ class WorkLogEntry : public Database {
         WorkLogEntry(std::string task_id, std::string start_date_entry, int start_hour_entry, std::string end_date_entry, int end_hour_entry);
 
         //methods
+        bool create();
+        bool update();
         bool finish();
 
         //getters
@@ -73,6 +75,7 @@ class Task : public Database {
         bool destroy();
         bool finish();
         bool exists();
+        void update();
 
         //setters
         void set_id(std::string id);

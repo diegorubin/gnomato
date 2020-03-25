@@ -420,10 +420,15 @@ void WinMain::move_task(string list) {
 void WinMain::log_work(string hook) {
     if (hook.compare("on_start") == 0) {
         currentTask->start();
-
     }
     if (hook.compare("on_pause") == 0) {
         currentTask->pause();
+    }
+    if (hook.compare("on_break") == 0) {
+        currentTask->update();
+    }
+    if (hook.compare("on_finish") == 0) {
+        currentTask->update();
     }
 }
 

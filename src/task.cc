@@ -68,6 +68,16 @@ WorkLogEntry::WorkLogEntry(std::string task_id, std::string start_date_entry, in
     this->end_hour_entry = end_hour_entry;
 }
 
+bool WorkLogEntry::update() {
+    ptime now = second_clock::local_time();
+    date today = now.date();
+    time_duration duration = now.time_of_day();
+
+    this->end_date_entry = format(today);
+    this->end_hour_entry = get_position_in_day(duration);
+    return this->save();
+}
+
 bool WorkLogEntry::finish() {
     ptime now = second_clock::local_time();
     date today = now.date();
@@ -78,10 +88,18 @@ bool WorkLogEntry::finish() {
     return this->save();
 }
 
-bool WorkLogEntry::save() {
+bool WorkLogEntry::create() {
     char sql[SQL_SIZE];
     sprintf(sql, INSERT_WORK_LOG_ENTRY, task_id.c_str(), start_date_entry.c_str(),
-            start_hour_entry, end_date_entry.c_str(), end_hour_entry);
+            start_hour_entry);
+
+    return execute_query(sql, load_task);
+}
+
+bool WorkLogEntry::save() {
+    char sql[SQL_SIZE];
+    sprintf(sql, UPDATE_WORK_LOG_ENTRY, end_date_entry.c_str(), end_hour_entry,
+            task_id.c_str(), start_date_entry.c_str(), start_hour_entry);
 
     return execute_query(sql, load_task);
 }
@@ -113,6 +131,11 @@ Task::~Task() {
 
 void Task::start() {
     workLlogEntry = new WorkLogEntry(id);
+    workLlogEntry->create();
+}
+
+void Task::update() {
+    workLlogEntry->update();
 }
 
 void Task::pause() {

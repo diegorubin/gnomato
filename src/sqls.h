@@ -67,19 +67,22 @@
                         ( \
                           task_id,\
                           start_date_entry,\
-                          start_hour_entry,\
-                          end_date_entry, \
-                          end_hour_entry\
+                          start_hour_entry\
                         )\
                       VALUES \
                         (\
                           '%s',\
                           '%s',\
-                          %d, \
-                          '%s',\
                           %d \
 );"
 
+#define UPDATE_WORK_LOG_ENTRY "UPDATE \
+                       WorkLogEntries \
+                     SET \
+                       end_date_entry = '%s', \
+                       end_hour_entry = %d \
+                     WHERE \
+task_id = '%s' AND start_date_entry = '%s' AND start_hour_entry = %d;"
 
 #define INSERT_TASK "INSERT INTO \
                       Task \
