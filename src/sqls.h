@@ -72,7 +72,8 @@
 #define SELECT_WORKLOG_ENTRIES_BY_DATE                                         \
   "SELECT task_id, start_date_entry, start_hour_entry, end_date_entry, "       \
   "end_hour_entry, name FROM WorkLogEntries INNER JOIN Task ON Task.id = "     \
-  "WorkLogEntries.task_id WHERE start_date_entry = '%s';"
+  "WorkLogEntries.task_id WHERE start_date_entry = '%s' ORDER BY "             \
+  "start_hour_entry DESC;"
 
 #define INSERT_WORK_LOG_ENTRY                                                  \
   "INSERT INTO \

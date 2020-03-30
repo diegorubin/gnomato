@@ -44,7 +44,6 @@ public:
   // methods
   bool create();
   bool update();
-  bool finish();
 
   // setters
   void set_task_name(std::string task_name);

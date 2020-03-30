@@ -30,6 +30,7 @@ unsigned int tasks_total;
 
 const std::locale date_format(std::locale::classic(),
                               new boost::gregorian::date_facet("%Y-%m-%d"));
+
 std::string format(const boost::gregorian::date &date) {
   std::ostringstream os;
   os.imbue(date_format);
@@ -77,16 +78,6 @@ WorkLogEntry::WorkLogEntry(std::string task_id, std::string start_date_entry,
 }
 
 bool WorkLogEntry::update() {
-  ptime now = second_clock::local_time();
-  date today = now.date();
-  time_duration duration = now.time_of_day();
-
-  this->end_date_entry = format(today);
-  this->end_hour_entry = get_position_in_day(duration);
-  return this->save();
-}
-
-bool WorkLogEntry::finish() {
   ptime now = second_clock::local_time();
   date today = now.date();
   time_duration duration = now.time_of_day();
@@ -173,9 +164,11 @@ void Task::start() {
   workLlogEntry->create();
 }
 
-void Task::update() { workLlogEntry->update(); }
-
-void Task::pause() { workLlogEntry->finish(); }
+void Task::update() {
+  if (workLlogEntry != NULL) {
+    workLlogEntry->update();
+  }
+}
 
 bool Task::create() {
   char sql[SQL_SIZE];
