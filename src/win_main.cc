@@ -438,8 +438,7 @@ void WinMain::log_work(string hook) {
 void WinMain::execute(string hook) {
   if (currentTask) {
     log_work(hook);
-    Glib::Threads::Thread::create(
-        sigc::bind(sigc::mem_fun(this, &WinMain::run_python_script), hook));
+    run_python_script(hook);
   }
 }
 
