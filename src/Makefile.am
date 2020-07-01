@@ -15,6 +15,7 @@ gnomato_CPPFLAGS = \
 gnomato_SOURCES = main.cc \
 									win_main.cc \
 									dialog_preferences.cc \
+									dialog_work_log_entries.cc \
 									dialog_task.cc \
 									database.cc \
 									task.cc \

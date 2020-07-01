@@ -64,6 +64,7 @@ WinMain::WinMain(BaseObjectType *cobject,
   m_refGlade->get_widget("mnuNew", mnuNew);
   m_refGlade->get_widget("mnuQuit", mnuQuit);
   m_refGlade->get_widget("mnuPreferences", mnuPreferences);
+  m_refGlade->get_widget("mnuWorkLogEntries", mnuWorkLogEntries);
   m_refGlade->get_widget("mnuAbout", mnuAbout);
 
   m_refGlade->get_widget_derived("trvTasks", trvTasks);
@@ -125,6 +126,8 @@ WinMain::WinMain(BaseObjectType *cobject,
       sigc::mem_fun(*this, &WinMain::on_menu_file_quit));
   mnuPreferences->signal_activate().connect(
       sigc::mem_fun(*this, &WinMain::on_menu_edit_preferences));
+  mnuWorkLogEntries->signal_activate().connect(
+      sigc::mem_fun(*this, &WinMain::on_menu_edit_work_log_entries));
   mnuAbout->signal_activate().connect(
       sigc::mem_fun(*this, &WinMain::on_menu_help_about));
 
@@ -667,6 +670,13 @@ void WinMain::on_menu_edit_preferences() {
 
   configs.load();
   configure_interface();
+}
+
+void WinMain::on_menu_edit_work_log_entries() {
+  DialogWorkLogEntries *dlgWorkLogEntries = 0;
+
+  m_refGlade->get_widget_derived("DialogWorkLogEntries", dlgWorkLogEntries);
+  dlgWorkLogEntries->run();
 }
 
 void WinMain::on_menu_help_about() {
