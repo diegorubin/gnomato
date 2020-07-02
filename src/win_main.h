@@ -36,6 +36,7 @@
 #include "dialog_task.h"
 #include "dialog_work_log_entries.h"
 #include "python_executor.h"
+#include "sound_player.h"
 #include "task.h"
 #include "task_list.h"
 #include "utils.h"

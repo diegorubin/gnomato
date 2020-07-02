@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 /*!
- * dialog_preferences.h
- * Copyright (C) Diego Rubin 2011 <rubin.diego@gmail.com>
+ * sound_player.h
+ * Copyright (C) Diego Rubin 2020 <rubin.diego@gmail.com>
  *
  * Gnomato is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -20,42 +20,30 @@
  *
  */
 
-#ifndef _WIN_PREFERENCES_H_
-#define _WIN_PREFERENCES_H_
+#ifndef _SOUND_PLAYER_H_
+#define _SOUND_PLAYER_H_
 
-#include <gdkmm/rgba.h>
-#include <gtkmm.h>
+#include <glibmm/i18n.h>
+#include <gsound.h>
+#include <iostream>
+#include <sstream>
 
-#include "config.h"
+using namespace std;
 
-using namespace Gtk;
-
-class DialogPreferences : public Gtk::Dialog {
+class SoundPlayer {
 public:
-  DialogPreferences(BaseObjectType *cobject,
-                    const Glib::RefPtr<Gtk::Builder> &refGlade);
+  SoundPlayer(string file);
+  SoundPlayer();
 
-  virtual ~DialogPreferences();
+  virtual ~SoundPlayer();
 
-protected:
+  // methods
+  void play();
+
 private:
   // attributes
-  Config configs;
-  Button *btnOk;
-  Button *btnCancel;
-
-  SpinButton *spnWork;
-  SpinButton *spnShortBreak;
-  SpinButton *spnLongBreak;
-  SpinButton *spnInactiveInterval;
-
-  ColorButton *clrTimer;
-
-  Glib::RefPtr<Gtk::Builder> m_refGlade;
-
-  // callback methods
-  virtual void on_button_cancel_clicked();
-  virtual void on_button_ok_clicked();
+  string file;
+  GSoundContext *gsound;
 };
 
-#endif // WIN_PREFERENCES_H_
+#endif // SOUND_PLAYER

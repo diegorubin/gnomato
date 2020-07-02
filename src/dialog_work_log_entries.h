@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 /*!
- * dialog_preferences.h
+ * dialog_work_log_entries.h
  * Copyright (C) Diego Rubin 2020 <rubin.diego@gmail.com>
  *
  * Gnomato is free software: you can redistribute it and/or modify it

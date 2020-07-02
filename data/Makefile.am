@@ -3,6 +3,7 @@ ui_DATA = \
 	tomato.png \
 	tomato-green.png \
 	tomato-gray.png \
+	alert.ogg \
 	gnomato.ui
 
 gsettings_SCHEMAS = com.diegorubin.gnomato.gschema.xml

@@ -319,7 +319,6 @@ void migrate_database() {
 }
 
 int main(int argc, char **argv) {
-
   sprintf(dbpath, "%s", dbfile().c_str());
   bootstrap();
   migrate_database();

@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 2; tab-width: 2 -*- */
 /*!
- * dialog_work_log_entries.cc
+ * sound_player.cc
  * Copyright (C) Diego Rubin 2020 <rubin.diego@gmail.com>
  *
  * Gnomato is free software: you can redistribute it and/or modify it
@@ -20,27 +20,22 @@
  *
  */
 
-#include "dialog_work_log_entries.h"
+#include "sound_player.h"
 
-DialogWorkLogEntries::DialogWorkLogEntries(
-    BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refGlade)
-    : Gtk::Dialog(cobject), m_refGlade(refGlade) {
-
-  // buttons
-  m_refGlade->get_widget("btnWorkLogSave", btnOk);
-  m_refGlade->get_widget("btnWorkLogCancel", btnCancel);
-
-  // connect signals
-  btnCancel->signal_clicked().connect(
-      sigc::mem_fun(*this, &DialogWorkLogEntries::on_button_cancel_clicked));
-  btnOk->signal_clicked().connect(
-      sigc::mem_fun(*this, &DialogWorkLogEntries::on_button_ok_clicked));
-
-  show_all();
+SoundPlayer::SoundPlayer(string file) : file(file) {
+  gsound = gsound_context_new(NULL, NULL);
 }
 
-DialogWorkLogEntries::~DialogWorkLogEntries() {}
+SoundPlayer::SoundPlayer() : SoundPlayer(GNOMATO_DATADIR "/alert.ogg") {}
 
-void DialogWorkLogEntries::on_button_cancel_clicked() { hide(); }
+SoundPlayer::~SoundPlayer() {}
 
-void DialogWorkLogEntries::on_button_ok_clicked() { hide(); }
+void SoundPlayer::play() {
+  if (!gsound) {
+    cout << _("Error on load gsound context") << endl;
+    return;
+  }
+
+  gsound_context_play_simple(gsound, NULL, NULL, GSOUND_ATTR_MEDIA_FILENAME,
+                             "phone-incoming-call", NULL);
+}

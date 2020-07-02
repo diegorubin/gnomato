@@ -345,6 +345,8 @@ void WinMain::notify(const char *message) {
 }
 
 void WinMain::notify(const char *icon, const char *message) {
+  SoundPlayer soundPlayer;
+
   NotifyNotification *notMessage;
   GError *error = NULL;
 
@@ -357,6 +359,7 @@ void WinMain::notify(const char *icon, const char *message) {
 
   notify_notification_set_urgency(notMessage, NOTIFY_URGENCY_NORMAL);
 
+  soundPlayer.play();
   notify_notification_show(notMessage, &error);
 }
 
