@@ -23,7 +23,10 @@
 #ifndef _WIN_WORK_LOG_ENTRIES_H_
 #define _WIN_WORK_LOG_ENTRIES_H_
 
+#include <glibmm/i18n.h>
 #include <gtkmm.h>
+
+#include "task.h"
 
 using namespace Gtk;
 
@@ -34,17 +37,57 @@ public:
 
   virtual ~DialogWorkLogEntries();
 
-protected:
 private:
-  // attributes
-  Button *btnOk;
-  Button *btnCancel;
+  class ModelColumns : public Gtk::TreeModel::ColumnRecord {
+  public:
+    ModelColumns() {
+      add(task_id);
+      add(task_name);
+      add(start_date_entry);
+      add(start_hour_entry);
+      add(end_date_entry);
+      add(end_hour_entry);
+    }
+    Gtk::TreeModelColumn<Glib::ustring> task_id;
+    Gtk::TreeModelColumn<Glib::ustring> task_name;
+    Gtk::TreeModelColumn<Glib::ustring> start_date_entry;
+    Gtk::TreeModelColumn<Glib::ustring> start_hour_entry;
+    Gtk::TreeModelColumn<Glib::ustring> end_date_entry;
+    Gtk::TreeModelColumn<Glib::ustring> end_hour_entry;
+  };
+
+  class WorkLogEntriesView : public Gtk::TreeView {
+
+  public:
+    WorkLogEntriesView(BaseObjectType *cobject,
+                       const Glib::RefPtr<Gtk::Builder> &refGlade);
+
+    void set_win_main_ref(DialogWorkLogEntries *dlgWorkLogEntries);
+    Glib::RefPtr<Gtk::Builder> m_refGlade;
+
+    DialogWorkLogEntries *dlgWorkLogEntries;
+    Gtk::Menu menu;
+  };
+
+  // widgets
+  Button *btnClose;
+
+  ComboBoxText *cmbWorkDays;
+
+  WorkLogEntriesView *trvEntries;
+  ModelColumns mdlColumn;
+
+  Glib::RefPtr<Gtk::ListStore> treEntries;
 
   Glib::RefPtr<Gtk::Builder> m_refGlade;
 
+  // methods
+  void load_days();
+  void load_entries();
+  std::string format_hour(int hour);
+
   // callback methods
-  virtual void on_button_cancel_clicked();
-  virtual void on_button_ok_clicked();
+  virtual void on_button_close_clicked();
 };
 
 #endif // WIN_WORK_LOG_ENTRIES

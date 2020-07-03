@@ -26,21 +26,93 @@ DialogWorkLogEntries::DialogWorkLogEntries(
     BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refGlade)
     : Gtk::Dialog(cobject), m_refGlade(refGlade) {
 
-  // buttons
-  m_refGlade->get_widget("btnWorkLogSave", btnOk);
-  m_refGlade->get_widget("btnWorkLogCancel", btnCancel);
+  m_refGlade->get_widget("cmbWorkDays", cmbWorkDays);
+  m_refGlade->get_widget("btnWorkLogClose", btnClose);
+
+  m_refGlade->get_widget_derived("trvWorkLogEntries", trvEntries);
+
+  treEntries = Gtk::ListStore::create(mdlColumn);
+  trvEntries->set_model(treEntries);
 
   // connect signals
-  btnCancel->signal_clicked().connect(
-      sigc::mem_fun(*this, &DialogWorkLogEntries::on_button_cancel_clicked));
-  btnOk->signal_clicked().connect(
-      sigc::mem_fun(*this, &DialogWorkLogEntries::on_button_ok_clicked));
+  btnClose->signal_clicked().connect(
+      sigc::mem_fun(*this, &DialogWorkLogEntries::on_button_close_clicked));
 
+  load_days();
+  load_entries();
   show_all();
 }
 
 DialogWorkLogEntries::~DialogWorkLogEntries() {}
 
-void DialogWorkLogEntries::on_button_cancel_clicked() { hide(); }
+DialogWorkLogEntries::WorkLogEntriesView::WorkLogEntriesView(
+    BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refGlade)
+    : Gtk::TreeView(cobject), m_refGlade(refGlade) {
+  menu.show_all();
+}
 
-void DialogWorkLogEntries::on_button_ok_clicked() { hide(); }
+void DialogWorkLogEntries::on_button_close_clicked() { hide(); }
+
+void DialogWorkLogEntries::load_days() {
+  cmbWorkDays->remove_all();
+
+  std::list<std::string> days = WorkLogEntry::work_days();
+  while (!days.empty()) {
+    cmbWorkDays->append(days.front());
+    days.pop_front();
+  }
+
+  cmbWorkDays->set_active(0);
+}
+
+void DialogWorkLogEntries::load_entries() {
+  std::list<WorkLogEntry *> entries;
+  Glib::ustring day = cmbWorkDays->get_active_text();
+
+  entries = WorkLogEntry::all(day);
+
+  treEntries->clear();
+  trvEntries->remove_all_columns();
+
+  while (!entries.empty()) {
+    Gtk::TreeModel::Row row = *(treEntries->append());
+
+    row[mdlColumn.task_id] = entries.front()->get_task_id();
+    row[mdlColumn.task_name] = entries.front()->get_task_name();
+    row[mdlColumn.start_date_entry] = entries.front()->get_start_date_entry();
+    row[mdlColumn.start_hour_entry] =
+        format_hour(entries.front()->get_start_hour_entry());
+    row[mdlColumn.end_date_entry] = entries.front()->get_end_date_entry();
+    row[mdlColumn.end_hour_entry] =
+        format_hour(entries.front()->get_end_hour_entry());
+
+    entries.pop_front();
+  }
+
+  trvEntries->append_column("ID", mdlColumn.task_id);
+  trvEntries->append_column(_("Title"), mdlColumn.task_name);
+  trvEntries->append_column(_("Start Date"), mdlColumn.start_date_entry);
+  trvEntries->append_column(_("Start Hour"), mdlColumn.start_hour_entry);
+  trvEntries->append_column(_("End Date"), mdlColumn.end_date_entry);
+  trvEntries->append_column(_("End Hour"), mdlColumn.end_hour_entry);
+}
+
+std::string DialogWorkLogEntries::format_hour(int hour) {
+
+  int hours = hour / 60;
+  int minutes = hour % 60;
+
+  std::stringstream strHour;
+
+  if (hours < 10) {
+    strHour << "0";
+  }
+  strHour << hours;
+  strHour << ":";
+  if (minutes < 10) {
+    strHour << "0";
+  }
+  strHour << minutes;
+
+  return strHour.str();
+}

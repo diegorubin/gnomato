@@ -3,3 +3,4 @@ src/main.cc
 src/win_main.cc
 src/dialog_preferences.cc
 src/dialog_task.cc
+src/sound_player.cc

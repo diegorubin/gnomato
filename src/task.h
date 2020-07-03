@@ -58,6 +58,7 @@ public:
 
   static std::list<WorkLogEntry *> all(std::string date);
   static std::list<WorkLogEntry *> all_worklog_entries_by_sql(char *sql);
+  static std::list<std::string> work_days();
 
 private:
   std::string task_id;
@@ -123,6 +124,8 @@ private:
 static int load_task(void *NotUsed, int argc, char **argv, char **azColName);
 static int load_worklog_entry(void *NotUsed, int argc, char **argv,
                               char **azColName);
+static int load_workdays(void *NotUsed, int argc, char **argv,
+                         char **azColName);
 static int check_exists(void *NotUsed, int argc, char **argv, char **azColName);
 
 #endif //_TASK_H_

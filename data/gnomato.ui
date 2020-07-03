@@ -137,10 +137,11 @@
   </object>
   <object class="GtkDialog" id="DialogWorkLogEntries">
     <property name="name">DialogWorkLogEntries</property>
+    <property name="width_request">800</property>
     <property name="can_focus">False</property>
-    <property name="window_position">center</property>
+    <property name="border_width">5</property>
     <property name="type_hint">dialog</property>
-    <property name="gravity">center</property>
+    <property name="has_resize_grip">True</property>
     <child type="titlebar">
       <placeholder/>
     </child>
@@ -155,29 +156,13 @@
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="btnWorkLogCancel">
-                <property name="label">gtk-cancel</property>
-                <property name="use_action_appearance">False</property>
-                <property name="name">btnWorkLogCancel</property>
+              <object class="GtkButton" id="btnWorkLogClose">
+                <property name="label">gtk-close</property>
+                <property name="name">btnWorkLogClose</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="btnWorkLogSave">
-                <property name="label">gtk-save</property>
-                <property name="name">btnWorkLogSave</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="tooltip_text" translatable="yes">Save Changes</property>
+                <property name="tooltip_text" translatable="yes">Close Dialog</property>
                 <property name="use_stock">True</property>
               </object>
               <packing>
@@ -194,18 +179,54 @@
           </packing>
         </child>
         <child>
-          <placeholder/>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkComboBoxText" id="cmbWorkDays">
+                <property name="name">cmbLists</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="shadow_type">in</property>
+                <child>
+                  <object class="GtkTreeView" id="trvWorkLogEntries">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="enable_grid_lines">both</property>
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection"/>
+                    </child>
+                    <accelerator key="l" signal="grab-focus" modifiers="GDK_CONTROL_MASK"/>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
         </child>
       </object>
     </child>
-    <action-widgets>
-      <action-widget response="0">btnWorkLogCancel</action-widget>
-    </action-widgets>
-  </object>
-  <object class="GtkImage">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-justify-center</property>
   </object>
   <object class="GtkAction" id="action1"/>
   <object class="GtkAdjustment" id="adjInactiveInterval">

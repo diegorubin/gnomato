@@ -75,6 +75,12 @@
   "WorkLogEntries.task_id WHERE start_date_entry = '%s' ORDER BY "             \
   "start_hour_entry DESC;"
 
+#define SELECT_WORKLOG_DAYS                                                    \
+  "SELECT start_date_entry "                                                   \
+  "FROM WorkLogEntries "                                                       \
+  "GROUP BY start_date_entry "                                                 \
+  "ORDER BY start_date_entry DESC;"
+
 #define INSERT_WORK_LOG_ENTRY                                                  \
   "INSERT INTO \
                       WorkLogEntries \

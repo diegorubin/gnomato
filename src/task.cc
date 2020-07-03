@@ -26,6 +26,7 @@ const int SQL_SIZE = 10240;
 
 std::list<Task *> tasks_aux;
 std::list<WorkLogEntry *> worklog_entries_aux;
+std::list<std::string> worklog_days_aux;
 unsigned int tasks_total;
 
 const std::locale date_format(std::locale::classic(),
@@ -114,6 +115,16 @@ std::list<WorkLogEntry *> WorkLogEntry::all_worklog_entries_by_sql(char *sql) {
   worklog_entries_aux.clear();
   execute_query(sql, load_worklog_entry);
   return worklog_entries_aux;
+}
+
+std::list<std::string> WorkLogEntry::work_days() {
+  worklog_days_aux.clear();
+
+  char sql[SQL_SIZE];
+  sprintf(sql, SELECT_WORKLOG_DAYS);
+
+  execute_query(sql, load_workdays);
+  return worklog_days_aux;
 }
 
 void WorkLogEntry::set_task_name(std::string task_name) {
@@ -295,6 +306,14 @@ static int load_worklog_entry(void *NotUsed, int argc, char **argv,
   entry->set_task_name(argv[5]);
 
   worklog_entries_aux.push_back(entry);
+
+  return 0;
+}
+
+static int load_workdays(void *NotUsed, int argc, char **argv,
+                         char **azColName) {
+
+  worklog_days_aux.push_back(argv[0]);
 
   return 0;
 }
