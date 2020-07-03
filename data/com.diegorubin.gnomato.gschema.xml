@@ -1,97 +1,68 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <schemalist>
-
   <schema id="com.diegorubin.gnomato" path="/com/diegorubin/gnomato/">
-
     <!-- Intervals -->
-
     <key name="work-interval" type="s">
       <default>"25"</default>
       <summary>Work Interval</summary>
-      <description>
-        Work Interval
-      </description>
+      <description>Work Interval</description>
     </key>
-
     <key name="break-interval" type="s">
       <default>"5"</default>
       <summary>Break Interval</summary>
-      <description>
-        Break Interval
-      </description>
+      <description>Break Interval</description>
     </key>
-
     <key name="long-interval" type="s">
       <default>"15"</default>
       <summary>Long Break Interval</summary>
-      <description>
-        Long Break Interval
-      </description>
+      <description>Long Break Interval</description>
     </key>
-
     <key name="inactive-interval" type="s">
       <default>"5"</default>
       <summary>Inactive Interval</summary>
-      <description>
-        Inactive Interval
-      </description>
+      <description>Inactive Interval</description>
     </key>
-
-
+    <key name="notification-timeout" type="s">
+      <default>"5"</default>
+      <summary>Notification Timeout</summary>
+      <description>Notification Timeout</description>
+    </key>
+    <key name="disable-inactive-notification" type="b">
+      <default>false</default>
+      <summary>Disable inactive notification</summary>
+      <description>Disable inactive notification</description>
+    </key>
     <!-- Colors -->
-
     <key name="color-timer-red" type="d">
       <default>0.0</default>
       <summary>Timer Color -- Red Component</summary>
-      <description>
-        Timer Color -- Red Component
-      </description>
+      <description>Timer Color -- Red Component</description>
     </key>
-
     <key name="color-timer-green" type="d">
       <default>1.0</default>
       <summary>Timer Color -- Green Component</summary>
-      <description>
-        Timer Color -- Green Component
-      </description>
+      <description>Timer Color -- Green Component</description>
     </key>
-
     <key name="color-timer-blue" type="d">
       <default>0.18</default>
       <summary>Timer Color -- Blue Component</summary>
-      <description>
-        Timer Color -- Blue Component
-      </description>
+      <description>Timer Color -- Blue Component</description>
     </key>
-
-
     <!-- State -->
-
     <key name="current-list" type="s">
       <default>""</default>
       <summary>Current List</summary>
-      <description>
-        Current List
-      </description>
+      <description>Current List</description>
     </key>
-
     <key name="window-width" type="i">
       <default>600</default>
       <summary>Window Width</summary>
-      <description>
-        Window Width
-      </description>
+      <description>Window Width</description>
     </key>
-
     <key name="window-height" type="i">
       <default>600</default>
       <summary>Window Width</summary>
-      <description>
-        Window Height
-      </description>
+      <description>Window Height</description>
     </key>
-
   </schema>
-
 </schemalist>

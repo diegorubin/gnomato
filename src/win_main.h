@@ -179,6 +179,8 @@ private:
   void set_systray();
   void configure_interface();
 
+  void lock();
+  void unlock();
   void show_task_buttons();
   void hide_task_buttons();
 

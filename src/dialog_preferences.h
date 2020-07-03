@@ -48,6 +48,8 @@ private:
   SpinButton *spnShortBreak;
   SpinButton *spnLongBreak;
   SpinButton *spnInactiveInterval;
+  SpinButton *spnNotificationTimeout;
+  Switch *swtDisableInactiveNotification;
 
   ColorButton *clrTimer;
 

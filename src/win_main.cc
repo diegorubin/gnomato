@@ -352,7 +352,8 @@ void WinMain::notify(const char *icon, const char *message) {
 
   notMessage = notify_notification_new("Gnomato", message, icon);
 
-  notify_notification_set_timeout(notMessage, 3000);
+  notify_notification_set_timeout(
+      notMessage, atoi(configs.notification_timeout.c_str()) * 1000);
 
   char category[30] = "Gnomato Notifications";
   notify_notification_set_category(notMessage, category);
@@ -415,12 +416,16 @@ void WinMain::hide_task_buttons() {
 }
 
 void WinMain::move_task(string list) {
-  Task *task = get_current_task();
-  task->set_list(list);
-  task->save();
+  if (currentTask) {
+    currentTask->set_list(list);
+    currentTask->save();
 
-  load_lists();
-  load_tasks();
+    delete currentTask;
+    currentTask = NULL;
+
+    load_lists();
+    load_tasks();
+  }
 }
 
 void WinMain::log_work(string hook) {
@@ -471,10 +476,21 @@ void WinMain::on_systray_popup(guint button, guint activate_time) {
   }
 }
 
+void WinMain::unlock() {
+  started = false;
+  trvTasks->set_sensitive(true);
+}
+
+void WinMain::lock() {
+  started = true;
+  trvTasks->set_sensitive(false);
+}
+
 void WinMain::on_button_start_clicked() {
 
   if (started) {
-    started = false;
+    unlock();
+
     btnStart->set_label(_("Start"));
     timeout.disconnect();
 
@@ -482,7 +498,8 @@ void WinMain::on_button_start_clicked() {
     set_gray_icon();
 
   } else {
-    started = true;
+    lock();
+
     btnStart->set_label(_("Pause"));
     timeout = Glib::signal_timeout().connect(timer, 1000);
 
@@ -512,6 +529,7 @@ void WinMain::on_button_finish_clicked() {
     execute("on_finish");
 
     currentTask->finish();
+    unlock();
 
     load_lists();
     load_tasks();
@@ -618,7 +636,7 @@ bool WinMain::on_timeout(int timer_number) {
 }
 
 bool WinMain::on_inactive_timeout(int timer_number) {
-  if (!(currentTask && started)) {
+  if (!(currentTask && started) && !configs.disable_inactive_notification) {
     notify_with_gray_icon(_("are you not doing anything?"));
   }
 
@@ -679,6 +697,7 @@ void WinMain::on_menu_edit_work_log_entries() {
   DialogWorkLogEntries *dlgWorkLogEntries = 0;
 
   m_refGlade->get_widget_derived("DialogWorkLogEntries", dlgWorkLogEntries);
+  dlgWorkLogEntries->load();
   dlgWorkLogEntries->run();
 }
 

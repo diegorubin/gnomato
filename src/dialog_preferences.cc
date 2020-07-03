@@ -36,10 +36,17 @@ DialogPreferences::DialogPreferences(BaseObjectType *cobject,
   m_refGlade->get_widget("spnShortBreak", spnShortBreak);
   m_refGlade->get_widget("spnLongBreak", spnLongBreak);
   m_refGlade->get_widget("spnInactiveInterval", spnInactiveInterval);
+  m_refGlade->get_widget("spnNotificationTimeout", spnNotificationTimeout);
+  m_refGlade->get_widget("swtDisableInactiveNotification",
+                         swtDisableInactiveNotification);
   spnWork->set_value(atoi(this->configs.work_interval.c_str()));
   spnShortBreak->set_value(atoi(this->configs.break_interval.c_str()));
   spnLongBreak->set_value(atoi(this->configs.long_interval.c_str()));
   spnInactiveInterval->set_value(atoi(this->configs.inactive_interval.c_str()));
+  spnNotificationTimeout->set_value(
+      atoi(this->configs.notification_timeout.c_str()));
+  swtDisableInactiveNotification->set_active(
+      this->configs.disable_inactive_notification);
 
   // page 2 - colors
   m_refGlade->get_widget("clrTimer", clrTimer);
@@ -66,6 +73,9 @@ void DialogPreferences::on_button_ok_clicked() {
   configs.break_interval = spnShortBreak->get_text();
   configs.long_interval = spnLongBreak->get_text();
   configs.inactive_interval = spnInactiveInterval->get_text();
+  configs.disable_inactive_notification =
+      swtDisableInactiveNotification->get_active();
+  configs.notification_timeout = spnNotificationTimeout->get_text();
 
   Gdk::RGBA timer = clrTimer->get_rgba();
   configs.colorTimerRed = timer.get_red();

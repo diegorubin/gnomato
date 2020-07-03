@@ -37,6 +37,8 @@ public:
 
   virtual ~DialogWorkLogEntries();
 
+  void load();
+
 private:
   class ModelColumns : public Gtk::TreeModel::ColumnRecord {
   public:

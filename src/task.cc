@@ -42,8 +42,6 @@ std::string format(const boost::gregorian::date &date) {
 int get_position_in_day(time_duration current_time_duration) {
   int result =
       current_time_duration.hours() * 60 + current_time_duration.minutes();
-  std::cout << "starting task: " << current_time_duration.hours() << ":"
-            << current_time_duration.minutes() << " = " << result << std::endl;
   return result;
 }
 
@@ -177,6 +175,8 @@ void Task::start() {
 
 void Task::update() {
   if (workLlogEntry != NULL) {
+    std::cout << "update work log entry: "
+              << workLlogEntry->get_end_hour_entry() << std::endl;
     workLlogEntry->update();
   }
 }
