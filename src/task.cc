@@ -39,6 +39,11 @@ std::string format(const boost::gregorian::date &date) {
   return os.str();
 }
 
+int to_minutes(std::string value) {
+  return atoi(value.substr(0, 2).c_str()) * 60 +
+         atoi(value.substr(3, 2).c_str());
+}
+
 int get_position_in_day(time_duration current_time_duration) {
   int result =
       current_time_duration.hours() * 60 + current_time_duration.minutes();
@@ -77,12 +82,14 @@ WorkLogEntry::WorkLogEntry(std::string task_id, std::string start_date_entry,
 }
 
 bool WorkLogEntry::update() {
-  ptime now = second_clock::local_time();
-  date today = now.date();
-  time_duration duration = now.time_of_day();
+  if (this->end_date_entry.empty() && !this->end_hour_entry) {
+    ptime now = second_clock::local_time();
+    date today = now.date();
+    time_duration duration = now.time_of_day();
 
-  this->end_date_entry = format(today);
-  this->end_hour_entry = get_position_in_day(duration);
+    this->end_date_entry = format(today);
+    this->end_hour_entry = get_position_in_day(duration);
+  }
   return this->save();
 }
 
@@ -96,8 +103,14 @@ bool WorkLogEntry::create() {
 
 bool WorkLogEntry::save() {
   char sql[SQL_SIZE];
-  sprintf(sql, UPDATE_WORK_LOG_ENTRY, end_date_entry.c_str(), end_hour_entry,
-          task_id.c_str(), start_date_entry.c_str(), start_hour_entry);
+  if (id.empty()) {
+    sprintf(sql, UPDATE_WORK_LOG_ENTRY, end_date_entry.c_str(), end_hour_entry,
+            task_id.c_str(), start_date_entry.c_str(), start_hour_entry);
+  } else {
+    sprintf(sql, UPDATE_WORK_LOG_ENTRY_BY_ID, start_date_entry.c_str(),
+            start_hour_entry, end_date_entry.c_str(), end_hour_entry,
+            id.c_str());
+  }
 
   return execute_query(sql, load_task);
 }
@@ -109,10 +122,18 @@ std::list<WorkLogEntry *> WorkLogEntry::all(std::string date) {
 }
 
 std::list<WorkLogEntry *> WorkLogEntry::all_worklog_entries_by_sql(char *sql) {
-  std::cout << sql << std::endl;
   worklog_entries_aux.clear();
   execute_query(sql, load_worklog_entry);
   return worklog_entries_aux;
+}
+
+WorkLogEntry *WorkLogEntry::find_by_id(std::string id) {
+  char sql[SQL_SIZE];
+  sprintf(sql, SELECT_WORKLOG_ENTRY_BY_ID, id.c_str());
+
+  worklog_entries_aux.clear();
+  execute_query(sql, load_worklog_entry);
+  return worklog_entries_aux.front();
 }
 
 std::list<std::string> WorkLogEntry::work_days() {
@@ -125,9 +146,25 @@ std::list<std::string> WorkLogEntry::work_days() {
   return worklog_days_aux;
 }
 
+void WorkLogEntry::set_id(std::string id) { this->id = id; }
+
 void WorkLogEntry::set_task_name(std::string task_name) {
   this->task_name = task_name;
 }
+
+void WorkLogEntry::set_start_hour(std::string hour) {
+  this->start_hour_entry = to_minutes(hour);
+}
+
+void WorkLogEntry::set_end_date(std::string date) {
+  this->end_date_entry = date;
+}
+
+void WorkLogEntry::set_end_hour(std::string hour) {
+  this->end_hour_entry = to_minutes(hour);
+}
+
+std::string WorkLogEntry::get_id() { return this->id; }
 
 std::string WorkLogEntry::get_task_id() { return this->task_id; }
 
@@ -175,8 +212,6 @@ void Task::start() {
 
 void Task::update() {
   if (workLlogEntry != NULL) {
-    std::cout << "update work log entry: "
-              << workLlogEntry->get_end_hour_entry() << std::endl;
     workLlogEntry->update();
   }
 }
@@ -301,9 +336,10 @@ static int load_worklog_entry(void *NotUsed, int argc, char **argv,
                               char **azColName) {
 
   WorkLogEntry *entry = new WorkLogEntry(
-      argv[0], argv[1] ? argv[1] : "", argv[2] ? atoi(argv[2]) : 0,
-      argv[3] ? argv[3] : "", argv[4] ? atoi(argv[4]) : 0);
-  entry->set_task_name(argv[5]);
+      argv[1], argv[2] ? argv[2] : "", argv[3] ? atoi(argv[3]) : 0,
+      argv[4] ? argv[4] : "", argv[5] ? atoi(argv[5]) : 0);
+  entry->set_task_name(argv[6]);
+  entry->set_id(argv[0]);
 
   worklog_entries_aux.push_back(entry);
 

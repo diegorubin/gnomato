@@ -81,7 +81,7 @@ void DialogWorkLogEntries::load_entries() {
   while (!entries.empty()) {
     Gtk::TreeModel::Row row = *(treEntries->append());
 
-    row[mdlColumn.task_id] = entries.front()->get_task_id();
+    row[mdlColumn.id] = entries.front()->get_id();
     row[mdlColumn.task_name] = entries.front()->get_task_name();
     row[mdlColumn.start_date_entry] = entries.front()->get_start_date_entry();
     row[mdlColumn.start_hour_entry] =
@@ -93,12 +93,74 @@ void DialogWorkLogEntries::load_entries() {
     entries.pop_front();
   }
 
-  trvEntries->append_column("ID", mdlColumn.task_id);
+  trvEntries->append_column("ID", mdlColumn.id);
   trvEntries->append_column(_("Title"), mdlColumn.task_name);
   trvEntries->append_column(_("Start Date"), mdlColumn.start_date_entry);
-  trvEntries->append_column(_("Start Hour"), mdlColumn.start_hour_entry);
-  trvEntries->append_column(_("End Date"), mdlColumn.end_date_entry);
-  trvEntries->append_column(_("End Hour"), mdlColumn.end_hour_entry);
+
+  int nStartHourCol = trvEntries->append_column_editable(
+      _("Start Hour"), mdlColumn.start_hour_entry);
+
+  int nEndDateCol = trvEntries->append_column_editable(
+      _("End Date"), mdlColumn.end_date_entry);
+
+  int nEndHourCol = trvEntries->append_column_editable(
+      _("End Hour"), mdlColumn.end_hour_entry);
+
+  auto startHourRenderer = dynamic_cast<Gtk::CellRendererText *>(
+      trvEntries->get_column_cell_renderer(nStartHourCol - 1));
+  startHourRenderer->signal_edited().connect(
+      sigc::mem_fun(*this, &DialogWorkLogEntries::on_start_hour_edited));
+
+  auto endDateCol = dynamic_cast<Gtk::CellRendererText *>(
+      trvEntries->get_column_cell_renderer(nEndDateCol - 1));
+  endDateCol->signal_edited().connect(
+      sigc::mem_fun(*this, &DialogWorkLogEntries::on_end_date_edited));
+
+  auto endHourCol = dynamic_cast<Gtk::CellRendererText *>(
+      trvEntries->get_column_cell_renderer(nEndHourCol - 1));
+  endHourCol->signal_edited().connect(
+      sigc::mem_fun(*this, &DialogWorkLogEntries::on_end_hour_edited));
+}
+
+void DialogWorkLogEntries::on_start_hour_edited(
+    const Glib::ustring &path_string, const Glib::ustring &new_text) {
+  WorkLogEntry *entry = recover_entry(path_string);
+  if (entry) {
+    entry->set_start_hour(new_text);
+    entry->update();
+  }
+}
+
+void DialogWorkLogEntries::on_end_date_edited(const Glib::ustring &path_string,
+                                              const Glib::ustring &new_text) {
+  WorkLogEntry *entry = recover_entry(path_string);
+  if (entry) {
+    entry->set_end_date(new_text);
+    entry->update();
+  }
+}
+
+void DialogWorkLogEntries::on_end_hour_edited(const Glib::ustring &path_string,
+                                              const Glib::ustring &new_text) {
+  WorkLogEntry *entry = recover_entry(path_string);
+  if (entry) {
+    entry->set_end_hour(new_text);
+    entry->update();
+  }
+}
+
+WorkLogEntry *
+DialogWorkLogEntries::recover_entry(const Glib::ustring &path_string) {
+  Gtk::TreePath path(path_string);
+
+  Gtk::TreeModel::iterator iter = treEntries->get_iter(path);
+
+  if (iter) {
+    Gtk::TreeModel::Row row = *iter;
+    Glib::ustring id = row[mdlColumn.id];
+    return WorkLogEntry::find_by_id(id);
+  }
+  return NULL;
 }
 
 std::string DialogWorkLogEntries::format_hour(int hour) {

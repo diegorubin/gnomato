@@ -43,14 +43,14 @@ private:
   class ModelColumns : public Gtk::TreeModel::ColumnRecord {
   public:
     ModelColumns() {
-      add(task_id);
+      add(id);
       add(task_name);
       add(start_date_entry);
       add(start_hour_entry);
       add(end_date_entry);
       add(end_hour_entry);
     }
-    Gtk::TreeModelColumn<Glib::ustring> task_id;
+    Gtk::TreeModelColumn<Glib::ustring> id;
     Gtk::TreeModelColumn<Glib::ustring> task_name;
     Gtk::TreeModelColumn<Glib::ustring> start_date_entry;
     Gtk::TreeModelColumn<Glib::ustring> start_hour_entry;
@@ -87,9 +87,16 @@ private:
   void load_days();
   void load_entries();
   std::string format_hour(int hour);
+  WorkLogEntry *recover_entry(const Glib::ustring &path_string);
 
   // callback methods
   virtual void on_button_close_clicked();
+  virtual void on_start_hour_edited(const Glib::ustring &path,
+                                    const Glib::ustring &new_text);
+  virtual void on_end_date_edited(const Glib::ustring &path,
+                                  const Glib::ustring &new_text);
+  virtual void on_end_hour_edited(const Glib::ustring &path,
+                                  const Glib::ustring &new_text);
 };
 
 #endif // WIN_WORK_LOG_ENTRIES

@@ -46,9 +46,14 @@ public:
   bool update();
 
   // setters
+  void set_id(std::string id);
   void set_task_name(std::string task_name);
+  void set_start_hour(std::string task_name);
+  void set_end_date(std::string task_name);
+  void set_end_hour(std::string task_name);
 
   // getters
+  std::string get_id();
   std::string get_task_id();
   std::string get_task_name();
   std::string get_start_date_entry();
@@ -58,9 +63,11 @@ public:
 
   static std::list<WorkLogEntry *> all(std::string date);
   static std::list<WorkLogEntry *> all_worklog_entries_by_sql(char *sql);
+  static WorkLogEntry *find_by_id(std::string id);
   static std::list<std::string> work_days();
 
 private:
+  std::string id;
   std::string task_id;
   std::string task_name;
   std::string start_date_entry;

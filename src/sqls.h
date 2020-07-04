@@ -50,11 +50,13 @@
   "CREATE TABLE \
                        WorkLogEntries \
                          (\
+                           id INTEGER, \
                            task_id INTEGER, \
                            start_date_entry VARCHAR(10), \
                            end_date_entry VARCHAR(10), \
                            start_hour_entry INTEGER, \
-                           end_hour_entry INTEGER \
+                           end_hour_entry INTEGER, \
+                           primary key(id)\
 )"
 
 #define SELECT_TASK "SELECT * FROM Task WHERE id = %s;"
@@ -70,10 +72,17 @@
   "ORDER BY position asc;"
 
 #define SELECT_WORKLOG_ENTRIES_BY_DATE                                         \
-  "SELECT task_id, start_date_entry, start_hour_entry, end_date_entry, "       \
+  "SELECT WorkLogEntries.id, task_id, start_date_entry, start_hour_entry, "    \
+  "end_date_entry, "                                                           \
   "end_hour_entry, name FROM WorkLogEntries INNER JOIN Task ON Task.id = "     \
   "WorkLogEntries.task_id WHERE start_date_entry = '%s' ORDER BY "             \
   "start_hour_entry DESC;"
+
+#define SELECT_WORKLOG_ENTRY_BY_ID                                             \
+  "SELECT WorkLogEntries.id, task_id, start_date_entry, start_hour_entry, "    \
+  "end_date_entry, "                                                           \
+  "end_hour_entry, name FROM WorkLogEntries INNER JOIN Task ON Task.id = "     \
+  "WorkLogEntries.task_id WHERE WorkLogEntries.id = %s "
 
 #define SELECT_WORKLOG_DAYS                                                    \
   "SELECT start_date_entry "                                                   \
@@ -104,6 +113,17 @@
                        end_hour_entry = %d \
                      WHERE \
 task_id = '%s' AND start_date_entry = '%s' AND start_hour_entry = %d;"
+
+#define UPDATE_WORK_LOG_ENTRY_BY_ID                                            \
+  "UPDATE \
+                       WorkLogEntries \
+                     SET \
+                       start_date_entry = '%s', \
+                       start_hour_entry = %d, \
+                       end_date_entry = '%s', \
+                       end_hour_entry = %d \
+                     WHERE \
+id = '%s' ;"
 
 #define INSERT_TASK                                                            \
   "INSERT INTO \
