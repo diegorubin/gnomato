@@ -91,6 +91,7 @@ private:
 
   // callback methods
   virtual void on_button_close_clicked();
+  virtual void on_day_changed();
   virtual void on_start_hour_edited(const Glib::ustring &path,
                                     const Glib::ustring &new_text);
   virtual void on_end_date_edited(const Glib::ustring &path,

@@ -37,6 +37,8 @@ DialogWorkLogEntries::DialogWorkLogEntries(
   // connect signals
   btnClose->signal_clicked().connect(
       sigc::mem_fun(*this, &DialogWorkLogEntries::on_button_close_clicked));
+  cmbWorkDays->signal_changed().connect(
+      sigc::mem_fun(*this, &DialogWorkLogEntries::on_day_changed));
 
   load();
   show_all();
@@ -51,6 +53,7 @@ DialogWorkLogEntries::WorkLogEntriesView::WorkLogEntriesView(
 }
 
 void DialogWorkLogEntries::on_button_close_clicked() { hide(); }
+void DialogWorkLogEntries::on_day_changed() { load_entries(); }
 
 void DialogWorkLogEntries::load() {
   load_days();
