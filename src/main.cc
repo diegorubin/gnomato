@@ -68,6 +68,10 @@ static Glib::ustring introspection_xml =
     "      <arg type='s' name='iso8601' direction='in'/>"
     "      <arg type='s' name='iso8601' direction='out'/>"
     "    </method>"
+    "    <method name='GetListTasks'>"
+    "      <arg type='s' name='iso8601' direction='in'/>"
+    "      <arg type='s' name='iso8601' direction='out'/>"
+    "    </method>"
     "    <method name='CreateTask'>"
     "      <arg type='s' name='iso8601' direction='in'/>"
     "      <arg type='s' name='iso8601' direction='in'/>"
@@ -154,9 +158,32 @@ on_method_call(const Glib::RefPtr<Gio::DBus::Connection> & /* connection */,
 
       entries.pop_front();
     }
-
     const Glib::Variant<Glib::ustring> response_list =
         Glib::Variant<Glib::ustring>::create(worklog_list.str());
+
+    Glib::VariantContainerBase response =
+        Glib::VariantContainerBase::create_tuple(response_list);
+
+    invocation->return_value(response);
+
+  } else if (method_name == "GetListTasks") {
+    Glib::Variant<Glib::ustring> param;
+
+    parameters.get_child(param, 0);
+    const Glib::ustring list_name = param.get();
+
+    // load workg log entries
+    std::list<Task *> tasks = Task::all(list_name);
+    std::ostringstream task_list;
+    while (!tasks.empty()) {
+      task_list << tasks.front()->get_id() << "\t" << tasks.front()->get_name()
+                << std::endl;
+
+      tasks.pop_front();
+    }
+
+    const Glib::Variant<Glib::ustring> response_list =
+        Glib::Variant<Glib::ustring>::create(task_list.str());
 
     Glib::VariantContainerBase response =
         Glib::VariantContainerBase::create_tuple(response_list);
@@ -205,7 +232,6 @@ on_method_call(const Glib::RefPtr<Gio::DBus::Connection> & /* connection */,
         Glib::VariantContainerBase::create_tuple(exists);
 
     invocation->return_value(response);
-
   } else {
     // Non-existent method on the interface.
     Gio::DBus::Error error(Gio::DBus::Error::UNKNOWN_METHOD,
