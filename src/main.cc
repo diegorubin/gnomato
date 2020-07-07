@@ -150,7 +150,8 @@ on_method_call(const Glib::RefPtr<Gio::DBus::Connection> & /* connection */,
     std::list<WorkLogEntry *> entries = WorkLogEntry::all(date.c_str());
     std::ostringstream worklog_list;
     while (!entries.empty()) {
-      worklog_list << entries.front()->get_task_name() << "\t"
+      worklog_list << entries.front()->get_id() << "\t"
+                   << entries.front()->get_task_name() << "\t"
                    << entries.front()->get_start_date_entry() << "\t"
                    << entries.front()->get_start_hour_entry() << "\t"
                    << entries.front()->get_end_date_entry() << "\t"

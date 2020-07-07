@@ -36,8 +36,6 @@ WinMain::WinMain(BaseObjectType *cobject,
 
   configs.load();
 
-  pe = new PythonExecutor();
-
   set_systray();
 
   // get widgets
@@ -148,11 +146,7 @@ WinMain::WinMain(BaseObjectType *cobject,
   resize(configs.window_width, configs.window_height);
 }
 
-WinMain::~WinMain() {
-  if (pe != NULL) {
-    delete (pe);
-  }
-}
+WinMain::~WinMain() {}
 
 void WinMain::set_systray() {
 
@@ -454,7 +448,8 @@ void WinMain::execute(string hook) {
 }
 
 void WinMain::run_python_script(string hook) {
-  pe->execute(hook, get_current_list(), currentTask->get_name());
+  PythonExecutor executor;
+  executor.execute(hook, get_current_list(), currentTask->get_name());
 }
 
 // callbacks implementations
