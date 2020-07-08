@@ -168,7 +168,7 @@ id = %s;"
   "SELECT \
                       COUNT(id) as TOTAL \
                      FROM Task \
-WHERE name = '%s' AND list = '%s';"
+WHERE name = '%s' AND list = '%s' AND done = 0;"
 
 #define DELETE_TASK "DELETE FROM Task WHERE id = %s;"
 #define DELETE_ALL_TASK_LISTS "DELETE FROM Task WHERE list = '%s';"
