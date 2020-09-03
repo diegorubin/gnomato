@@ -65,6 +65,8 @@ WinMain::WinMain(BaseObjectType *cobject,
   m_refGlade->get_widget("mnuWorkLogEntries", mnuWorkLogEntries);
   m_refGlade->get_widget("mnuAbout", mnuAbout);
 
+  m_refGlade->get_widget("swtFinishedTasks", swtFinishedTasks);
+
   m_refGlade->get_widget_derived("trvTasks", trvTasks);
 
   treTasks = Gtk::ListStore::create(mdlColumn);
@@ -116,6 +118,9 @@ WinMain::WinMain(BaseObjectType *cobject,
 
   cmbLists->signal_changed().connect(
       sigc::mem_fun(*this, &WinMain::on_list_changed));
+
+  swtFinishedTasks->signal_state_set().connect(
+      sigc::mem_fun(*this, &WinMain::on_display_finished_changed), false);
 
   // connect menu
   mnuNew->signal_activate().connect(
@@ -277,6 +282,11 @@ void WinMain::generate_pomodoros() {
   lblPomodoros->set_text(pomodoros);
 }
 
+bool WinMain::on_display_finished_changed(bool changed) {
+  load_lists();
+  return false;
+}
+
 void WinMain::load_lists() {
   Glib::ustring previous = configs.current_list;
   cmbLists->remove_all();
@@ -298,15 +308,16 @@ void WinMain::load_lists() {
 void WinMain::load_tasks() {
   std::list<Task *> tasks;
   Gtk::TreeModel::iterator iter = cmbLists->get_active();
+  int done = swtFinishedTasks->get_active() ? 1 : 0;
 
   if (iter) {
     Gtk::TreeModel::Row row = *iter;
     if (row) {
       if (entFilter->get_text().empty()) {
-        tasks = Task::all(get_current_list().c_str());
+        tasks = Task::all(get_current_list().c_str(), done);
       } else
         tasks = Task::all(get_current_list().c_str(),
-                          entFilter->get_text().c_str());
+                          entFilter->get_text().c_str(), done);
     }
   }
 

@@ -134,6 +134,8 @@ private:
   Label *lblPomodoros;
   Label *lblNotification;
 
+  Switch *swtFinishedTasks;
+
   Entry *entFilter;
 
   Frame *frmWorkOn;
@@ -198,6 +200,7 @@ private:
   virtual bool on_inactive_timeout(int timer_number);
   virtual void on_cursor_changed();
   virtual void on_list_changed();
+  virtual bool on_display_finished_changed(bool changed);
 
   // callback methods - menu
   virtual void on_menu_file_quit();

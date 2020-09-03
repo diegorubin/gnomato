@@ -173,8 +173,7 @@ on_method_call(const Glib::RefPtr<Gio::DBus::Connection> & /* connection */,
     parameters.get_child(param, 0);
     const Glib::ustring list_name = param.get();
 
-    // load workg log entries
-    std::list<Task *> tasks = Task::all(list_name);
+    std::list<Task *> tasks = Task::all(list_name, 0);
     std::ostringstream task_list;
     while (!tasks.empty()) {
       task_list << tasks.front()->get_id() << "\t" << tasks.front()->get_name()

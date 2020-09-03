@@ -283,16 +283,16 @@ std::list<Task *> Task::all() {
   return all_by_sql(sql);
 }
 
-std::list<Task *> Task::all(std::string list) {
+std::list<Task *> Task::all(std::string list, int done) {
   char sql[SQL_SIZE];
-  sprintf(sql, SELECT_ALL_TASK_BY_LIST, list.c_str());
+  sprintf(sql, SELECT_ALL_TASK_BY_LIST, list.c_str(), done);
   return all_by_sql(sql);
 }
 
-std::list<Task *> Task::all(std::string list, std::string filter) {
+std::list<Task *> Task::all(std::string list, std::string filter, int done) {
   char sql[SQL_SIZE];
-  sprintf(sql, SELECT_ALL_TASK_BY_LIST_AND_FILTER, list.c_str(),
-          filter.c_str());
+  sprintf(sql, SELECT_ALL_TASK_BY_LIST_AND_FILTER, list.c_str(), filter.c_str(),
+          done);
   return all_by_sql(sql);
 }
 

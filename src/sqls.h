@@ -65,10 +65,10 @@
   "SELECT * FROM Task WHERE done = 0 ORDER BY position asc;"
 
 #define SELECT_ALL_TASK_BY_LIST                                                \
-  "SELECT * FROM Task WHERE done = 0 AND list = '%s' ORDER BY position asc;"
+  "SELECT * FROM Task WHERE list = '%s' AND done = %d ORDER BY position asc;"
 
 #define SELECT_ALL_TASK_BY_LIST_AND_FILTER                                     \
-  "SELECT * FROM Task WHERE done = 0 AND list = '%s' AND name like '%%%s%%' "  \
+  "SELECT * FROM Task WHERE list = '%s' AND name like '%%%s%%' AND done = %d " \
   "ORDER BY position asc;"
 
 #define SELECT_WORKLOG_ENTRIES_BY_DATE                                         \

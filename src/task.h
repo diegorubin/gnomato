@@ -112,8 +112,8 @@ public:
   int get_position();
 
   static std::list<Task *> all();
-  static std::list<Task *> all(std::string list);
-  static std::list<Task *> all(std::string list, std::string filter);
+  static std::list<Task *> all(std::string list, int done);
+  static std::list<Task *> all(std::string list, std::string filter, int done);
   static std::list<Task *> all_by_sql(char *sql);
   static void update_position(std::string id, int position);
 
