@@ -110,6 +110,7 @@ public:
   int get_done();
   std::string get_list();
   int get_position();
+  int elapsed_time();
 
   static std::list<Task *> all();
   static std::list<Task *> all(std::string list, int done);

@@ -118,8 +118,8 @@ private:
   Button *btnRestart;
   Button *btnAddTask;
   Button *btnDelTask;
+  Button *btnStartTask;
   Button *btnFinish;
-  Button *btnCancelTask;
   Button *btnClearList;
 
   ImageMenuItem *mnuNew;
@@ -178,6 +178,7 @@ private:
   void move_task(string list);
   void set_systray();
   void configure_interface();
+  void display_task_elapsed();
 
   void lock();
   void unlock();
@@ -191,15 +192,15 @@ private:
   virtual void on_button_start_clicked();
   virtual void on_button_restart_clicked();
   virtual void on_button_finish_clicked();
-  virtual void on_button_cancel_clicked();
+  virtual void on_button_stop_clicked();
   virtual void on_button_clear_list_clicked();
   virtual void on_treeview_tasks_row_activated(const TreeModel::Path &path,
                                                TreeViewColumn *column);
   virtual void on_button_del_task_clicked();
   virtual bool on_timeout(int timer_number);
   virtual bool on_inactive_timeout(int timer_number);
-  virtual void on_cursor_changed();
   virtual void on_list_changed();
+  virtual void on_start_task();
   virtual bool on_display_finished_changed(bool changed);
 
   // callback methods - menu

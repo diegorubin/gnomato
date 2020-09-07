@@ -902,21 +902,6 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkButton" id="btnCancelTask">
-                                    <property name="label" translatable="yes">Cancel</property>
-                                    <property name="use_action_appearance">False</property>
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">True</property>
-                                    <accelerator key="c" signal="activate" modifiers="GDK_CONTROL_MASK"/>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                    <property name="position">1</property>
-                                  </packing>
-                                </child>
-                                <child>
                                   <object class="GtkButton" id="btnFinish">
                                     <property name="label" translatable="yes">Finish</property>
                                     <property name="use_action_appearance">False</property>
@@ -928,7 +913,7 @@
                                   <packing>
                                     <property name="expand">False</property>
                                     <property name="fill">False</property>
-                                    <property name="position">2</property>
+                                    <property name="position">1</property>
                                   </packing>
                                 </child>
                               </object>
@@ -1113,6 +1098,20 @@
                                 <property name="orientation">vertical</property>
                                 <property name="spacing">4</property>
                                 <child>
+                                  <object class="GtkButton" id="btnStartTask">
+                                    <property name="label" translatable="yes">Start</property>
+                                    <property name="name">btnStartTask</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
                                   <object class="GtkButton" id="btnAddTask">
                                     <property name="label">gtk-add</property>
                                     <property name="use_action_appearance">False</property>
@@ -1125,7 +1124,7 @@
                                   <packing>
                                     <property name="expand">False</property>
                                     <property name="fill">True</property>
-                                    <property name="position">0</property>
+                                    <property name="position">1</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -1141,7 +1140,7 @@
                                   <packing>
                                     <property name="expand">False</property>
                                     <property name="fill">True</property>
-                                    <property name="position">1</property>
+                                    <property name="position">2</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -1153,7 +1152,7 @@
                                   <packing>
                                     <property name="expand">False</property>
                                     <property name="fill">True</property>
-                                    <property name="position">2</property>
+                                    <property name="position">3</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -1167,7 +1166,7 @@
                                   <packing>
                                     <property name="expand">False</property>
                                     <property name="fill">False</property>
-                                    <property name="position">3</property>
+                                    <property name="position">4</property>
                                   </packing>
                                 </child>
                               </object>

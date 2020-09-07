@@ -277,6 +277,16 @@ std::string Task::get_list() { return list; }
 
 int Task::get_position() { return position; }
 
+int Task::elapsed_time() {
+  if (workLlogEntry) {
+    ptime now = second_clock::local_time();
+    time_duration duration = now.time_of_day();
+    return get_position_in_day(duration) -
+           workLlogEntry->get_start_hour_entry();
+  }
+  return 0;
+}
+
 std::list<Task *> Task::all() {
   char sql[SQL_SIZE];
   sprintf(sql, SELECT_ALL_TASK);

@@ -53,8 +53,8 @@ WinMain::WinMain(BaseObjectType *cobject,
   m_refGlade->get_widget("btnRestart", btnRestart);
   m_refGlade->get_widget("btnAddTask", btnAddTask);
   m_refGlade->get_widget("btnDelTask", btnDelTask);
+  m_refGlade->get_widget("btnStartTask", btnStartTask);
   m_refGlade->get_widget("btnFinish", btnFinish);
-  m_refGlade->get_widget("btnCancelTask", btnCancelTask);
   m_refGlade->get_widget("btnClearList", btnClearList);
 
   m_refGlade->get_widget("cmbLists", cmbLists);
@@ -98,8 +98,8 @@ WinMain::WinMain(BaseObjectType *cobject,
   btnFinish->signal_clicked().connect(
       sigc::mem_fun(*this, &WinMain::on_button_finish_clicked));
 
-  btnCancelTask->signal_clicked().connect(
-      sigc::mem_fun(*this, &WinMain::on_button_cancel_clicked));
+  btnStartTask->signal_clicked().connect(
+      sigc::mem_fun(*this, &WinMain::on_start_task));
 
   btnClearList->signal_clicked().connect(
       sigc::mem_fun(*this, &WinMain::on_button_clear_list_clicked));
@@ -112,9 +112,6 @@ WinMain::WinMain(BaseObjectType *cobject,
 
   trvTasks->signal_row_activated().connect(
       sigc::mem_fun(*this, &WinMain::on_treeview_tasks_row_activated));
-
-  trvTasks->signal_cursor_changed().connect(
-      sigc::mem_fun(*this, &WinMain::on_cursor_changed));
 
   cmbLists->signal_changed().connect(
       sigc::mem_fun(*this, &WinMain::on_list_changed));
@@ -210,6 +207,18 @@ void WinMain::configure_interface() {
   }
 
   lblDisplay->set_attributes(attrs);
+}
+
+void WinMain::display_task_elapsed() {
+  if (currentTask) {
+    std::stringstream completeDescription;
+    completeDescription << currentTask->get_name();
+    completeDescription << ": ";
+    completeDescription << currentTask->elapsed_time();
+    completeDescription << " minute(s)";
+
+    lblTaskTitle->set_text(completeDescription.str());
+  }
 }
 
 // methods implementations
@@ -410,12 +419,12 @@ void WinMain::set_notification(string notification) {
 
 void WinMain::show_task_buttons() {
   btnFinish->show();
-  btnCancelTask->show();
+  btnStartTask->set_label("Stop");
 }
 
 void WinMain::hide_task_buttons() {
   btnFinish->hide();
-  btnCancelTask->hide();
+  btnStartTask->set_label("Start");
   lblTaskTitle->set_text("are you not doing anything?");
   lblPomodoros->set_text("");
 }
@@ -434,19 +443,16 @@ void WinMain::move_task(string list) {
 }
 
 void WinMain::log_work(string hook) {
-  if (hook.compare("on_start") == 0) {
+  if (hook.compare("on_start_task") == 0) {
     currentTask->start();
   }
   if (hook.compare("on_pause") == 0) {
     currentTask->update();
   }
-  if (hook.compare("on_break") == 0) {
-    currentTask->update();
-  }
-  if (hook.compare("on_work") == 0) {
-    currentTask->update();
-  }
   if (hook.compare("on_finish") == 0) {
+    currentTask->update();
+  }
+  if (hook.compare("on_cancel_task") == 0) {
     currentTask->update();
   }
 }
@@ -482,15 +488,9 @@ void WinMain::on_systray_popup(guint button, guint activate_time) {
   }
 }
 
-void WinMain::unlock() {
-  started = false;
-  trvTasks->set_sensitive(true);
-}
+void WinMain::unlock() { started = false; }
 
-void WinMain::lock() {
-  started = true;
-  trvTasks->set_sensitive(false);
-}
+void WinMain::lock() { started = true; }
 
 void WinMain::on_button_start_clicked() {
 
@@ -545,7 +545,7 @@ void WinMain::on_button_finish_clicked() {
   }
 }
 
-void WinMain::on_button_cancel_clicked() {
+void WinMain::on_button_stop_clicked() {
   if (currentTask) {
     execute("on_cancel_task");
     hide_task_buttons();
@@ -601,6 +601,7 @@ void WinMain::on_button_del_task_clicked() {
 }
 
 bool WinMain::on_timeout(int timer_number) {
+  display_task_elapsed();
 
   if (!time_elapsed) {
     cycle_number++;
@@ -642,7 +643,9 @@ bool WinMain::on_timeout(int timer_number) {
 }
 
 bool WinMain::on_inactive_timeout(int timer_number) {
-  if (!(currentTask && started) && !configs.disable_inactive_notification) {
+  display_task_elapsed();
+
+  if (!currentTask && !configs.disable_inactive_notification) {
     notify_with_gray_icon(_("are you not doing anything?"));
   }
 
@@ -653,16 +656,18 @@ bool WinMain::on_inactive_timeout(int timer_number) {
   return false;
 }
 
-void WinMain::on_cursor_changed() {
+void WinMain::on_start_task() {
 
-  currentTask = get_current_task();
   if (currentTask) {
-    lblTaskTitle->set_text(currentTask->get_name());
-    generate_pomodoros();
-
-    show_task_buttons();
-
-    execute("on_change_task");
+    on_button_stop_clicked();
+  } else {
+    currentTask = get_current_task();
+    if (currentTask) {
+      execute("on_start_task");
+      lblTaskTitle->set_text(currentTask->get_name());
+      generate_pomodoros();
+      show_task_buttons();
+    }
   }
 }
 
