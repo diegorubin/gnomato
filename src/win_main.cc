@@ -589,6 +589,7 @@ void WinMain::on_treeview_tasks_row_activated(const TreeModel::Path &path,
 }
 
 void WinMain::on_button_del_task_clicked() {
+  currentTask = get_current_task();
   if (currentTask) {
     currentTask->destroy();
 
