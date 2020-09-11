@@ -85,6 +85,10 @@ WinMain::WinMain(BaseObjectType *cobject,
       inactive_timer,
       atoi(configs.inactive_interval.c_str()) * MINUTE_IN_SECONDS);
 
+  // working timer
+  working_timer =
+      sigc::bind(sigc::mem_fun(*this, &WinMain::on_working_timeout), 0);
+
   // connect signals
   entFilter->signal_changed().connect(
       sigc::mem_fun(*this, &WinMain::on_filter_changed));
@@ -417,13 +421,9 @@ void WinMain::set_notification(string notification) {
   }
 }
 
-void WinMain::show_task_buttons() {
-  btnFinish->show();
-  btnStartTask->set_label("Stop");
-}
+void WinMain::show_task_buttons() { btnStartTask->set_label("Stop"); }
 
 void WinMain::hide_task_buttons() {
-  btnFinish->hide();
   btnStartTask->set_label("Start");
   lblTaskTitle->set_text("are you not doing anything?");
   lblPomodoros->set_text("");
@@ -445,9 +445,6 @@ void WinMain::move_task(string list) {
 void WinMain::log_work(string hook) {
   if (hook.compare("on_start_task") == 0) {
     currentTask->start();
-  }
-  if (hook.compare("on_pause") == 0) {
-    currentTask->update();
   }
   if (hook.compare("on_finish") == 0) {
     currentTask->update();
@@ -535,7 +532,6 @@ void WinMain::on_button_finish_clicked() {
     execute("on_finish");
 
     currentTask->finish();
-    unlock();
 
     load_lists();
     load_tasks();
@@ -583,8 +579,6 @@ void WinMain::on_treeview_tasks_row_activated(const TreeModel::Path &path,
 
     load_lists();
     load_tasks();
-
-    hide_task_buttons();
   }
 }
 
@@ -602,8 +596,6 @@ void WinMain::on_button_del_task_clicked() {
 }
 
 bool WinMain::on_timeout(int timer_number) {
-  display_task_elapsed();
-
   if (!time_elapsed) {
     cycle_number++;
 
@@ -644,8 +636,6 @@ bool WinMain::on_timeout(int timer_number) {
 }
 
 bool WinMain::on_inactive_timeout(int timer_number) {
-  display_task_elapsed();
-
   if (!currentTask && !configs.disable_inactive_notification) {
     notify_with_gray_icon(_("are you not doing anything?"));
   }
@@ -657,10 +647,22 @@ bool WinMain::on_inactive_timeout(int timer_number) {
   return false;
 }
 
+bool WinMain::on_working_timeout(int timer_number) {
+  if (currentTask) {
+    currentTask->update();
+    display_task_elapsed();
+    check_working.disconnect();
+    check_working =
+        Glib::signal_timeout().connect(working_timer, MINUTE_IN_SECONDS);
+  }
+  return false;
+}
+
 void WinMain::on_start_task() {
 
   if (currentTask) {
     on_button_stop_clicked();
+    check_working.disconnect();
   } else {
     currentTask = get_current_task();
     if (currentTask) {
@@ -668,6 +670,7 @@ void WinMain::on_start_task() {
       lblTaskTitle->set_text(currentTask->get_name());
       generate_pomodoros();
       show_task_buttons();
+      check_working = Glib::signal_timeout().connect(working_timer, 1000);
     }
   }
 }

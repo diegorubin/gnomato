@@ -111,6 +111,10 @@ private:
   sigc::slot<bool> inactive_timer;
   sigc::connection check_inactive;
 
+  // For update elapsed time
+  sigc::slot<bool> working_timer;
+  sigc::connection check_working;
+
   Glib::RefPtr<Gtk::Builder> m_refGlade;
 
   // widgets
@@ -199,6 +203,7 @@ private:
   virtual void on_button_del_task_clicked();
   virtual bool on_timeout(int timer_number);
   virtual bool on_inactive_timeout(int timer_number);
+  virtual bool on_working_timeout(int timer_number);
   virtual void on_list_changed();
   virtual void on_start_task();
   virtual bool on_display_finished_changed(bool changed);

@@ -82,14 +82,14 @@ WorkLogEntry::WorkLogEntry(std::string task_id, std::string start_date_entry,
 }
 
 bool WorkLogEntry::update() {
-  if (this->end_date_entry.empty() && !this->end_hour_entry) {
-    ptime now = second_clock::local_time();
-    date today = now.date();
-    time_duration duration = now.time_of_day();
 
-    this->end_date_entry = format(today);
-    this->end_hour_entry = get_position_in_day(duration);
-  }
+  ptime now = second_clock::local_time();
+  date today = now.date();
+  time_duration duration = now.time_of_day();
+
+  this->end_date_entry = format(today);
+  this->end_hour_entry = get_position_in_day(duration);
+
   return this->save();
 }
 
