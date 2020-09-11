@@ -527,6 +527,7 @@ void WinMain::on_button_restart_clicked() {
 }
 
 void WinMain::on_button_finish_clicked() {
+  currentTask = get_current_task();
   if (currentTask) {
 
     execute("on_finish");
