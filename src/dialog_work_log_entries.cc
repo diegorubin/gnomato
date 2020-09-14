@@ -130,7 +130,7 @@ void DialogWorkLogEntries::on_start_hour_edited(
   WorkLogEntry *entry = recover_entry(path_string);
   if (entry) {
     entry->set_start_hour(new_text);
-    entry->update();
+    entry->save();
   }
 }
 
@@ -139,7 +139,7 @@ void DialogWorkLogEntries::on_end_date_edited(const Glib::ustring &path_string,
   WorkLogEntry *entry = recover_entry(path_string);
   if (entry) {
     entry->set_end_date(new_text);
-    entry->update();
+    entry->save();
   }
 }
 
@@ -148,7 +148,7 @@ void DialogWorkLogEntries::on_end_hour_edited(const Glib::ustring &path_string,
   WorkLogEntry *entry = recover_entry(path_string);
   if (entry) {
     entry->set_end_hour(new_text);
-    entry->update();
+    entry->save();
   }
 }
 

@@ -44,6 +44,7 @@ public:
   // methods
   bool create();
   bool update();
+  bool save();
 
   // setters
   void set_id(std::string id);
@@ -74,9 +75,6 @@ private:
   std::string end_date_entry;
   int start_hour_entry;
   int end_hour_entry;
-
-  // methods
-  bool save();
 };
 
 class Task : public Database {

@@ -112,6 +112,7 @@ bool WorkLogEntry::save() {
             id.c_str());
   }
 
+  std::cout << "updating worklog: " << sql << std::endl;
   return execute_query(sql, load_task);
 }
 
