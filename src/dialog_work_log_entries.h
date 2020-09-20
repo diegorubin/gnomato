@@ -66,6 +66,8 @@ private:
 
     void set_win_main_ref(DialogWorkLogEntries *dlgWorkLogEntries);
     Glib::RefPtr<Gtk::Builder> m_refGlade;
+    virtual void on_remove_worlog_entry();
+    virtual bool on_button_press_event(GdkEventButton *ev);
 
     DialogWorkLogEntries *dlgWorkLogEntries;
     Gtk::Menu menu;
@@ -86,6 +88,7 @@ private:
   // methods
   void load_days();
   void load_entries();
+  void remove_entry();
   std::string format_hour(int hour);
   WorkLogEntry *recover_entry(const Glib::ustring &path_string);
 

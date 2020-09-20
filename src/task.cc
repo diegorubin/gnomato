@@ -116,6 +116,16 @@ bool WorkLogEntry::save() {
   return execute_query(sql, load_task);
 }
 
+bool WorkLogEntry::remove() {
+  char sql[SQL_SIZE];
+  if (!id.empty()) {
+    sprintf(sql, DELETE_WORK_LOG_ENTRY_BY_ID, id.c_str());
+    std::cout << "removing worklog: " << sql << std::endl;
+    return execute_query(sql);
+  }
+  return false;
+}
+
 std::list<WorkLogEntry *> WorkLogEntry::all(std::string date) {
   char sql[SQL_SIZE];
   sprintf(sql, SELECT_WORKLOG_ENTRIES_BY_DATE, date.c_str());

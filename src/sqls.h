@@ -125,6 +125,9 @@ task_id = '%s' AND start_date_entry = '%s' AND start_hour_entry = %d;"
                      WHERE \
 id = '%s' ;"
 
+#define DELETE_WORK_LOG_ENTRY_BY_ID                                            \
+  "DELETE FROM WorkLogEntries WHERE id = '%s' ;"
+
 #define INSERT_TASK                                                            \
   "INSERT INTO \
                       Task \

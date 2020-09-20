@@ -49,7 +49,18 @@ DialogWorkLogEntries::~DialogWorkLogEntries() {}
 DialogWorkLogEntries::WorkLogEntriesView::WorkLogEntriesView(
     BaseObjectType *cobject, const Glib::RefPtr<Gtk::Builder> &refGlade)
     : Gtk::TreeView(cobject), m_refGlade(refGlade) {
+
+  Gtk::MenuItem *item =
+      Gtk::manage(new Gtk::MenuItem(_("Remove Worklog Entry"), true));
+  item->signal_activate().connect(
+      sigc::mem_fun(*this, &WorkLogEntriesView::on_remove_worlog_entry));
+  menu.append(*item);
   menu.show_all();
+
+#ifndef GLIBMM_DEFAULT_SIGNAL_HANDLERS_ENABLED
+  signal_button_press_event().connect(
+      sigc::mem_fun(*this, &TasksView::on_button_press_event), false);
+#endif
 }
 
 void DialogWorkLogEntries::on_button_close_clicked() { hide(); }
@@ -164,6 +175,34 @@ DialogWorkLogEntries::recover_entry(const Glib::ustring &path_string) {
     return WorkLogEntry::find_by_id(id);
   }
   return NULL;
+}
+
+void DialogWorkLogEntries::remove_entry() {
+  std::vector<Gtk::TreePath> paths =
+      trvEntries->get_selection()->get_selected_rows();
+  if (paths.size()) {
+    Gtk::TreeRow row = Gtk::TreeRow(*treEntries->get_iter(*paths.begin()));
+
+    Glib::ustring id = row[mdlColumn.id];
+    WorkLogEntry *entry = WorkLogEntry::find_by_id(id);
+    entry->remove();
+  }
+}
+
+void DialogWorkLogEntries::WorkLogEntriesView::on_remove_worlog_entry() {
+  dlgWorkLogEntries->remove_entry();
+}
+
+bool DialogWorkLogEntries::WorkLogEntriesView::on_button_press_event(
+    GdkEventButton *event) {
+  bool return_value = false;
+  return_value = TreeView::on_button_press_event(event);
+
+  if ((event->type == GDK_BUTTON_PRESS) && (event->button == 3)) {
+    menu.popup(event->button, event->time);
+  }
+
+  return return_value;
 }
 
 std::string DialogWorkLogEntries::format_hour(int hour) {

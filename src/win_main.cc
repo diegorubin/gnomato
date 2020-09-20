@@ -430,12 +430,13 @@ void WinMain::hide_task_buttons() {
 }
 
 void WinMain::move_task(string list) {
-  if (currentTask) {
-    currentTask->set_list(list);
-    currentTask->save();
+  Task *task = get_current_task();
+  if (task) {
+    task->set_list(list);
+    task->save();
 
-    delete currentTask;
-    currentTask = NULL;
+    delete task;
+    task = NULL;
 
     load_lists();
     load_tasks();
