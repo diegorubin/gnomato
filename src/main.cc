@@ -156,6 +156,7 @@ on_method_call(const Glib::RefPtr<Gio::DBus::Connection>& /* connection */,
                          << entries.front()->get_start_hour_entry() << "\t"
                          << entries.front()->get_end_date_entry() << "\t"
                          << entries.front()->get_end_hour_entry() << "\t"
+                         << entries.front()->get_task_id() << "\t"
                          << entries.front()->get_done() << std::endl;
 
             entries.pop_front();
