@@ -24,7 +24,7 @@
 #define _SQLS_
 
 #define CREATE_TASK                                                            \
-  "CREATE TABLE \
+    "CREATE TABLE \
                        Task \
                          (\
                            id INTEGER, \
@@ -36,7 +36,7 @@
 )"
 
 #define CREATE_SETTINGS                                                        \
-  "CREATE TABLE \
+    "CREATE TABLE \
                        Settings \
                          (\
                            id INTEGER, \
@@ -47,7 +47,7 @@
 )"
 
 #define CREATE_WORLOG_ENTRIES                                                  \
-  "CREATE TABLE \
+    "CREATE TABLE \
                        WorkLogEntries \
                          (\
                            id INTEGER, \
@@ -61,37 +61,40 @@
 
 #define SELECT_TASK "SELECT * FROM Task WHERE id = %s;"
 
+#define SELECT_TASK_BY_ID                                                     \
+    "SELECT * FROM Task WHERE id = %s limit 1;"
+
 #define SELECT_ALL_TASK                                                        \
-  "SELECT * FROM Task WHERE done = 0 ORDER BY position asc;"
+    "SELECT * FROM Task WHERE done = 0 ORDER BY position asc;"
 
 #define SELECT_ALL_TASK_BY_LIST                                                \
-  "SELECT * FROM Task WHERE list = '%s' AND done = %d ORDER BY position asc;"
+    "SELECT * FROM Task WHERE list = '%s' AND done = %d ORDER BY position asc;"
 
 #define SELECT_ALL_TASK_BY_LIST_AND_FILTER                                     \
-  "SELECT * FROM Task WHERE list = '%s' AND name like '%%%s%%' AND done = %d " \
-  "ORDER BY position asc;"
+    "SELECT * FROM Task WHERE list = '%s' AND name like '%%%s%%' AND done = %d " \
+    "ORDER BY position asc;"
 
 #define SELECT_WORKLOG_ENTRIES_BY_DATE                                         \
-  "SELECT WorkLogEntries.id, task_id, start_date_entry, start_hour_entry, "    \
-  "end_date_entry, "                                                           \
-  "end_hour_entry, name FROM WorkLogEntries INNER JOIN Task ON Task.id = "     \
-  "WorkLogEntries.task_id WHERE start_date_entry = '%s' ORDER BY "             \
-  "start_hour_entry DESC;"
+    "SELECT WorkLogEntries.id, task_id, start_date_entry, start_hour_entry, "    \
+    "end_date_entry, "                                                           \
+    "end_hour_entry, name FROM WorkLogEntries INNER JOIN Task ON Task.id = "     \
+    "WorkLogEntries.task_id WHERE start_date_entry = '%s' ORDER BY "             \
+    "start_hour_entry DESC;"
 
 #define SELECT_WORKLOG_ENTRY_BY_ID                                             \
-  "SELECT WorkLogEntries.id, task_id, start_date_entry, start_hour_entry, "    \
-  "end_date_entry, "                                                           \
-  "end_hour_entry, name FROM WorkLogEntries INNER JOIN Task ON Task.id = "     \
-  "WorkLogEntries.task_id WHERE WorkLogEntries.id = %s "
+    "SELECT WorkLogEntries.id, task_id, start_date_entry, start_hour_entry, "    \
+    "end_date_entry, "                                                           \
+    "end_hour_entry, name FROM WorkLogEntries INNER JOIN Task ON Task.id = "     \
+    "WorkLogEntries.task_id WHERE WorkLogEntries.id = %s "
 
 #define SELECT_WORKLOG_DAYS                                                    \
-  "SELECT start_date_entry "                                                   \
-  "FROM WorkLogEntries "                                                       \
-  "GROUP BY start_date_entry "                                                 \
-  "ORDER BY start_date_entry DESC;"
+    "SELECT start_date_entry "                                                   \
+    "FROM WorkLogEntries "                                                       \
+    "GROUP BY start_date_entry "                                                 \
+    "ORDER BY start_date_entry DESC;"
 
 #define INSERT_WORK_LOG_ENTRY                                                  \
-  "INSERT INTO \
+    "INSERT INTO \
                       WorkLogEntries \
                         ( \
                           task_id,\
@@ -106,7 +109,7 @@
 );"
 
 #define UPDATE_WORK_LOG_ENTRY                                                  \
-  "UPDATE \
+    "UPDATE \
                        WorkLogEntries \
                      SET \
                        end_date_entry = '%s', \
@@ -115,7 +118,7 @@
 task_id = '%s' AND start_date_entry = '%s' AND start_hour_entry = %d;"
 
 #define UPDATE_WORK_LOG_ENTRY_BY_ID                                            \
-  "UPDATE \
+    "UPDATE \
                        WorkLogEntries \
                      SET \
                        start_date_entry = '%s', \
@@ -126,10 +129,10 @@ task_id = '%s' AND start_date_entry = '%s' AND start_hour_entry = %d;"
 id = '%s' ;"
 
 #define DELETE_WORK_LOG_ENTRY_BY_ID                                            \
-  "DELETE FROM WorkLogEntries WHERE id = '%s' ;"
+    "DELETE FROM WorkLogEntries WHERE id = '%s' ;"
 
 #define INSERT_TASK                                                            \
-  "INSERT INTO \
+    "INSERT INTO \
                       Task \
                         ( \
                           name,\
@@ -148,7 +151,7 @@ id = '%s' ;"
 );"
 
 #define UPDATE_TASK                                                            \
-  "UPDATE \
+    "UPDATE \
                        Task \
                      SET \
                        name = '%s', \
@@ -160,7 +163,7 @@ id = '%s' ;"
 id = %s;"
 
 #define UPDATE_TASK_POSITION                                                   \
-  "UPDATE \
+    "UPDATE \
                        Task \
                      SET \
                        position = %d \
@@ -168,7 +171,7 @@ id = %s;"
 id = %s;"
 
 #define TASK_EXISTS                                                            \
-  "SELECT \
+    "SELECT \
                       COUNT(id) as TOTAL \
                      FROM Task \
 WHERE name = '%s' AND list = '%s' AND done = 0;"
@@ -177,7 +180,7 @@ WHERE name = '%s' AND list = '%s' AND done = 0;"
 #define DELETE_ALL_TASK_LISTS "DELETE FROM Task WHERE list = '%s';"
 
 #define SELECT_ALL_TASK_LISTS                                                  \
-  "SELECT list FROM Task WHERE done = 0 GROUP BY list ORDER BY list;"
+    "SELECT list FROM Task WHERE done = 0 GROUP BY list ORDER BY list;"
 
 // Migrations
 #define CHECK_SETTINGS "SELECT * FROM Settings;"
@@ -185,6 +188,6 @@ WHERE name = '%s' AND list = '%s' AND done = 0;"
 
 #define ADD_TASK_POSITION "ALTER TABLE Task ADD position INTEGER DEFAULT 0;"
 #define INSERT_TASK_POSITION                                                   \
-  "INSERT INTO Settings (name, value) VALUES ('TASK_POSITION', 'CREATED');"
+    "INSERT INTO Settings (name, value) VALUES ('TASK_POSITION', 'CREATED');"
 
 #endif //_SQLS_

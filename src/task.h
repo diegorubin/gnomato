@@ -33,106 +33,110 @@ using namespace boost::gregorian;
 using namespace boost::posix_time;
 
 class WorkLogEntry : public Database {
-public:
-  WorkLogEntry(std::string task_id);
-  WorkLogEntry(std::string task_id, std::string start_date_entry,
-               int start_hour_entry);
-  WorkLogEntry(std::string task_id, std::string start_date_entry,
-               int start_hour_entry, std::string end_date_entry,
-               int end_hour_entry);
+    public:
+        WorkLogEntry(std::string task_id);
+        WorkLogEntry(std::string task_id, std::string start_date_entry,
+                     int start_hour_entry);
+        WorkLogEntry(std::string task_id, std::string start_date_entry,
+                     int start_hour_entry, std::string end_date_entry,
+                     int end_hour_entry, int done);
 
-  // methods
-  bool create();
-  bool update();
-  bool save();
-  bool remove();
+        // methods
+        bool create();
+        bool update();
+        bool save();
+        bool remove();
 
-  // setters
-  void set_id(std::string id);
-  void set_task_name(std::string task_name);
-  void set_start_hour(std::string task_name);
-  void set_end_date(std::string task_name);
-  void set_end_hour(std::string task_name);
+        // setters
+        void set_id(std::string id);
+        void set_task_name(std::string task_name);
+        void set_start_hour(std::string task_name);
+        void set_end_date(std::string task_name);
+        void set_end_hour(std::string task_name);
+        void set_done(int done);
 
-  // getters
-  std::string get_id();
-  std::string get_task_id();
-  std::string get_task_name();
-  std::string get_start_date_entry();
-  std::string get_end_date_entry();
-  int get_start_hour_entry();
-  int get_end_hour_entry();
+        // getters
+        std::string get_id();
+        std::string get_task_id();
+        std::string get_task_name();
+        std::string get_start_date_entry();
+        std::string get_end_date_entry();
+        int get_done();
+        int get_start_hour_entry();
+        int get_end_hour_entry();
 
-  static std::list<WorkLogEntry *> all(std::string date);
-  static std::list<WorkLogEntry *> all_worklog_entries_by_sql(char *sql);
-  static WorkLogEntry *find_by_id(std::string id);
-  static std::list<std::string> work_days();
+        static std::list<WorkLogEntry*> all(std::string date);
+        static std::list<WorkLogEntry*> all_worklog_entries_by_sql(char* sql);
+        static WorkLogEntry* find_by_id(std::string id);
+        static std::list<std::string> work_days();
 
-private:
-  std::string id;
-  std::string task_id;
-  std::string task_name;
-  std::string start_date_entry;
-  std::string end_date_entry;
-  int start_hour_entry;
-  int end_hour_entry;
+    private:
+        std::string id;
+        std::string task_id;
+        std::string task_name;
+        std::string start_date_entry;
+        std::string end_date_entry;
+        int start_hour_entry;
+        int end_hour_entry;
+        int done;
 };
 
 class Task : public Database {
-public:
-  Task();
-  Task(std::string id);
-  virtual ~Task();
+    public:
+        Task();
+        Task(std::string id);
+        virtual ~Task();
 
-  // methods
-  void start();
-  void pause();
-  bool create();
-  bool save();
-  bool destroy();
-  bool finish();
-  bool exists();
-  void update();
+        // methods
+        void start();
+        void pause();
+        bool create();
+        bool save();
+        bool destroy();
+        bool finish();
+        bool exists();
+        void update();
 
-  // setters
-  void set_id(std::string id);
-  void set_name(std::string value);
-  void set_pomodoros(int value);
-  void set_done(int value);
-  void set_list(std::string value);
-  void set_position(int value);
+        // setters
+        void set_id(std::string id);
+        void set_name(std::string value);
+        void set_pomodoros(int value);
+        void set_done(int value);
+        void set_list(std::string value);
+        void set_position(int value);
 
-  // getters
-  std::string get_id();
-  std::string get_name();
-  int get_pomodoros();
-  int get_done();
-  std::string get_list();
-  int get_position();
-  int elapsed_time();
+        // getters
+        std::string get_id();
+        std::string get_name();
+        int get_pomodoros();
+        int get_done();
+        std::string get_list();
+        int get_position();
+        int elapsed_time();
 
-  static std::list<Task *> all();
-  static std::list<Task *> all(std::string list, int done);
-  static std::list<Task *> all(std::string list, std::string filter, int done);
-  static std::list<Task *> all_by_sql(char *sql);
-  static void update_position(std::string id, int position);
+        static Task* first(std::string task_id);
+        static std::list<Task*> all();
+        static std::list<Task*> all(std::string list, int done);
+        static std::list<Task*> all(std::string list, std::string filter, int done);
+        static std::list<Task*> all_by_sql(char* sql);
+        static void update_position(std::string id, int position);
 
-private:
-  // attributes
-  std::string id;
-  std::string name;
-  std::string list;
-  int pomodoros;
-  int done;
-  int position;
-  WorkLogEntry *workLlogEntry;
+    private:
+        // attributes
+        std::string id;
+        std::string name;
+        std::string list;
+        int pomodoros;
+        int done;
+        int position;
+        WorkLogEntry* workLlogEntry;
 };
 
-static int load_task(void *NotUsed, int argc, char **argv, char **azColName);
-static int load_worklog_entry(void *NotUsed, int argc, char **argv,
-                              char **azColName);
-static int load_workdays(void *NotUsed, int argc, char **argv,
-                         char **azColName);
-static int check_exists(void *NotUsed, int argc, char **argv, char **azColName);
+static int load_task(void* NotUsed, int argc, char** argv, char** azColName);
+static int load_worklog_entry(void* NotUsed, int argc, char** argv,
+                              char** azColName);
+static int load_workdays(void* NotUsed, int argc, char** argv,
+                         char** azColName);
+static int check_exists(void* NotUsed, int argc, char** argv, char** azColName);
 
 #endif //_TASK_H_
