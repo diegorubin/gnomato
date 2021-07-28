@@ -58,6 +58,9 @@ static Glib::ustring introspection_xml =
     "    <method name='GetCycle'>"
     "      <arg type='s' name='iso8601' direction='out'/>"
     "    </method>"
+    "    <method name='GetStatus'>"
+    "      <arg type='s' name='iso8601' direction='out'/>"
+    "    </method>"
     "    <method name='ShowWindow'>"
     "      <arg type='s' name='iso8601' direction='out'/>"
     "    </method>"
@@ -118,6 +121,14 @@ on_method_call(const Glib::RefPtr<Gio::DBus::Connection>& /* connection */,
 
         Glib::VariantContainerBase response =
             Glib::VariantContainerBase::create_tuple(time_var);
+
+        invocation->return_value(response);
+    } else if (method_name == "GetStatus") {
+        const Glib::Variant<Glib::ustring> status =
+            Glib::Variant<Glib::ustring>::create(winMain->get_status());
+
+        Glib::VariantContainerBase response =
+            Glib::VariantContainerBase::create_tuple(status);
 
         invocation->return_value(response);
     } else if (method_name == "ShowWindow") {
