@@ -22,108 +22,101 @@
 
 #include "dialog_task.h"
 
-DialogTask::DialogTask(BaseObjectType* cobject, 
+DialogTask::DialogTask(BaseObjectType* cobject,
                        const Glib::RefPtr<Gtk::Builder>& refGlade)
-: Gtk::Dialog(cobject),
-  m_refGlade(refGlade)
-{
-  // buttons
-  m_refGlade->get_widget("btnTaskOk", btnOk);
-  m_refGlade->get_widget("btnTaskCancel", btnCancel);
+    : Gtk::Dialog(cobject),
+      m_refGlade(refGlade) {
+    // buttons
+    m_refGlade->get_widget("btnTaskOk", btnOk);
+    m_refGlade->get_widget("btnTaskCancel", btnCancel);
 
-  // entries
-  m_refGlade->get_widget("entTaskName", entName);
-  m_refGlade->get_widget("entTaskList", entList);
-  
-  entList->grab_focus();
+    // entries
+    m_refGlade->get_widget("entTaskName", entName);
+    m_refGlade->get_widget("entTaskList", entList);
 
-  // connect signals
-  btnCancel->signal_clicked().
-             connect(sigc::mem_fun(*this,
-                    &DialogTask::on_button_cancel_clicked));
-  
-  btnOk->signal_clicked().
-         connect(sigc::mem_fun(*this,
-               &DialogTask::on_button_ok_clicked));
-  
-  entName->signal_activate().
-         connect(sigc::mem_fun(*this,
-               &DialogTask::on_button_ok_clicked));
+    entList->grab_focus();
 
-  // Configure the Completion
-  ecpLists = Gtk::EntryCompletion::create();
-  lstLists = Gtk::ListStore::create(mcpLists);
+    // connect signals
+    btnCancel->signal_clicked().
+    connect(sigc::mem_fun(*this,
+                          &DialogTask::on_button_cancel_clicked));
 
-  ecpLists->set_model(lstLists);
-  entList->set_completion(ecpLists);
-  ecpLists->set_text_column (mcpLists.col_text);
-  ecpLists->set_minimum_key_length(1);
-  ecpLists->set_popup_completion(true);
+    btnOk->signal_clicked().
+    connect(sigc::mem_fun(*this,
+                          &DialogTask::on_button_ok_clicked));
 
-  this->load_lists();
-  show_all();
+    entName->signal_activate().
+    connect(sigc::mem_fun(*this,
+                          &DialogTask::on_button_ok_clicked));
+
+    // Configure the Completion
+    ecpLists = Gtk::EntryCompletion::create();
+    lstLists = Gtk::ListStore::create(mcpLists);
+
+    ecpLists->set_model(lstLists);
+    entList->set_completion(ecpLists);
+    ecpLists->set_text_column(mcpLists.col_text);
+    ecpLists->set_minimum_key_length(1);
+    ecpLists->set_popup_completion(true);
+
+    this->load_lists();
+    show_all();
 }
 
-DialogTask::~DialogTask()
-{
+DialogTask::~DialogTask() {
 }
 
-void DialogTask::set_id(std::string value)
-{
-  id = value;
-  Task t(id);
+void DialogTask::set_id(std::string value) {
+    id = value;
+    Task t(id);
 
-  entName->set_text(t.get_name());
-  entList->set_text(t.get_list());
+    entName->set_text(t.get_name());
+    entList->set_text(t.get_list());
 }
 
-void DialogTask::set_list(std::string value)
-{
-  if(entList->get_text().empty() && !value.empty()) {
-    entList->set_text(value);
-    entName->grab_focus();
-  }
+void DialogTask::set_list(std::string value) {
+    if (entList->get_text().empty() && !value.empty()) {
+        entList->set_text(value);
+        entName->grab_focus();
+    }
 }
 
-void DialogTask::load_lists()
-{
-  Gtk::TreeModel::Row row;
-  std::list<TaskList*> lists = TaskList::all();
+void DialogTask::load_lists() {
+    Gtk::TreeModel::Row row;
+    std::list<TaskList*> lists = TaskList::all();
 
-  while(!lists.empty()){
-    row =*(lstLists->append());
-    row[mcpLists.col_text] = lists.front()->get_name();
-    lists.pop_front();
-  }
+    while (!lists.empty()) {
+        row = *(lstLists->append());
+        row[mcpLists.col_text] = lists.front()->get_name();
+        lists.pop_front();
+    }
 }
 
-void DialogTask::on_button_cancel_clicked()
-{
-  id = "";
-  entName->set_text("");
-  entList->set_text("");
-  hide();
+void DialogTask::on_button_cancel_clicked() {
+    id = "";
+    entName->set_text("");
+    entList->set_text("");
+    hide();
 }
 
-void DialogTask::on_button_ok_clicked()
-{
-  // [TODO] - Refactor, many repetitions
-  if(id == ""){
-    task = new Task();
-    task->set_name(entName->get_text().c_str());
-    task->set_list(entList->get_text().c_str());
-    task->create();
-  }else{
-    task = new Task(id);
-    task->set_name(entName->get_text().c_str());
-    task->set_list(entList->get_text().c_str());
-    task->save();
-  }
+void DialogTask::on_button_ok_clicked() {
+    // [TODO] - Refactor, many repetitions
+    if (id == "") {
+        task = new Task();
+        task->set_name(entName->get_text().c_str());
+        task->set_list(entList->get_text().c_str());
+        task->set_position(100);
+        task->create();
+    } else {
+        task = new Task(id);
+        task->set_name(entName->get_text().c_str());
+        task->set_list(entList->get_text().c_str());
+        task->save();
+    }
 
-  hide();
+    hide();
 
-  id = "";
-  entName->set_text("");
-  entList->set_text("");
+    id = "";
+    entName->set_text("");
+    entList->set_text("");
 }
-

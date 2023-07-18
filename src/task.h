@@ -94,6 +94,7 @@ class Task : public Database {
         bool save();
         bool destroy();
         bool finish();
+        bool unfinish();
         bool exists();
         void update();
 

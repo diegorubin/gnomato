@@ -278,6 +278,11 @@ bool Task::finish() {
     return save();
 }
 
+bool Task::unfinish() {
+    done = 0;
+    return save();
+}
+
 bool Task::exists() {
     char sql[SQL_SIZE];
     sprintf(sql, TASK_EXISTS, name.c_str(), list.c_str());

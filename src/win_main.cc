@@ -297,6 +297,13 @@ void WinMain::generate_pomodoros() {
 
 bool WinMain::on_display_finished_changed(bool changed) {
     load_lists();
+
+    if (swtFinishedTasks->get_active()) {
+        btnFinish->set_label(_("Unfinish"));
+    } else {
+        btnFinish->set_label(_("Finish"));
+    }
+
     return false;
 }
 
@@ -539,7 +546,11 @@ void WinMain::on_button_finish_clicked() {
 
         execute("on_finish");
 
-        currentTask->finish();
+        if (swtFinishedTasks->get_active()) {
+            currentTask->unfinish();
+        } else {
+            currentTask->finish();
+        }
 
         load_lists();
         load_tasks();

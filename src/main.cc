@@ -213,6 +213,7 @@ on_method_call(const Glib::RefPtr<Gio::DBus::Connection>& /* connection */,
         Task t;
         t.set_list(list_name);
         t.set_name(task);
+        t.set_position(50);
         t.create();
 
         winMain->load_lists();
